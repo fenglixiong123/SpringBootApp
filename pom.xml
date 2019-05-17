@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.flx.springboot</groupId>
+    <artifactId>SpringBoootApp</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>springboot-scaffold-parent</module>
+        <module>springboot-scaffold-dependencies</module>
+        <module>springboot-scaffold-web</module>
+        <module>springboot-scaffold-simple</module>
+        <module>springboot-scaffold-swagger</module>
+        <module>springboot-scaffold-common</module>
+        <module>springboot-scaffold-websocket</module>
+        <module>springboot-scaffold-email</module>
+        <module>springboot-scaffold-logger</module>
+        <module>springboot-scaffold-jms</module>
+        <module>springboot-scaffold-jdbc</module>
+        <module>springboot-scaffold-rbac</module>
+    </modules>
+
+</project>

@@ -1,0 +1,42 @@
+1.@ModelAttribute
+
+作用在方法上
+会在每一个Controller方法执行前执行这个被标记的方法
+
+2.获取request,response方法
+
+((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+3.spring.factories
+
+由于被其他应用引用但是却不会去加载其配置文件类
+所以在spring.factories里面写入需要
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.flx.springboot.scaffold.swagger.config.SwaggerConfig
+在src/main/resources目录下新建META-INF文件夹，然后新建spring.factories文件，
+这个文件用于告诉Spring Boot去找指定的自动配置文件
+
+4.自定义注解来实现Swagger
+
+添加这个注解就可以实现Swagger扫描
+import com.flx.springboot.scaffold.web.core.annotation.RestController;
+
+5.包扫描问题
+
+方法一：
+添加了GlobalExceptionHandler全局异常处理类，但是添加到其他项目中不能被扫描到
+@SpringBootApplication(scanBasePackages = {"com.flx.springboot.scaffold.simple",
+        "com.flx.springboot.scaffold.web.core.exception.handler"})
+方法二：
+直接继承类添加@Component注解
+
+6.scope
+<dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+</dependency>
+由于mysql编译时期没有用到所以不会打包导致丢失jar包，但是在运行时期又需要，所以加上这个scope会把jar包打包进去的
+
+7.加入@Configuration配置swagger访问不了
+添加隔离配置
