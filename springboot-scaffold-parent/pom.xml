@@ -12,19 +12,94 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <dependencies.version>1.0-SNAPSHOT</dependencies.version>
         <jdk.version>1.8</jdk.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
         <maven.compiler.piugin.version>3.7.0</maven.compiler.piugin.version>
+        <spring.boot.version>2.1.0.RELEASE</spring.boot.version>
+        <spring.cloud.version>Finchley.RELEASE</spring.cloud.version>
+        <apache.common.version>3.3.2</apache.common.version>
+        <alibaba.fastjson.version>1.2.51</alibaba.fastjson.version>
+        <alibaba.druid.version>1.1.12</alibaba.druid.version>
+        <jackson.version>2.9.7</jackson.version>
+        <json.path.verson>2.4.0</json.path.verson>
+        <kafka.version>2.2.0.RELEASE</kafka.version>
+        <mybatis.version>1.3.2</mybatis.version>
+        <scaffold.web.version>1.0-SNAPSHOT</scaffold.web.version>
+        <scaffold.swagger.version>1.0-SNAPSHOT</scaffold.swagger.version>
+        <scaffold.common.version>1.0-SNAPSHOT</scaffold.common.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--spring-kafka-->
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>${kafka.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${alibaba.druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${alibaba.fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jayway.jsonpath</groupId>
+                <artifactId>json-path</artifactId>
+                <version>${json.path.verson}</version>
+            </dependency>
+            <!--apache-common-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.common.version}</version>
+            </dependency>
+            <!--scaffold-swagger-->
             <dependency>
                 <groupId>com.flx.springboot</groupId>
-                <artifactId>springboot-scaffold-dependencies</artifactId>
-                <version>${dependencies.version}</version>
+                <artifactId>springboot-scaffold-swagger</artifactId>
+                <version>${scaffold.swagger.version}</version>
+            </dependency>
+            <!--scaffold-tomcat-->
+            <dependency>
+                <groupId>com.flx.springboot</groupId>
+                <artifactId>springboot-scaffold-web</artifactId>
+                <version>${scaffold.web.version}</version>
+            </dependency>
+            <!--scaffold-common-->
+            <dependency>
+                <groupId>com.flx.springboot</groupId>
+                <artifactId>springboot-scaffold-common</artifactId>
+                <version>${scaffold.common.version}</version>
+            </dependency>
+            <!--spring-boot-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--spring-cloud-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

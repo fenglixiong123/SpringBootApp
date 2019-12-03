@@ -13,15 +13,10 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.flx.springboot</groupId>
-            <artifactId>springboot-scaffold-web-tomcat</artifactId>
-        </dependency>
         <!--加入自定义的swagger配置-->
         <dependency>
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-swagger</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
