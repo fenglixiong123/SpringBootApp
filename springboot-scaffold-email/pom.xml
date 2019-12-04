@@ -13,8 +13,17 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-web</artifactId>
+        </dependency>
+        <!--scaffold-swagger-->
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-swagger</artifactId>
         </dependency>
     </dependencies>
 

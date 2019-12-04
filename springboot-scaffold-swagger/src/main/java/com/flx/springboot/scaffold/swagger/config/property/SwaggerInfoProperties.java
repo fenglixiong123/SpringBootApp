@@ -24,16 +24,16 @@ public class SwaggerInfoProperties {
 
     private String email = "fenglixiong123@163.com";
 
-    private String title = "FLX SpringBoot API DOCS Provider";
+    private String title = "接口文档画面";
 
     private String description = "swagger ui for China website";
 
-    private String version = "1.0.0";
+    private String version = "1.0.0 RELEASE";
 
     private String license = "None";
 
     private String licenseUrl = "";
 
-    private String termsOfServiceUrl = "https://www.china.com.cn";
+    private String termsOfServiceUrl = "https://www.fenglixiong.com.cn";
 
 }

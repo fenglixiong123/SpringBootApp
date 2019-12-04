@@ -6,44 +6,27 @@
         <artifactId>springboot-scaffold-parent</artifactId>
         <groupId>com.flx.springboot</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../springboot-scaffold-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>springboot-scaffold-swagger</artifactId>
 
-    <properties>
-        <swagger.version>2.9.2</swagger.version>
-    </properties>
-
     <dependencies>
-        <!--swagger ui 的使用-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.version}</version>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
         </dependency>
-        <!--这里主要使用了@RestController注解-->
         <dependency>
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 

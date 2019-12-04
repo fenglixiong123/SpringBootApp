@@ -2,7 +2,6 @@ package com.flx.springboot.scaffold.logger.controller.student;
 
 import com.flx.springboot.scaffold.logger.entity.Student;
 import com.flx.springboot.scaffold.logger.service.StudentService;
-import com.flx.springboot.scaffold.web.core.annotation.RestController;
 import com.flx.springboot.scaffold.web.core.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import java.util.List;
  * @Description
  **/
 @Slf4j
-@RestController
 @RequestMapping("/student")
 public class StudentController {
 

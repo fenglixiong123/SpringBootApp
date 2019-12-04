@@ -4,8 +4,6 @@ import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.flx.springboot.scaffold.jms.common.constants.KafkaConstant;
 import com.flx.springboot.scaffold.jms.entity.Student;
 import com.flx.springboot.scaffold.jms.message.kafka.producer.KafkaProducer;
-import com.flx.springboot.scaffold.jms.service.StudentService;
-import com.flx.springboot.scaffold.web.core.annotation.RestController;
 import com.flx.springboot.scaffold.web.core.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
  * @Description
  **/
 @Slf4j
-@RestController
 @RequestMapping("/kafka")
 public class KafkaController {
 

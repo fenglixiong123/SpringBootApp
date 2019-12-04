@@ -3,7 +3,6 @@ package com.flx.scaffold.jdbc.jpa.controller;
 
 import com.flx.scaffold.jdbc.jpa.domain.Student;
 import com.flx.scaffold.jdbc.jpa.service.StudentService;
-import com.flx.springboot.scaffold.web.core.annotation.RestController;
 import com.flx.springboot.scaffold.web.core.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import java.util.List;
  * @Description
  **/
 @Slf4j
-@RestController
 @RequestMapping("/jdbc/student")
 public class JdbcController {
 

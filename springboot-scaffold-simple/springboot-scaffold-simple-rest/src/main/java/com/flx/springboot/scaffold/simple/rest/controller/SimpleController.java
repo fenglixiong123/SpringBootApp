@@ -3,7 +3,6 @@ package com.flx.springboot.scaffold.simple.rest.controller;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.flx.springboot.scaffold.simple.rest.entity.User;
 import com.flx.springboot.scaffold.web.core.annotation.RequestLimit;
-import com.flx.springboot.scaffold.web.core.annotation.RestController;
 import com.flx.springboot.scaffold.web.core.annotation.SysLog;
 import com.flx.springboot.scaffold.web.core.enums.BizTypeEnum;
 import com.flx.springboot.scaffold.web.core.enums.OperateTypeEnum;
