@@ -1,10 +1,12 @@
 package com.flx.springboot.email.controller;
 
+import com.flx.springboot.email.entity.ComplexMail;
 import com.flx.springboot.email.entity.SimpleMail;
 import com.flx.springboot.email.service.EmailService;
 import com.flx.springboot.scaffold.web.core.result.ResultResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date: 2019/12/4 11:13
  * @Description:
  */
+@Slf4j
 @Api("邮件收发相关接口")
 @RestController
 @RequestMapping("/email")
@@ -26,11 +29,23 @@ public class EmailController {
 
     @ApiOperation("发送简单的邮件")
     @GetMapping("/sendSimpleEmail")
-    public ResultResponse sendSimpleEmil(@RequestParam String subject,
+    public ResultResponse sendSimpleEmil(
                                 @RequestParam String to,
-                                @RequestParam String from,
+                                @RequestParam String subject,
                                 @RequestParam String content){
-        boolean result = emailService.sendSimpleEmail(new SimpleMail(subject,to,from,content));
+        boolean result = emailService.sendSimpleEmail(new SimpleMail(subject,to,content));
+        log.info("发送结果：{}",result);
+        return ResultResponse.ok(result);
+    }
+
+    @ApiOperation("发送复杂的邮件")
+    @GetMapping("/sendComplexEmail")
+    public ResultResponse sendComplexEmil(
+            @RequestParam String to,
+            @RequestParam String subject,
+            @RequestParam String content){
+        boolean result = emailService.sendComplexEmail(new ComplexMail(subject,to,content));
+        log.info("发送结果：{}",result);
         return ResultResponse.ok(result);
     }
 

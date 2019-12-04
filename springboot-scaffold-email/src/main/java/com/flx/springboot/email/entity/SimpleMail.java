@@ -14,13 +14,11 @@ public class SimpleMail {
 
     private String subject;
     private String to;
-    private String from;
     private String content;
 
-    public SimpleMail(String subject, String to, String from, String content) {
+    public SimpleMail(String subject, String to, String content) {
         this.subject = subject;
         this.to = to;
-        this.from = from;
         this.content = content;
     }
 }

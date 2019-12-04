@@ -14,8 +14,11 @@ public class ComplexMail {
 
     private String subject;
     private String to;
-    private String from;
     private String content;
 
-
+    public ComplexMail(String subject, String to, String content) {
+        this.subject = subject;
+        this.to = to;
+        this.content = content;
+    }
 }

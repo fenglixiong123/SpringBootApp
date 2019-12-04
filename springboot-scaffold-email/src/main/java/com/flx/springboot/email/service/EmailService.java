@@ -1,5 +1,6 @@
 package com.flx.springboot.email.service;
 
+import com.flx.springboot.email.entity.ComplexMail;
 import com.flx.springboot.email.entity.SimpleMail;
 
 /**
@@ -10,5 +11,7 @@ import com.flx.springboot.email.entity.SimpleMail;
 public interface EmailService {
 
     boolean sendSimpleEmail(SimpleMail simpleMail);
+
+    boolean sendComplexEmail(ComplexMail complexMail);
 
 }
