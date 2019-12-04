@@ -1,5 +1,6 @@
 package com.flx.springboot.email.controller;
 
+import com.flx.springboot.email.entity.SimpleMail;
 import com.flx.springboot.email.service.EmailService;
 import com.flx.springboot.scaffold.web.core.result.ResultResponse;
 import io.swagger.annotations.Api;
@@ -23,11 +24,14 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
-    @ApiOperation("测试信息")
-    @GetMapping("/hello")
-    public ResultResponse hello(@RequestParam String name){
-
-        return ResultResponse.ok("成功");
+    @ApiOperation("发送简单的邮件")
+    @GetMapping("/sendSimpleEmail")
+    public ResultResponse sendSimpleEmil(@RequestParam String subject,
+                                @RequestParam String to,
+                                @RequestParam String from,
+                                @RequestParam String content){
+        boolean result = emailService.sendSimpleEmail(new SimpleMail(subject,to,from,content));
+        return ResultResponse.ok(result);
     }
 
 }
