@@ -1,5 +1,6 @@
 package com.flx.springboot.activemq;
 
+import com.flx.springboot.scaffold.web.core.annotation.EnableExceptionHandle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,7 @@ import org.springframework.jms.annotation.EnableJms;
  **/
 @Slf4j
 @EnableJms
+@EnableExceptionHandle
 @SpringBootApplication
 public class ActiveMqApplication {
 

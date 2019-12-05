@@ -7,7 +7,9 @@ package com.flx.springboot.activemq.constants;
  **/
 public class ActiveConstant {
 
+    //点对点方式
     public static final String ActiveQueuePoint = "active_queue_point";
+    //广播方式
     public static final String ActiveQueueTopic = "active_queue_topic";
 
 }
