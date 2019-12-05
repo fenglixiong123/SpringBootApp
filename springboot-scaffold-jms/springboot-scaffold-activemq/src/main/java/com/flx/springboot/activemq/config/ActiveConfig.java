@@ -1,6 +1,6 @@
-package com.flx.springboot.scaffold.jms.common.configuration;
+package com.flx.springboot.activemq.config;
 
-import com.flx.springboot.scaffold.jms.common.constants.ActiveConstant;
+import com.flx.springboot.activemq.constants.ActiveConstant;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;

@@ -1,6 +1,6 @@
-package com.flx.springboot.scaffold.jms.controller.active;
+package com.flx.springboot.activemq.controller;
 
-import com.flx.springboot.scaffold.jms.message.active.producer.ActiveProducer;
+import com.flx.springboot.activemq.service.producer.ActiveProducer;
 import com.flx.springboot.scaffold.web.core.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

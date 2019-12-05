@@ -1,6 +1,6 @@
-package com.flx.springboot.scaffold.jms.message.active.consumer;
+package com.flx.springboot.activemq.service.consumer;
 
-import com.flx.springboot.scaffold.jms.common.constants.ActiveConstant;
+import com.flx.springboot.activemq.constants.ActiveConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;

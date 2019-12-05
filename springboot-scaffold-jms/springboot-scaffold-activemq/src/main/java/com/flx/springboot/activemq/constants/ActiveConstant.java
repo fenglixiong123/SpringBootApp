@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.jms.common.constants;
+package com.flx.springboot.activemq.constants;
 
 /**
  * @Author Fenglixiong

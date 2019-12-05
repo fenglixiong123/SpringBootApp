@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.jms.message.active.producer;
+package com.flx.springboot.activemq.service.producer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
