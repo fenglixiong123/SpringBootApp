@@ -27,8 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class CoreExceptionHandler implements InitializingBean {
 
-
-
     /**
      * 自定义传参异常类
      * @param request
@@ -39,7 +37,7 @@ public class CoreExceptionHandler implements InitializingBean {
     @ExceptionHandler(ParamException.class)
     public ResultResponse<String> paramExceptionHandler(HttpServletRequest request,Exception e){
         log.error("【异常地址】：{}",request.getRequestURL().toString());
-        log.error("【异常类型】传参异常paramException：{}",e);
+        log.error("【异常类型】传参异常paramException：{}",e.getMessage());
         return new ResultResponse<String>().fail(ErrorMsgEnum.PARAM_INVILAD.getCode(),ErrorMsgEnum.PARAM_INVILAD.getMsg(),e.getMessage());
     }
 
@@ -53,7 +51,7 @@ public class CoreExceptionHandler implements InitializingBean {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResultResponse methodNotValidExceptionHandler(HttpServletRequest request,MethodArgumentNotValidException e){
         log.error("【异常地址】：{}",request.getRequestURL().toString());
-        log.error("【异常类型】字段校验异常MethodArgumentNotValidException：{}",e);
+        log.error("【异常类型】字段校验异常MethodArgumentNotValidException：{}",e.getMessage());
         String errorMsg = "字段校验异常";
         if(e.getBindingResult()!=null&&e.getBindingResult().getFieldError()!=null){
             errorMsg = e.getBindingResult().getFieldError().getDefaultMessage();
@@ -71,7 +69,7 @@ public class CoreExceptionHandler implements InitializingBean {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResultResponse<String> missingRequestParamExceptionHandler(HttpServletRequest request,Exception e){
         log.error("【异常地址】：{}",request.getRequestURL().toString());
-        log.error("【异常类型】缺少参数异常missingRequestParamException：{}",e);
+        log.error("【异常类型】缺少参数异常missingRequestParamException：{}",e.getMessage());
         return new ResultResponse<String>().fail(ErrorMsgEnum.PARAM_MISSING.getCode(),ErrorMsgEnum.PARAM_MISSING.getMsg(),e.getMessage());
     }
 
@@ -85,7 +83,7 @@ public class CoreExceptionHandler implements InitializingBean {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResultResponse jsonConvertExceptionHandler(HttpServletRequest request,HttpMessageNotReadableException e){
         log.error("【异常地址】：{}",request.getRequestURL().toString());
-        log.error("【异常类型】业务异常JsonConvertException：{}",e);
+        log.error("【异常类型】业务异常JsonConvertException：{}",e.getMessage());
         return ResultResponse.error(ErrorMsgEnum.JSON_CONVERT_ERROR);
     }
 
@@ -99,7 +97,7 @@ public class CoreExceptionHandler implements InitializingBean {
     @ExceptionHandler(BizException.class)
     public ResultResponse bizExceptionHandler(HttpServletRequest request,Exception e){
         log.error("【异常地址】：{}",request.getRequestURL().toString());
-        log.error("【异常类型】业务异常BizException：{}",e);
+        log.error("【异常类型】业务异常BizException：{}",e.getMessage());
         return ResultResponse.error(e.getMessage());
     }
 
@@ -115,23 +113,23 @@ public class CoreExceptionHandler implements InitializingBean {
         String message;
         if(e instanceof NullPointerException){
             message = "空指针异常";
-            log.error("【异常类型】空指针异常NullPointerException：{}",e);
+            log.error("【异常类型】空指针异常NullPointerException：{}",e.getMessage());
         } else if(e instanceof IllegalArgumentException){
             message = "参数异常";
-            log.error("【异常类型】参数异常IllegalArgumentException：{}",e);
+            log.error("【异常类型】参数异常IllegalArgumentException：{}",e.getMessage());
         }else if(e instanceof ArithmeticException){
             message = "算数异常";
-            log.error("【异常类型】算数异常ArithmeticException：{}",e);
+            log.error("【异常类型】算数异常ArithmeticException：{}",e.getMessage());
         }else {
             message = "未知异常";
-            log.error("【异常类型】未知异常UnknownException：{}",e);
+            log.error("【异常类型】未知异常UnknownException：{}",e.getMessage());
         }
 
         return ResultResponse.error(message);
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         log.info("============>加载全局异常处理程序成功<=========");
     }
 }
