@@ -1,8 +1,8 @@
 package com.flx.springboot.kafka.service.consumer;
 
 import com.alibaba.fastjson.JSONObject;
-import com.flx.springboot.scaffold.jms.common.constants.KafkaConstant;
-import com.flx.springboot.scaffold.jms.entity.Student;
+import com.flx.springboot.kafka.constants.KafkaConstant;
+import com.flx.springboot.kafka.entity.Student;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
