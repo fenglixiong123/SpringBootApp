@@ -1,7 +1,7 @@
-package com.flx.springboot.scaffold.schedule.config;
+package com.flx.springboot.scaffold.schedule.quartz.config;
 
-import com.flx.springboot.scaffold.schedule.task.SayHelloTask;
-import com.flx.springboot.scaffold.schedule.task.SayHiTask;
+import com.flx.springboot.scaffold.schedule.quartz.task.SayHelloTask;
+import com.flx.springboot.scaffold.schedule.quartz.task.SayHiTask;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.springframework.context.annotation.Bean;

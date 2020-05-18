@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.schedule.task;
+package com.flx.springboot.scaffold.schedule.quartz.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
@@ -13,9 +13,9 @@ import java.util.Date;
  * @Description:
  */
 @Slf4j
-public class SayHelloTask extends QuartzJobBean {
+public class SayHiTask extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        log.info("----孤舟蓑笠翁，独钓寒江雪----"+new Date());
+        log.info("----床前明月光，疑是地上霜----"+new Date());
     }
 }
