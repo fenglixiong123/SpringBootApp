@@ -21,6 +21,7 @@
         <module>springboot-scaffold-jms</module>
         <module>springboot-scaffold-jdbc</module>
         <module>springboot-scaffold-rbac</module>
+        <module>springboot-scaffold-schedule</module>
     </modules>
 
 </project>

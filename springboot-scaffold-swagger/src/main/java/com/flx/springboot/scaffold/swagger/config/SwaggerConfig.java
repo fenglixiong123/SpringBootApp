@@ -28,8 +28,7 @@ import com.flx.springboot.scaffold.swagger.config.property.SwaggerInfoProperties
 @Slf4j
 @Configuration
 @EnableSwagger2
-@EnableConfigurationProperties({
-        SwaggerInfoProperties.class})
+@EnableConfigurationProperties({SwaggerInfoProperties.class})
 public class SwaggerConfig {
 
     @Autowired
