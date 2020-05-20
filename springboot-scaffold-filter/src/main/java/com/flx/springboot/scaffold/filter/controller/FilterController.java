@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "过滤器管理层")
 @RestController
 @RequestMapping("/")
-public class SimpleController {
+public class FilterController {
 
     @GetMapping("/single/hello")
-    public ResultResponse single(){
+    public ResultResponse singleFilter(){
         return ResultResponse.ok("Single Hello");
     }
 
     @GetMapping("/multi/hello")
-    public ResultResponse multi(){
+    public ResultResponse multiFilter(){
         return ResultResponse.ok("Multi Hello");
     }
 }
