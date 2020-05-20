@@ -1,0 +1,12 @@
+
+拦截器文档
+
+@ServletComponentScan：使用该注解后，Servlet、Filter、Listener可以直接通过
+@WebServlet、@WebFilter、@WebListener注解自动注册，无需其它代码。
+
+拦截器类继承HandlerInterceptor
+实现三个方法
+
+将拦截器注册到spring中
+继承WebMvcConfigurer
+实现addInterceptors方法

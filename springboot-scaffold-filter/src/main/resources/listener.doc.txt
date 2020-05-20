@@ -21,3 +21,5 @@ Request对象是客户发送请求时创建的（一同创建的还有Response�
 @ServletComponentScan：使用该注解后，Servlet、Filter、Listener可以直接通过
 @WebServlet、@WebFilter、@WebListener注解自动注册，无需其它代码。
 
+@WebListener
+实现初始化和销毁的方法
