@@ -1,0 +1,37 @@
+1.过滤器Filter，是Servlet的的一个实用技术了。
+可通过过滤器，对请求进行拦截，比如读取session判断用户是否登录、判断访问的请求URL是否有访问权限(黑白名单)等。主要还是可对请求进行预处理。
+
+2.过滤器和拦截器触发时机不一样:
+
+  Tomcat---Filter---Servlet---Inteceptor---Controller
+
+(1)过滤器是在请求进入容器后，但请求进入servlet之前进行预处理的。请求结束返回也是，是在servlet处理完后，返回给前端之前。
+
+(2)拦截器可以获取IOC容器中的各个bean，而过滤器就不行，因为拦截器是spring提供并管理的，spring的功能可以被拦截器使用，
+在拦截器里注入一个service，可以调用业务逻辑。而过滤器是JavaEE标准，只需依赖servlet api ，不需要依赖spring。
+
+3.过滤器实现
+(1)单过滤器
+
+启动类加 @ServletComponentScan
+过滤器类加 @WebFilter(filterName = "simpleFilter",urlPatterns = {"/single/*"})
+
+(2)多过滤器
+
+过滤器类继承Filter
+写config类
+    @Bean
+    public Filter filter1(){
+        return new FilterOne();
+    }
+
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean1(){
+        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(filter1());
+        filterRegistrationBean.setName("filterOne");
+        filterRegistrationBean.setOrder(1);
+        filterRegistrationBean.addUrlPatterns("/multi/*");
+        return filterRegistrationBean;
+    }
+

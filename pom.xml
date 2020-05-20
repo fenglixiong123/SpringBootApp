@@ -22,6 +22,7 @@
         <module>springboot-scaffold-jdbc</module>
         <module>springboot-scaffold-rbac</module>
         <module>springboot-scaffold-schedule</module>
+        <module>springboot-scaffold-filter</module>
     </modules>
 
 </project>
