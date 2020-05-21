@@ -1,6 +1,7 @@
 package com.flx.springboot.scaffold.filter.filter.single;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -21,11 +22,19 @@ public class SingleFilter implements Filter {
         log.info(filterConfig.getFilterName()+"init...");
     }
 
+    /**
+     * 用户名必须是admin才能继续访问
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String host = servletRequest.getRemoteHost();
         log.info("simpleFilter doFilter...{}",host);
-        filterChain.doFilter(servletRequest,servletResponse);
+        String username = servletRequest.getParameter("username");
+        if(!StringUtils.isBlank(username) && username.equals("admin")) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        }else {
+            throw new ServletException("error username !!!");
+        }
     }
 
     @Override
