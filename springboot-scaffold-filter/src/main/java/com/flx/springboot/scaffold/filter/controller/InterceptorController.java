@@ -9,22 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Author: Fenglixiong
- * @Date: 2020/5/20 18:21
+ * @Date: 2020/5/21 19:09
  * @Description:
  */
 @Slf4j
-@Api(value = "过滤器管理层")
+@Api(value = "拦截器管理层")
 @RestController
-@RequestMapping("/filter")
-public class FilterController {
+@RequestMapping("/interceptor")
+public class InterceptorController {
 
-    @GetMapping("/single/hello")
-    public ResultResponse singleFilter(){
-        return ResultResponse.ok("Single Hello");
+    @GetMapping("/sayHello")
+    public ResultResponse sayHello(){
+        return ResultResponse.ok("Hello Interceptor");
     }
 
-    @GetMapping("/multi/hello")
-    public ResultResponse multiFilter(){
-        return ResultResponse.ok("Multi Hello");
-    }
 }

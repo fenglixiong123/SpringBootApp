@@ -17,7 +17,7 @@ import javax.servlet.annotation.WebListener;
  */
 @Slf4j
 @WebListener
-public class SimpleListener implements ServletContextListener {
+public class ApplicationListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {

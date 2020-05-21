@@ -32,7 +32,7 @@ public class FilterConfig {
         filterRegistrationBean.setFilter(filter1());
         filterRegistrationBean.setName("filterOne");
         filterRegistrationBean.setOrder(1);
-        filterRegistrationBean.addUrlPatterns("/multi/*");
+        filterRegistrationBean.addUrlPatterns("/filter/multi/*");
         return filterRegistrationBean;
     }
 
@@ -42,7 +42,7 @@ public class FilterConfig {
         filterRegistrationBean.setFilter(filter2());
         filterRegistrationBean.setName("filterTwo");
         filterRegistrationBean.setOrder(2);
-        filterRegistrationBean.addUrlPatterns("/multi/*");
+        filterRegistrationBean.addUrlPatterns("/filter/multi/*");
         return filterRegistrationBean;
     }
 

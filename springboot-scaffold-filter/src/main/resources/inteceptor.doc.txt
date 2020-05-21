@@ -10,3 +10,9 @@
 将拦截器注册到spring中
 继承WebMvcConfigurer
 实现addInterceptors方法
+
+1.调用方法前=preHandle()
+
+2.调用完controller之后，视图渲染之前=postHandle()
+
+3.整个完成之后，通常用于资源清理=afterCompletion()

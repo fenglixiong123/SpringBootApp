@@ -10,9 +10,11 @@ import java.io.IOException;
  * @Author: Fenglixiong
  * @Date: 2020/5/20 15:30
  * @Description:
+ * @WebFilter 也可以控制filter的执行顺序
+ * 通过实践发现如果想要控制filer的执行顺序可以 通过控制filter的文件名的首字母来 来控制
  */
 @Slf4j
-@WebFilter(filterName = "simpleFilter",urlPatterns = {"/single/*"})
+@WebFilter(filterName = "simpleFilter",urlPatterns = {"/filter/single/*"})
 public class SingleFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -21,7 +23,8 @@ public class SingleFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        log.info("simpleFilter doFilter...");
+        String host = servletRequest.getRemoteHost();
+        log.info("simpleFilter doFilter...{}",host);
         filterChain.doFilter(servletRequest,servletResponse);
     }
 
