@@ -1,0 +1,53 @@
+
+相关注解含义
+
+1.
+@Component
+把普通pojo实例化到spring容器中，相当于配置文件中的<bean id="userMan" class="com.flx.spring.entity.UserMan">
+
+2.
+@AliasFor
+在Spring的众多注解中，经常会发现很多注解的不同属性起着相同的作用，比如@RequestMapping的value属性和path属性，
+这就需要做一些基本的限制，比如value和path的值不能冲突，比如任意设置value或者设置path属性的值，都能够通过另一个属性来获取值等等。
+为了统一处理这些情况，Spring创建了@AliasFor标签。
+
+public @interface RequestMapping {
+
+    @AliasFor("path")
+    String[] value() default {};
+
+    @AliasFor("value")
+    String[] path() default {};
+}
+
+3.
+@Configuration
+标注在类上，相当于把该类作为spring的xml配置文件中的<beans>，作用为：配置spring容器(应用上下文)
+
+4.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

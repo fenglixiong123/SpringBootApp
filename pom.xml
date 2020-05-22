@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>springboot-scaffold-application</module>
         <module>springboot-scaffold-parent</module>
         <module>springboot-scaffold-web</module>
         <module>springboot-scaffold-simple</module>
