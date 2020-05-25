@@ -1,7 +1,7 @@
 package com.flx.springboot.scaffold.logger.common.annotation;
 
-import com.flx.springboot.scaffold.common.enums.OperateEnum;
 import com.flx.springboot.scaffold.logger.enums.BizTypeEnum;
+import com.flx.springboot.scaffold.logger.enums.OperateEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

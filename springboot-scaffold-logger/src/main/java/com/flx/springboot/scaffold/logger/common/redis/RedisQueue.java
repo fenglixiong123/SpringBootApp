@@ -1,5 +1,6 @@
 package com.flx.springboot.scaffold.logger.common.redis;
 
+import com.flx.springboot.scaffold.common.context.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -53,6 +54,7 @@ public class RedisQueue implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         log.info("----------加载队列服务---------");
-        RedisQueue.redisTemplate = ApplicationContextProvider.getBean(StringRedisTemplate.class);
+        RedisQueue.redisTemplate = SpringContextUtil.getBean(StringRedisTemplate.class);
     }
+
 }
