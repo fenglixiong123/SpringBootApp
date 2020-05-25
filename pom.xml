@@ -24,6 +24,8 @@
         <module>springboot-scaffold-rbac</module>
         <module>springboot-scaffold-schedule</module>
         <module>springboot-scaffold-filter</module>
+        <module>springboot-scaffold-aop</module>
+        <module>springboot-scaffold-exception</module>
     </modules>
 
 </project>

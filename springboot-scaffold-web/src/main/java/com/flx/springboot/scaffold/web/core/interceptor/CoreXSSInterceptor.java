@@ -1,6 +1,5 @@
 package com.flx.springboot.scaffold.web.core.interceptor;
 
-import com.flx.springboot.scaffold.web.core.exception.element.BizException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -27,7 +26,7 @@ public class CoreXSSInterceptor implements HandlerInterceptor {
             paramK = parameterNames.nextElement();
             String paramV = request.getParameter(paramK);
             if(checkSQLInject(paramV)){
-                throw new BizException("request params has specialCharacters !");
+                throw new Exception("request params has specialCharacters !");
             }
         }
         return false;

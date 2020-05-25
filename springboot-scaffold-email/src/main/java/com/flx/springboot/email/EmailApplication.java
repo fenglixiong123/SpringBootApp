@@ -1,6 +1,5 @@
 package com.flx.springboot.email;
 
-import com.flx.springboot.scaffold.web.core.annotation.EnableExceptionHandle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description:
  */
 @Slf4j
-@EnableExceptionHandle
 @SpringBootApplication
 public class EmailApplication {
 

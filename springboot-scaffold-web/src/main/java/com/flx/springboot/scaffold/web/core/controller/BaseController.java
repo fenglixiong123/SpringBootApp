@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.web.core.controller;
 
-import com.flx.springboot.scaffold.web.core.util.ServletUtil;
+import com.flx.springboot.scaffold.common.utils.network.ServletUtil;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;

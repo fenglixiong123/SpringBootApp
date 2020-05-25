@@ -2,8 +2,8 @@ package com.flx.springboot.scaffold.application.controller;
 
 import com.flx.springboot.scaffold.application.service.StudentService;
 import com.flx.springboot.scaffold.application.service.UserService;
-import com.flx.springboot.scaffold.web.core.context.SpringContextUtil;
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
+import com.flx.springboot.scaffold.common.context.SpringContextUtil;
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +21,9 @@ public class SimpleController {
 
     @GetMapping("/getUserServiceBean")
     public ResultResponse getUserServiceBean(){
-        UserService userService = SpringContextUtil.getBean("userServiceBean", UserService.class);
+        UserService userService = SpringContextUtil.getBean("userService", UserService.class);
         userService.sayHello();
+        int z = 1/0;
         return ResultResponse.ok();
     }
 

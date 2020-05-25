@@ -11,11 +11,19 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
 
     public UserService(){
-        log.info("StudentService init...");
+        log.info("UserService init...");
     }
 
     public void sayHello(){
         log.info("UserService Hello ... ");
+    }
+
+    public void start(){
+        log.info("userService 创建...");
+    }
+
+    public void end(){
+        log.info("userService 销毁...");
     }
 
 }

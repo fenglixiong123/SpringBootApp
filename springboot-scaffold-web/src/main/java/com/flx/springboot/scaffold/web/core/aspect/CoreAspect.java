@@ -2,13 +2,12 @@ package com.flx.springboot.scaffold.web.core.aspect;
 
 
 
+import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
+import com.flx.springboot.scaffold.common.utils.network.IPUtils;
 import com.flx.springboot.scaffold.web.core.annotation.RequestLimit;
 import com.flx.springboot.scaffold.web.core.annotation.SysLog;
-import com.flx.springboot.scaffold.web.core.util.CoreUtils;
-import com.flx.springboot.scaffold.web.core.util.IPUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
@@ -103,8 +102,8 @@ public class CoreAspect implements InitializingBean {
         Object[] paramArgs = joinPoint.getArgs();
         log.info("classpath:{}",classPath);
         log.info("methodName:{}",methodName);
-        log.info("paramJson:{}", CoreUtils.toJsonMsg(paramArgs));
-        log.info("resultJson:{}", CoreUtils.toJsonMsg(result));
+        log.info("paramJson:{}", JsonUtils.toJsonMsg(paramArgs));
+        log.info("resultJson:{}", JsonUtils.toJsonMsg(result));
         HttpServletRequest request = getRequest();
         String ipAddress = IPUtils.getSimpleIp(request);
         String requestUrl = IPUtils.getRequestUrl(request);

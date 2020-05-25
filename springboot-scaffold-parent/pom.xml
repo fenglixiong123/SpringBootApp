@@ -30,6 +30,7 @@
         <scaffold.web.version>1.0-SNAPSHOT</scaffold.web.version>
         <scaffold.swagger.version>1.0-SNAPSHOT</scaffold.swagger.version>
         <scaffold.common.version>1.0-SNAPSHOT</scaffold.common.version>
+        <scaffold.exception.version>1.0-SNAPSHOT</scaffold.exception.version>
         <quartz.version>2.2.3</quartz.version>
     </properties>
 
@@ -89,6 +90,12 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>swagger-bootstrap-ui</artifactId>
                 <version>${swagger.ui.version}</version>
+            </dependency>
+            <!--scaffold-exception-->
+            <dependency>
+                <groupId>com.flx.springboot</groupId>
+                <artifactId>springboot-scaffold-exception</artifactId>
+                <version>${scaffold.exception.version}</version>
             </dependency>
             <!--scaffold-swagger-->
             <dependency>

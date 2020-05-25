@@ -1,0 +1,7 @@
+
+全局异常处理
+
+@EnableExceptionHandler开启全局异常处理
+
+@ControllerAdvice
+代表开启全局异常捕获
