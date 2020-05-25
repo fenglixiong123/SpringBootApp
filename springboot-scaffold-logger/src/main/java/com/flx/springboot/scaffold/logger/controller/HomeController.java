@@ -7,7 +7,6 @@ import com.flx.springboot.scaffold.logger.dao.BizLogDao;
 import com.flx.springboot.scaffold.logger.entity.BizLogger;
 import com.flx.springboot.scaffold.logger.entity.Student;
 import com.flx.springboot.scaffold.logger.enums.BizTypeEnum;
-import com.flx.springboot.scaffold.logger.enums.OperateEnum;
 import com.flx.springboot.scaffold.web.core.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.logger.utils;
+package com.flx.springboot.scaffold.common.utils;
 
 import org.aspectj.lang.JoinPoint;
 
@@ -16,6 +16,7 @@ public class ParamUtils {
             "java.lang.Byte", "java.lang.Boolean", "java.lang.Char",
             "java.lang.String", "int", "double", "long", "short", "byte",
             "boolean", "char", "float"};
+
     public static String getParamValue(JoinPoint joinPoint) {
         StringBuilder sb = new StringBuilder();
         //获取所有的参数
@@ -27,7 +28,7 @@ public class ParamUtils {
             for (String t : types) {
                 //1 判断是否是基础类型
                 if (t.equals(typeName)) {
-                    sb.append(arg).append("; ");
+                    sb.append(arg).append(";");
                 }else{
                     //2 通过反射获取实体类属性
                     sb.append(getFieldsValue(arg));
@@ -66,13 +67,6 @@ public class ParamUtils {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
-        boolean s = false;
-        Object result = s;
-        System.out.println(isBaseType(result));
-
-    }
-
     public static boolean isBaseType(Object value){
         String typeName = value.getClass().getName();
         System.out.println(typeName);
@@ -84,4 +78,10 @@ public class ParamUtils {
         return false;
     }
 
+    public static void main(String[] args) {
+        boolean s = false;
+        Object result = s;
+        System.out.println(isBaseType(result));
+
+    }
 }

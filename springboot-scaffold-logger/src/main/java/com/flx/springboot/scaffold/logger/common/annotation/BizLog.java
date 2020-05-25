@@ -1,13 +1,8 @@
 package com.flx.springboot.scaffold.logger.common.annotation;
 
+import com.flx.springboot.scaffold.common.enums.OperateEnum;
 import com.flx.springboot.scaffold.logger.enums.BizTypeEnum;
-import com.flx.springboot.scaffold.logger.enums.OperateEnum;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.annotation.Resources;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

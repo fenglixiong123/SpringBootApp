@@ -1,9 +1,9 @@
 package com.flx.springboot.scaffold.logger.service.impl;
 
+import com.flx.springboot.scaffold.exception.element.ParamException;
 import com.flx.springboot.scaffold.logger.dao.StudentDao;
 import com.flx.springboot.scaffold.logger.entity.Student;
 import com.flx.springboot.scaffold.logger.service.StudentService;
-import com.flx.springboot.scaffold.web.core.exception.element.ParamException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

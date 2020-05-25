@@ -3,11 +3,11 @@ package com.flx.springboot.scaffold.logger.common.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.flx.springboot.scaffold.common.utils.CommonUtils;
+import com.flx.springboot.scaffold.common.utils.ParamUtils;
 import com.flx.springboot.scaffold.common.utils.json.JsonParser;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.flx.springboot.scaffold.logger.common.annotation.BizLog;
 import com.flx.springboot.scaffold.logger.entity.BizLogger;
-import com.flx.springboot.scaffold.logger.utils.ParamUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;

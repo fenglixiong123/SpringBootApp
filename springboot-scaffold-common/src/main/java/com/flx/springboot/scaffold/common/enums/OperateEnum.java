@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.logger.enums;
+package com.flx.springboot.scaffold.common.enums;
 
 /**
  * @Author Fenglixiong

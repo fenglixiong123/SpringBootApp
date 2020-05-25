@@ -1,5 +1,6 @@
 package com.flx.springboot.scaffold.logger;
 
+import com.flx.springboot.scaffold.exception.annotation.EnableExceptionHandler;
 import com.flx.springboot.scaffold.logger.common.redis.RedisConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.FilterType;
         type = FilterType.ASSIGNABLE_TYPE,
         classes = RedisConfig.class))
 @SpringBootApplication
+@EnableExceptionHandler
 public class LoggerApplication {
 
     public static void main(String[] args) {
