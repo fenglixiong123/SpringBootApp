@@ -6,4 +6,7 @@ package com.flx.springboot.scaffold.common.utils.code;
  * @Description:
  */
 public class CodeUtils {
+
+
+
 }

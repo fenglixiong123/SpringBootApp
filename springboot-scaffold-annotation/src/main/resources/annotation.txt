@@ -35,6 +35,27 @@ public @interface RequestMapping {
 (3)既然@Bean的作用是注册bean对象，那么完全可以使用@Component、@Controller、@Service、@Ripository等注解注册bean，当然需要配置@ComponentScan注解进行自动扫描。
 
 5.
+@Import
+容器会自动注册这个组件，id默认是全类名
+@Import注解把用到的bean导入到了当前ioc容器中,类似于@Bean，但是只能作用在类上
+
+使用方式
+@Import({ImportBean.class})
+public class MyClass{
+
+}
+
+6.
+@ImportSelector
+自定义类继承ImportSelector接口并实现下面方法
+public String[] selectImports(AnnotationMetadata annotationMetadata) {
+   return new String[0];
+}
+1、返回值： 就是我们实际上要导入到容器中的组件全类名【重点 】
+2、参数： AnnotationMetadata表示当前被@Import注解给标注的所有注解信息【不是重点】
+
+
+5.
 @EnableXXX注解
 
 

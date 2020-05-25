@@ -6,7 +6,7 @@ import com.flx.scaffold.jdbc.mybatis.dao.WorkerDao;
 import com.flx.scaffold.jdbc.mybatis.model.Worker;
 import com.flx.scaffold.jdbc.mybatis.model.WorkerExample;
 import com.flx.scaffold.jdbc.mybatis.service.WorkerService;
-import com.flx.springboot.scaffold.common.utils.ColumnUtils;
+import com.flx.springboot.scaffold.common.utils.code.ColumnUtils;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.utils;
+package com.flx.springboot.scaffold.common.utils.code;
 
 /**
  * @Author Fenglixiong

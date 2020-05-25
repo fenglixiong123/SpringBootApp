@@ -26,6 +26,7 @@
         <module>springboot-scaffold-filter</module>
         <module>springboot-scaffold-aop</module>
         <module>springboot-scaffold-exception</module>
+        <module>springboot-scaffold-annotation</module>
     </modules>
 
 </project>
