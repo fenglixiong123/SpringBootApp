@@ -1,7 +1,7 @@
 package com.flx.springboot.scaffold.aop.controller;
 
 import com.flx.springboot.scaffold.aop.service.SimpleService;
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
