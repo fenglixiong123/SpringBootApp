@@ -27,6 +27,7 @@
         <module>springboot-scaffold-aop</module>
         <module>springboot-scaffold-exception</module>
         <module>springboot-scaffold-annotation</module>
+        <module>springboot-scaffold-redis</module>
     </modules>
 
 </project>

@@ -33,15 +33,7 @@ public class CoreAspect implements InitializingBean {
      */
     private static final int MAX_SEARCH_LENGTH = 3;
 
-    /**
-     * execution()语法:execution (* com.xx.xx.impl..*.*(..))
-     * 第一个*表示方法返回值类型[*表示所有类型]
-     * com.xx.xx.impl表示包路径[*表示所有包]
-     * .[.表示当前包下所有类的方法,..表示当前包下及此包下所有子包中的所有类的方法]
-     * 第二个*表示类名[*表示所有类,可以匹配以X开头或结尾如X*、*X、X*X的类名]
-     * 第三个*表示方法名[*表示所有方法,可以匹配以X开头或结尾的如X*、*X、X*X的方法名]
-     * (..)表示方法参数[..表示任何参数]
-     */
+
     @Pointcut(value = "execution(* com.flx.springboot.scaffold..*.*(..))")
     private void serviceCommon(){
 

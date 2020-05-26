@@ -19,7 +19,7 @@ public class ResultResponse<E> {
     /**
      * 返回状态
      */
-    private Boolean success;
+    private boolean success;
 
     /**
      * 返回代码
@@ -37,11 +37,11 @@ public class ResultResponse<E> {
     private E data;
 
 
-    public ResultResponse(){
-
+    private ResultResponse(){
+        this.success = true;
     }
 
-    private ResultResponse(Boolean success, int code, String msg, E data) {
+    private ResultResponse(boolean success, int code, String msg, E data) {
         this.success = success;
         this.code = code;
         this.msg = msg;
@@ -56,7 +56,7 @@ public class ResultResponse<E> {
         return this;
     }
 
-    public ResultResponse<E> fail(int code,String message,E data) {
+    public ResultResponse<E> error(int code,String message,E data) {
         this.success = false;
         this.code = code;
         this.msg = message;
@@ -64,37 +64,19 @@ public class ResultResponse<E> {
         return this;
     }
 
-    public static <E> ResultResponse<E> success(){
-        return new ResultResponse<>(true,ErrorMsgEnum.SUCCESS.getCode(),ErrorMsgEnum.SUCCESS.getMessage(),null);
+    public static ResultResponse<String> success(){
+        return new ResultResponse<>(true,ErrorMsgEnum.SUCCESS.getCode(),ErrorMsgEnum.SUCCESS.getMessage(),ErrorMsgEnum.SUCCESS.getUserMsg());
     }
 
-    public ResultResponse<E> success(E data){
-        return success(ErrorMsgEnum.SUCCESS.getCode(),ErrorMsgEnum.SUCCESS.getMessage(),data);
-    }
-
-    public ResultResponse<E> success(String message,E data){
-        return success(ErrorMsgEnum.SUCCESS.getCode(),message,data);
-    }
-
-    public ResultResponse<E> fail(String message) {
-        return fail(ErrorMsgEnum.SYS_ERROR.getCode(),message,null);
-    }
-
-    public ResultResponse<E> fail(String message,E data) {
-        return fail(ErrorMsgEnum.SYS_ERROR.getCode(),message,data);
-    }
-
-    public ResultResponse<E> fail(Integer code,String message) {
-        return fail(code,message,null);
-    }
-
-
-    public static <E> ResultResponse<E> ok(){
-        return new ResultResponse<>(true,ErrorMsgEnum.SUCCESS.getCode(),ErrorMsgEnum.SUCCESS.getMessage(),null);
-    }
-    public static <E> ResultResponse<E> ok(E data){
+    public static <E> ResultResponse<E> success(E data){
         return new ResultResponse<>(true,ErrorMsgEnum.SUCCESS.getCode(),ErrorMsgEnum.SUCCESS.getMessage(),data);
     }
+
+    public static <E> ResultResponse<E> success(String message,E data){
+        return new ResultResponse<>(true,ErrorMsgEnum.SUCCESS.getCode(),message,data);
+    }
+
+
     public static ResultResponse<String> error() {
         return new ResultResponse<>(false,ErrorMsgEnum.SYS_ERROR.getCode(),ErrorMsgEnum.SYS_ERROR.getMessage(),ErrorMsgEnum.SYS_ERROR.getUserMsg());
     }

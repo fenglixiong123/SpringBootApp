@@ -4,6 +4,7 @@ import com.flx.springboot.scaffold.common.enums.ErrorMsgEnum;
 import com.flx.springboot.scaffold.common.result.ResultResponse;
 import com.flx.springboot.scaffold.exception.element.BizException;
 import com.flx.springboot.scaffold.exception.element.ParamException;
+import com.flx.springboot.scaffold.exception.element.RedisException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class CoreExceptionHandler implements InitializingBean {
     public ResultResponse<String> paramExceptionHandler(HttpServletRequest request, Exception e){
         log.error("【异常地址】：{}",request.getRequestURL().toString());
         log.error("【异常类型】传参异常paramException：{}",e.getMessage());
-        return new ResultResponse<String>().fail(ErrorMsgEnum.PARAM_INVILAD.getCode(), ErrorMsgEnum.PARAM_INVILAD.getMessage(),e.getMessage());
+        return ResultResponse.error(ErrorMsgEnum.PARAM_INVILAD,e.getMessage());
     }
 
     /**
@@ -70,7 +71,7 @@ public class CoreExceptionHandler implements InitializingBean {
     public ResultResponse<String> missingRequestParamExceptionHandler(HttpServletRequest request,Exception e){
         log.error("【异常地址】：{}",request.getRequestURL().toString());
         log.error("【异常类型】缺少参数异常missingRequestParamException：{}",e.getMessage());
-        return new ResultResponse<String>().fail(ErrorMsgEnum.PARAM_MISSING.getCode(),ErrorMsgEnum.PARAM_MISSING.getMessage(),e.getMessage());
+        return ResultResponse.error(ErrorMsgEnum.PARAM_MISSING,e.getMessage());
     }
 
     /**
@@ -81,10 +82,10 @@ public class CoreExceptionHandler implements InitializingBean {
      */
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResultResponse jsonConvertExceptionHandler(HttpServletRequest request,HttpMessageNotReadableException e){
+    public ResultResponse jsonConvertExceptionHandler(HttpServletRequest request,Exception e){
         log.error("【异常地址】：{}",request.getRequestURL().toString());
         log.error("【异常类型】业务异常JsonConvertException：{}",e.getMessage());
-        return ResultResponse.error(ErrorMsgEnum.JSON_CONVERT_ERROR);
+        return ResultResponse.error(ErrorMsgEnum.JSON_CONVERT_ERROR,e.getMessage());
     }
 
     /**
@@ -99,6 +100,20 @@ public class CoreExceptionHandler implements InitializingBean {
         log.error("【异常地址】：{}",request.getRequestURL().toString());
         log.error("【异常类型】业务异常BizException：{}",e.getMessage());
         return ResultResponse.error(e.getMessage());
+    }
+
+    /**
+     * 自定义Redis异常类
+     * @param request
+     * @param e
+     * @return
+     */
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(RedisException.class)
+    public ResultResponse<String> redisExceptionHandler(HttpServletRequest request, Exception e){
+        log.error("【异常地址】：{}",request.getRequestURL().toString());
+        log.error("【异常类型】缓存异常redisException：{}",e.getMessage());
+        return ResultResponse.error(ErrorMsgEnum.REDIS_ERROR,e.getMessage());
     }
 
     /**
