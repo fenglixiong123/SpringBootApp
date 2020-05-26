@@ -14,6 +14,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-swagger</artifactId>
         </dependency>
@@ -24,6 +28,10 @@
         <dependency>
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-exception</artifactId>
         </dependency>
     </dependencies>
 

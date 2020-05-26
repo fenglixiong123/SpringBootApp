@@ -1,10 +1,7 @@
 package com.flx.springboot.scaffold.aop.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
-public class AspectConfig {
+public class BaseAspect {
 
     @Pointcut("execution(* com.flx.springboot.scaffold.aop.service.*.*(..))")
     public void point(){
@@ -29,7 +26,12 @@ public class AspectConfig {
 
     @AfterReturning("point()")
     public void afterReturning(){
-        log.info("method before...");
+        log.info("method afterReturning...");
+    }
+
+    @AfterThrowing("point()")
+    public void afterThrowing(){
+        log.info("method afterThrowing...");
     }
 
 }

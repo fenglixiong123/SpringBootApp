@@ -1,5 +1,6 @@
 package com.flx.springboot.scaffold.aop;
 
+import com.flx.springboot.scaffold.exception.annotation.EnableExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @Slf4j
 @SpringBootApplication
+@EnableExceptionHandler
 public class AopApplication {
 
     public static void main(String[] args) {
