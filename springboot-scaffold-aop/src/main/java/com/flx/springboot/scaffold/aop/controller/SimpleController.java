@@ -25,7 +25,7 @@ public class SimpleController {
 
     @GetMapping("/hello")
     public ResultResponse sayHello(){
-        return ResultResponse.ok(simpleService.sayHello());
+        return ResultResponse.success(simpleService.sayHello());
     }
 
 }

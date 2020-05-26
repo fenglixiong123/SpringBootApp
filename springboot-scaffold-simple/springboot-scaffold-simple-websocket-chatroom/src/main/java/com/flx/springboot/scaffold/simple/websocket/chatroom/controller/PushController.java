@@ -1,7 +1,7 @@
 package com.flx.springboot.scaffold.simple.websocket.chatroom.controller;
 
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.client.WebSocketService;
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +33,7 @@ public class PushController extends BaseController{
     @GetMapping("/sendP2pMsg")
     public ResultResponse<String> sendP2pMsg(HttpServletRequest request, Long userId, String content){
         webSocketService.sendChatMessageToUser(getChatUser(request),userId,content);
-        return ResultResponse.ok("消息发送成功！");
+        return ResultResponse.success("消息发送成功！");
     }
 
     /**
@@ -46,7 +46,7 @@ public class PushController extends BaseController{
     @GetMapping("/sendGroupMsg")
     public ResultResponse<String> sendGroupMsg(HttpServletRequest request,Long roomId,String content){
         webSocketService.sendChatMessageToRoom(getChatUser(request),roomId,content);
-        return ResultResponse.ok("消息发送成功！");
+        return ResultResponse.success("消息发送成功！");
     }
 
     /**
@@ -59,7 +59,7 @@ public class PushController extends BaseController{
     @GetMapping("/sendSystemMsg")
     public ResultResponse<String> sendSystemMsg(HttpServletRequest request,Long roomId,String content){
         webSocketService.sendSystemMessageToRoom(getChatUser(request),roomId,content);
-        return ResultResponse.ok("消息发送成功！");
+        return ResultResponse.success("消息发送成功！");
     }
 
     /**
@@ -71,7 +71,7 @@ public class PushController extends BaseController{
     @GetMapping("/sendOnlineMsg")
     public ResultResponse<String> sendOnlineMsg(HttpServletRequest request,Long roomId){
         webSocketService.sendLineMessageToRoom(getChatUser(request),roomId);
-        return ResultResponse.ok("消息发送成功！");
+        return ResultResponse.success("消息发送成功！");
     }
 
     /**
@@ -83,7 +83,7 @@ public class PushController extends BaseController{
     @GetMapping("/sendBroadMsg")
     public ResultResponse<String> sendBroadMsg(HttpServletRequest request,String content){
         webSocketService.sendChatMessageToBroad(getChatUser(request),content);
-        return ResultResponse.ok("消息发送成功！");
+        return ResultResponse.success("消息发送成功！");
     }
 
 }

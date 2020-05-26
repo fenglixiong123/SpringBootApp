@@ -1,7 +1,7 @@
 package com.flx.springboot.kafka.service.producer;
 
+import com.flx.springboot.kafka.constants.KafkaConstant;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
-import com.flx.springboot.scaffold.jms.common.constants.KafkaConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

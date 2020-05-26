@@ -1,7 +1,7 @@
 package com.flx.springboot.scaffold.simple.rest.jpa.controller;
 
-import com.flx.springboot.scaffold.web.core.exception.element.BizException;
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
+import com.flx.springboot.scaffold.common.result.ResultResponse;
+import com.flx.springboot.scaffold.exception.element.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +26,7 @@ public class HomeController {
     public ResultResponse<String> greet(@RequestParam("someone")String someone){
         log.info("greet,{}",someone);
         int s = 111/0;
-        return ResultResponse.ok("Greet "+someone);
+        return ResultResponse.success("Greet "+someone);
     }
 
 }

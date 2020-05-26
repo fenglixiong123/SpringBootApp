@@ -18,12 +18,19 @@
         </dependency>
         <dependency>
             <groupId>com.flx.springboot</groupId>
-            <artifactId>springboot-scaffold-web</artifactId>
+            <artifactId>springboot-scaffold-swagger</artifactId>
         </dependency>
-        <!--scaffold-swagger-->
         <dependency>
             <groupId>com.flx.springboot</groupId>
-            <artifactId>springboot-scaffold-swagger</artifactId>
+            <artifactId>springboot-scaffold-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-exception</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-common</artifactId>
         </dependency>
     </dependencies>
 

@@ -1,13 +1,13 @@
 package com.flx.springboot.scaffold.simple.rest.controller;
 
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
+import com.flx.springboot.scaffold.exception.element.BizException;
 import com.flx.springboot.scaffold.simple.rest.entity.User;
 import com.flx.springboot.scaffold.web.core.annotation.RequestLimit;
 import com.flx.springboot.scaffold.web.core.annotation.SysLog;
 import com.flx.springboot.scaffold.web.core.enums.BizTypeEnum;
 import com.flx.springboot.scaffold.web.core.enums.OperateTypeEnum;
-import com.flx.springboot.scaffold.web.core.exception.element.BizException;
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,24 +33,24 @@ public class SimpleController {
         if(id.equals("111")){
             throw new BizException("测试错误");
         }
-        return ResultResponse.ok("Hello,"+someone);
+        return ResultResponse.success("Hello,"+someone);
     }
 
     @GetMapping(value = "/greet")
     public ResultResponse<String> greet(@RequestParam("someone")String someone){
         log.info("greet,{}",someone);
-        return ResultResponse.ok("Greet "+someone);
+        return ResultResponse.success("Greet "+someone);
     }
 
     @GetMapping(value = "/user/getUser")
     public ResultResponse getUser(){
-        return ResultResponse.ok(getUserList());
+        return ResultResponse.success(getUserList());
     }
 
     @PostMapping(value = "/user/postUser")
     public ResultResponse postUser(@RequestBody User user){
         log.info("user:{}", JsonUtils.toJsonMsg(user));
-        return ResultResponse.ok(getUserList());
+        return ResultResponse.success(getUserList());
     }
 
     private List<User> getUserList() {

@@ -1,11 +1,11 @@
 package com.flx.springboot.scaffold.simple.websocket.chatroom.client;
 
+import com.flx.springboot.scaffold.exception.element.BizException;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.common.enums.MessageEnum;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.common.enums.PushTypeEnum;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.entity.ChatUser;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.service.ChatMessageService;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.utils.WebSocketUtils;
-import com.flx.springboot.scaffold.web.core.exception.element.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

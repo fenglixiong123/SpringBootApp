@@ -1,6 +1,6 @@
 package com.flx.springboot.rbac.controller;
 
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ public class HomeController {
     @GetMapping("/hello")
     public ResultResponse hello(){
         log.info("-------->hello");
-        return ResultResponse.ok();
+        return ResultResponse.success();
     }
 
 }

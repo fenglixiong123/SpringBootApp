@@ -1,9 +1,9 @@
 package com.flx.springboot.scaffold.simple.websocket.chatroom.utils;
 
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
+import com.flx.springboot.scaffold.exception.element.BizException;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.entity.ChatUser;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.entity.ResultSend;
-import com.flx.springboot.scaffold.web.core.exception.element.BizException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

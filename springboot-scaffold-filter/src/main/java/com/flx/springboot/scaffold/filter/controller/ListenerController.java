@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.filter.controller;
 
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ public class ListenerController {
     public ResultResponse sayHello(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession();
         Object count = session.getAttribute("count");
-        return ResultResponse.ok("Hello Listener : "+count);
+        return ResultResponse.success("Hello Listener : "+count);
     }
 
 }

@@ -3,7 +3,7 @@ package com.flx.springboot.email.controller;
 import com.flx.springboot.email.entity.ComplexMail;
 import com.flx.springboot.email.entity.SimpleMail;
 import com.flx.springboot.email.service.EmailService;
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class EmailController {
                                 @RequestParam String content){
         boolean result = emailService.sendSimpleEmail(new SimpleMail(subject,to,content));
         log.info("发送结果：{}",result);
-        return ResultResponse.ok(result);
+        return ResultResponse.success(result);
     }
 
     @ApiOperation("发送复杂的邮件")
@@ -46,7 +46,7 @@ public class EmailController {
             @RequestParam String content){
         boolean result = emailService.sendComplexEmail(new ComplexMail(subject,to,content));
         log.info("发送结果：{}",result);
-        return ResultResponse.ok(result);
+        return ResultResponse.success(result);
     }
 
 }

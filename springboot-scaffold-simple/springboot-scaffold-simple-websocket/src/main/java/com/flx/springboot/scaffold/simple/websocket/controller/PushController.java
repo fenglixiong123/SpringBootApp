@@ -1,7 +1,7 @@
 package com.flx.springboot.scaffold.simple.websocket.controller;
 
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import com.flx.springboot.scaffold.simple.websocket.common.SimpleWebSocket;
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,7 @@ public class PushController {
     @GetMapping("/push")
     public ResultResponse<String> pushMessage(String message){
         simpleWebSocket.sendMessageToAll(message);
-        return ResultResponse.ok("推送消息成功！");
+        return ResultResponse.success("推送消息成功！");
     }
 
 }

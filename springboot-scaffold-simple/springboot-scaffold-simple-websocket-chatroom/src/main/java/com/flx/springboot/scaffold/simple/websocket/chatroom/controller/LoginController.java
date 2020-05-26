@@ -1,8 +1,8 @@
 package com.flx.springboot.scaffold.simple.websocket.chatroom.controller;
 
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.common.constants.WebContant;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.entity.ChatUser;
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +31,7 @@ public class LoginController {
            (username.equals("tom")&&password.equals("tom123"))){
             request.getSession().setAttribute(WebContant.WEBSOCKET_SESSION_KEY,new ChatUser(getUserIdByName(username),username,password,username+"一级新人"));
             log.info("login successful !");
-            return ResultResponse.ok("登陆成功！");
+            return ResultResponse.success("登陆成功！");
         }
         log.info("login error !");
         return ResultResponse.error("登陆失败！");

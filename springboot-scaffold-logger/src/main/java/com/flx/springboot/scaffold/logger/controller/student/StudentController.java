@@ -24,27 +24,27 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public ResultResponse<Student> getStudentById(@PathVariable("id")Long id){
-        return ResultResponse.ok(studentService.findStudentById(id));
+        return ResultResponse.success(studentService.findStudentById(id));
     }
 
     @PostMapping("/add")
     public ResultResponse<Student> saveStudent(@Valid @RequestBody Student student){
-        return ResultResponse.ok(studentService.saveStudent(student));
+        return ResultResponse.success(studentService.saveStudent(student));
     }
 
     @PutMapping("/update")
     public ResultResponse<Student> updateStudent(@RequestBody Student student){
-        return ResultResponse.ok(studentService.updateStudent(student));
+        return ResultResponse.success(studentService.updateStudent(student));
     }
 
     @GetMapping("/list")
     public ResultResponse<List<Student>> studentList(){
-        return ResultResponse.ok(studentService.studentList());
+        return ResultResponse.success(studentService.studentList());
     }
 
     @PutMapping("/updateStudentHobby")
     public ResultResponse<Integer> updateStudentHobby(Long id,String hobby){
-        return ResultResponse.ok(studentService.updateStudentHobbyById(hobby,id));
+        return ResultResponse.success(studentService.updateStudentHobbyById(hobby,id));
     }
 
 }

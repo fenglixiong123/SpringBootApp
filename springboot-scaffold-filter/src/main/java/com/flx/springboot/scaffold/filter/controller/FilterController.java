@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.filter.controller;
 
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +20,11 @@ public class FilterController {
 
     @GetMapping("/single/hello")
     public ResultResponse singleFilter(){
-        return ResultResponse.ok("Single Hello");
+        return ResultResponse.success("Single Hello");
     }
 
     @GetMapping("/multi/hello")
     public ResultResponse multiFilter(){
-        return ResultResponse.ok("Multi Hello");
+        return ResultResponse.success("Multi Hello");
     }
 }

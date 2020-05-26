@@ -145,6 +145,6 @@ public class CoreExceptionHandler implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        log.info("=============加载全局异常处理程序成功==========");
+        log.info("=============注册GlobalExceptionHandler成功==========");
     }
 }

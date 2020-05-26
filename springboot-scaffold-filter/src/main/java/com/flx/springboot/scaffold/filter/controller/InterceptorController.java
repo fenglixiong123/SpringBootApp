@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.filter.controller;
 
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class InterceptorController {
 
     @GetMapping("/sayHello")
     public ResultResponse sayHello(){
-        return ResultResponse.ok("Hello Interceptor");
+        return ResultResponse.success("Hello Interceptor");
     }
 
 }

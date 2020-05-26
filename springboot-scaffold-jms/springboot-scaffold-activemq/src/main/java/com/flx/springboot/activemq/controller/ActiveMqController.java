@@ -1,7 +1,7 @@
 package com.flx.springboot.activemq.controller;
 
 import com.flx.springboot.activemq.service.producer.ActiveProducer;
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +31,7 @@ public class ActiveMqController {
     public ResultResponse<String> sendPoint(@RequestParam String message){
         log.info("【ActiveMQ】sendPoint发送了一条消息：{}",message);
         activeProducer.sendPointMessage(message);
-        return ResultResponse.ok("sendPoint successful");
+        return ResultResponse.success("sendPoint successful");
     }
 
     /**
@@ -43,7 +43,7 @@ public class ActiveMqController {
     public ResultResponse<String> sendTopic(@RequestParam String message){
         log.info("【ActiveMQ】sendTopic发送了一条消息：{}",message);
         activeProducer.sendTopicMessage(message);
-        return ResultResponse.ok("sendTopic successful");
+        return ResultResponse.success("sendTopic successful");
     }
 
 }

@@ -19,8 +19,8 @@ public class RedisController {
 
     @GetMapping("/get")
     public ResultResponse getKey(){
-        throw new RedisException("redis出错拉");
-//        return ResultResponse.success("Hello");
+//        throw new RedisException("redis出错拉");
+        return ResultResponse.success("Hello");
     }
 
 }

@@ -59,6 +59,6 @@ public class SpringContextUtil implements ApplicationContextAware, InitializingB
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        log.info("=============加载注册SpringContextUtil成功=======");
+        log.info("=============注册SpringContextUtil成功=======");
     }
 }

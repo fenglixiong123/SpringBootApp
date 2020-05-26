@@ -24,14 +24,14 @@ public class SimpleController {
         UserService userService = SpringContextUtil.getBean("userService", UserService.class);
         userService.sayHello();
         int z = 1/0;
-        return ResultResponse.ok();
+        return ResultResponse.success();
     }
 
     @GetMapping("/getStudentServiceBean")
     public ResultResponse getStudentServiceBean(){
         StudentService studentService = SpringContextUtil.getBean("studentService", StudentService.class);
         studentService.sayHello();
-        return ResultResponse.ok();
+        return ResultResponse.success();
     }
 
 }

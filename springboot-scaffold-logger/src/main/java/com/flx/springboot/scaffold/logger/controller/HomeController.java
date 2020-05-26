@@ -1,5 +1,6 @@
 package com.flx.springboot.scaffold.logger.controller;
 
+import com.flx.springboot.scaffold.common.result.ResultResponse;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.flx.springboot.scaffold.logger.common.annotation.BizLog;
 import com.flx.springboot.scaffold.logger.common.redis.RedisQueue;
@@ -7,7 +8,7 @@ import com.flx.springboot.scaffold.logger.dao.BizLogDao;
 import com.flx.springboot.scaffold.logger.entity.BizLogger;
 import com.flx.springboot.scaffold.logger.entity.Student;
 import com.flx.springboot.scaffold.logger.enums.BizTypeEnum;
-import com.flx.springboot.scaffold.web.core.result.ResultResponse;
+import com.flx.springboot.scaffold.logger.enums.OperateEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -35,9 +36,9 @@ public class HomeController {
     @BizLog(bizType = BizTypeEnum.HOUSEING,operateType = OperateEnum.ADD,
             bizId = "student.id",remark = "Hello1方法",searchKey = {"student.name","student.age","student.hobby"})
     @GetMapping(value = "/hello1")
-    public ResultResponse<Student> hello1(Student student,String work,int count,Long objId){
+    public ResultResponse<Student> hello1(Student student, String work, int count, Long objId){
         log.info("Hello,{},{},{},{}", JsonUtils.toJsonMsg(student),work,count,objId);
-        return ResultResponse.ok(student);
+        return ResultResponse.success(student);
     }
 
     @BizLog(bizType = BizTypeEnum.HOUSEING,operateType = OperateEnum.ADD,
@@ -45,7 +46,7 @@ public class HomeController {
     @GetMapping(value = "/hello2")
     public ResultResponse<Student> hello2(Student student,String work,int count,Long objId){
         log.info("Hello,{},{},{},{}", JsonUtils.toJsonMsg(student),work,count,objId);
-        return ResultResponse.ok(student);
+        return ResultResponse.success(student);
     }
 
     @BizLog(bizType = BizTypeEnum.HOUSEING,operateType = OperateEnum.ADD,
@@ -53,7 +54,7 @@ public class HomeController {
     @GetMapping(value = "/hello3")
     public ResultResponse<String> hello3(String work,int count,Long objId){
         log.info("Hello,{},{},{}",work,count,objId);
-        return ResultResponse.ok();
+        return ResultResponse.success();
     }
 
     @GetMapping("/saveLog")
@@ -79,7 +80,7 @@ public class HomeController {
             bizLogDao.save(bizLogger);
             log.info("save successful");
         }
-        return ResultResponse.ok("保存成功");
+        return ResultResponse.success("保存成功");
     }
 
     @GetMapping("/sendMessage")
@@ -99,7 +100,7 @@ public class HomeController {
         for (int i = 0; i < 10; i++) {
             stringRedisTemplate.convertAndSend("chat",JsonUtils.toJsonMsg(bizLogger));
         }
-        return ResultResponse.ok("发送成功");
+        return ResultResponse.success("发送成功");
     }
 
 

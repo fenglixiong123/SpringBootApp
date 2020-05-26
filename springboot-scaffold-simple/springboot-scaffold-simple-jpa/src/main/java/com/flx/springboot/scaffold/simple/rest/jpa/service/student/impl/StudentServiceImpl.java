@@ -1,9 +1,9 @@
 package com.flx.springboot.scaffold.simple.rest.jpa.service.student.impl;
 
+import com.flx.springboot.scaffold.exception.element.ParamException;
 import com.flx.springboot.scaffold.simple.rest.jpa.dao.StudentDao;
 import com.flx.springboot.scaffold.simple.rest.jpa.domain.Student;
 import com.flx.springboot.scaffold.simple.rest.jpa.service.student.StudentService;
-import com.flx.springboot.scaffold.web.core.exception.element.ParamException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
