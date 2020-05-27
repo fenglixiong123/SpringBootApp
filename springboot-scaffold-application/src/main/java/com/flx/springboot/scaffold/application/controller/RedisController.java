@@ -1,10 +1,8 @@
-package com.flx.springboot.scaffold.redis.controller;
+package com.flx.springboot.scaffold.application.controller;
 
 import com.flx.springboot.scaffold.common.result.ResultResponse;
-import com.flx.springboot.scaffold.exception.element.RedisException;
 import com.flx.springboot.scaffold.redis.utils.RedisUtils;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

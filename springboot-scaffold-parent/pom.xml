@@ -31,6 +31,7 @@
         <scaffold.swagger.version>1.0-SNAPSHOT</scaffold.swagger.version>
         <scaffold.common.version>1.0-SNAPSHOT</scaffold.common.version>
         <scaffold.exception.version>1.0-SNAPSHOT</scaffold.exception.version>
+        <scaffold.redis.version>1.0-SNAPSHOT</scaffold.redis.version>
         <quartz.version>2.2.3</quartz.version>
     </properties>
 
@@ -90,6 +91,12 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>swagger-bootstrap-ui</artifactId>
                 <version>${swagger.ui.version}</version>
+            </dependency>
+            <!--scaffold-redis-->
+            <dependency>
+                <groupId>com.flx.springboot</groupId>
+                <artifactId>springboot-scaffold-redis</artifactId>
+                <version>${scaffold.redis.version}</version>
             </dependency>
             <!--scaffold-exception-->
             <dependency>
