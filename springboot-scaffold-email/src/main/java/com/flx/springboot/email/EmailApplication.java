@@ -3,6 +3,7 @@ package com.flx.springboot.email;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @Author: Fenglixiong
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description:
  */
 @Slf4j
+@EnableAsync
 @SpringBootApplication
 public class EmailApplication {
 

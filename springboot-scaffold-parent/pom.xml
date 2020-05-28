@@ -33,6 +33,7 @@
         <scaffold.exception.version>1.0-SNAPSHOT</scaffold.exception.version>
         <scaffold.redis.version>1.0-SNAPSHOT</scaffold.redis.version>
         <quartz.version>2.2.3</quartz.version>
+        <jxl.version>2.6.10</jxl.version>
     </properties>
 
     <dependencyManagement>
@@ -73,6 +74,12 @@
                 <groupId>com.jayway.jsonpath</groupId>
                 <artifactId>json-path</artifactId>
                 <version>${json.path.verson}</version>
+            </dependency>
+            <!--excel-->
+            <dependency>
+                <groupId>net.sourceforge.jexcelapi</groupId>
+                <artifactId>jxl</artifactId>
+                <version>${jxl.version}</version>
             </dependency>
 
             <!--apache-common-->

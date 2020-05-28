@@ -4,6 +4,7 @@ import com.flx.springboot.scaffold.exception.annotation.EnableExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @Author: Fenglixiong
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description:
  */
 @Slf4j
+@EnableScheduling
 @SpringBootApplication
 @EnableExceptionHandler //开启全局异常处理能力
 public class AnnotationApplication {

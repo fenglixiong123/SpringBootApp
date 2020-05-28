@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.exception.annotation;
 
-import com.flx.springboot.scaffold.exception.handler.CoreExceptionHandler;
+import com.flx.springboot.scaffold.exception.config.ExceptionConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -12,7 +12,7 @@ import java.lang.annotation.*;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({CoreExceptionHandler.class})
+@Import({ExceptionConfiguration.class})
 @Documented
 public @interface EnableExceptionHandler {
 

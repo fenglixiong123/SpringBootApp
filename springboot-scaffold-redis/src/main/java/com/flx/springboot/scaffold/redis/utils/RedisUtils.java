@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@DependsOn(value = "com.flx.springboot.scaffold.common.context.SpringContextUtil")
 public class RedisUtils extends RedisEListUtils {
 
     public RedisUtils(){

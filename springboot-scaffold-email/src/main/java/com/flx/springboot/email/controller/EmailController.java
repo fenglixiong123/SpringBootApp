@@ -2,7 +2,7 @@ package com.flx.springboot.email.controller;
 
 import com.flx.springboot.email.entity.ComplexMail;
 import com.flx.springboot.email.entity.SimpleMail;
-import com.flx.springboot.email.service.EmailService;
+import com.flx.springboot.email.service.SimpleEmailService;
 import com.flx.springboot.scaffold.common.result.ResultResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmailController {
 
     @Autowired
-    private EmailService emailService;
+    private SimpleEmailService emailService;
 
     @ApiOperation("发送简单的邮件")
     @GetMapping("/sendSimpleEmail")
@@ -38,15 +38,15 @@ public class EmailController {
         return ResultResponse.success(result);
     }
 
-    @ApiOperation("发送复杂的邮件")
-    @GetMapping("/sendComplexEmail")
-    public ResultResponse sendComplexEmil(
-            @RequestParam String to,
-            @RequestParam String subject,
-            @RequestParam String content){
-        boolean result = emailService.sendComplexEmail(new ComplexMail(subject,to,content));
-        log.info("发送结果：{}",result);
-        return ResultResponse.success(result);
-    }
+//    @ApiOperation("发送复杂的邮件")
+//    @GetMapping("/sendComplexEmail")
+//    public ResultResponse sendComplexEmil(
+//            @RequestParam String to,
+//            @RequestParam String subject,
+//            @RequestParam String content){
+//        boolean result = emailService.sendComplexEmail(new ComplexMail(subject,to,content));
+//        log.info("发送结果：{}",result);
+//        return ResultResponse.success(result);
+//    }
 
 }

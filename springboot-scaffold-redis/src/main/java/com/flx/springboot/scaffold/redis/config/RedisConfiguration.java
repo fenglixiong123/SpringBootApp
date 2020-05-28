@@ -3,12 +3,15 @@ package com.flx.springboot.scaffold.redis.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flx.springboot.scaffold.common.context.SpringContextUtil;
+import com.flx.springboot.scaffold.redis.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -28,11 +31,11 @@ import java.time.Duration;
 @Slf4j
 @Configuration
 @EnableCaching
-public class RedisConfig extends CachingConfigurerSupport {
+public class RedisConfiguration extends CachingConfigurerSupport {
 
     private Duration timeToLive = Duration.ZERO;
 
-    public RedisConfig(){
+    public RedisConfiguration(){
         log.info("RedisConfig init...");
     }
 
@@ -73,6 +76,16 @@ public class RedisConfig extends CachingConfigurerSupport {
         return RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(configuration)
                 .build();
+    }
+
+    /**
+     * 注入RedisUtils类
+     * @return
+     */
+    @Bean(name = "com.flx.springboot.scaffold.redis.utils.RedisUtils")
+    @DependsOn(value = "com.flx.springboot.scaffold.common.context.SpringContextUtil")
+    public RedisUtils redisUtils(){
+        return new RedisUtils();
     }
 
     /**

@@ -2,7 +2,7 @@ package com.flx.springboot.email.service.impl;
 
 import com.flx.springboot.email.entity.ComplexMail;
 import com.flx.springboot.email.entity.SimpleMail;
-import com.flx.springboot.email.service.EmailService;
+import com.flx.springboot.email.service.SimpleEmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage;
  */
 @Slf4j
 @Service
-public class EmailServiceImpl implements EmailService {
+public class SimpleEmailServiceImpl implements SimpleEmailService {
 
     @Autowired
     private JavaMailSender mailSender;
@@ -45,33 +45,6 @@ public class EmailServiceImpl implements EmailService {
             return false;
         }
         return true;
-    }
-
-    /**
-     * 发送复杂邮件
-     * @param complexMail
-     * @return
-     */
-    @Override
-    public boolean sendComplexEmail(ComplexMail complexMail){
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        try {
-            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage,true);
-            messageHelper.setSubject(complexMail.getSubject());
-            messageHelper.setFrom("fenglixiong123@163.com");
-            messageHelper.setTo(complexMail.getTo());
-            messageHelper.setText(complexMail.getContent(),true);
-            try {
-                mailSender.send(mimeMessage);
-                return true;
-            }catch (MailException e){
-                log.error("发送失败：{}",e.getMessage());
-                return false;
-            }
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
 }

@@ -1,7 +1,6 @@
 package com.flx.springboot.scaffold.redis.annotation;
 
-import com.flx.springboot.scaffold.redis.config.RedisConfig;
-import com.flx.springboot.scaffold.redis.utils.RedisUtils;
+import com.flx.springboot.scaffold.redis.config.RedisConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -13,7 +12,7 @@ import java.lang.annotation.*;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({RedisConfig.class, RedisUtils.class})
+@Import({RedisConfiguration.class})
 @Documented
 public @interface EnableRedis {
 
