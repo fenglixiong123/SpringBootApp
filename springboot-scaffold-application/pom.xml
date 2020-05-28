@@ -34,6 +34,10 @@
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-exception</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-email</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -17,6 +17,8 @@ import java.lang.annotation.*;
 @Documented
 public @interface EnableEmail {
 
+    Class<? extends Annotation> annotation() default Annotation.class;
+
     EmailMode emailMode() default EmailMode.SIMPLE;
 
 }

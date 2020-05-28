@@ -18,7 +18,7 @@ import java.lang.annotation.Annotation;
  */
 public abstract class EmailModeImportSelector<A extends Annotation> implements ImportSelector {
 
-    public static final String DEFAULT_EMAIL_MODE_ATTRIBUTE_NAME = "mode";
+    public static final String DEFAULT_EMAIL_MODE_ATTRIBUTE_NAME = "emailMode";
 
     @Nullable
     protected String getEmailModeAttributeName() {
@@ -34,7 +34,7 @@ public abstract class EmailModeImportSelector<A extends Annotation> implements I
         if (attributes == null) {
             throw new IllegalArgumentException(String.format("@%s is not present on importing class '%s' as expected", annType.getSimpleName(), importingClassMetadata.getClassName()));
         } else {
-            EmailMode emailMode = (EmailMode)attributes.getEnum(this.getEmailModeAttributeName());
+            EmailMode emailMode = attributes.getEnum(this.getEmailModeAttributeName());
             String[] imports = this.selectImports(emailMode);
             if (imports == null) {
                 throw new IllegalArgumentException("Unknown EmailMode: " + emailMode);

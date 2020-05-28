@@ -3,8 +3,11 @@ package com.flx.springboot.email.config;
 import com.flx.springboot.email.service.SimpleEmailService;
 import com.flx.springboot.email.service.impl.SimpleEmailServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 /**
  * @Author: Fenglixiong
@@ -15,8 +18,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SimpleEmailConfiguration {
 
+    @Bean
+    @ConditionalOnMissingBean //不然会被注入两次
+    public JavaMailSender javaMailSender(){
+        return new JavaMailSenderImpl();
+    }
+
     @Bean(name = "com.flx.springboot.email.service.SimpleEmailService")
     public SimpleEmailService simpleEmailService(){
+        log.info("=============注册SimpleEmailService成功========");
         return new SimpleEmailServiceImpl();
     }
 
