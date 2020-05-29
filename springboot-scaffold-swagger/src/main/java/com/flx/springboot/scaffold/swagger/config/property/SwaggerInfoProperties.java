@@ -9,10 +9,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @Description Swagger基本信息的一些配置
  **/
 @Data
-@ConfigurationProperties(prefix = SwaggerInfoProperties.PREFIX)
+@ConfigurationProperties(prefix = "flx.swagger")
 public class SwaggerInfoProperties {
-
-    public static final String PREFIX = "flx.swagger";
 
     private String groupName = "中国稀有物种网";
 

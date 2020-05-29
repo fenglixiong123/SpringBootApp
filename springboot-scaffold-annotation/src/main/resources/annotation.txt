@@ -58,8 +58,9 @@ public String[] selectImports(AnnotationMetadata annotationMetadata) {
 @DependsOn(value = "com.flx.springboot.scaffold.common.context.SpringContextUtil")
 表示在这个类初始化之后在进行初始化
 
-5.
-@EnableXXX注解
+8.
+
+
 
 
 

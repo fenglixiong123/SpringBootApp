@@ -37,15 +37,4 @@ public class EmailController {
         return ResultResponse.success(result);
     }
 
-//    @ApiOperation("发送复杂的邮件")
-//    @GetMapping("/sendComplexEmail")
-//    public ResultResponse sendComplexEmil(
-//            @RequestParam String to,
-//            @RequestParam String subject,
-//            @RequestParam String content){
-//        boolean result = emailService.sendComplexEmail(new ComplexMail(subject,to,content));
-//        log.info("发送结果：{}",result);
-//        return ResultResponse.success(result);
-//    }
-
 }

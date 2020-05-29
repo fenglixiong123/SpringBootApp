@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flx.springboot.scaffold.common.context.SpringContextUtil;
 import com.flx.springboot.scaffold.redis.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -31,7 +32,7 @@ import java.time.Duration;
 @Slf4j
 @Configuration
 @EnableCaching
-public class RedisConfiguration extends CachingConfigurerSupport {
+public class RedisConfiguration extends CachingConfigurerSupport implements InitializingBean {
 
     private Duration timeToLive = Duration.ZERO;
 
@@ -104,4 +105,8 @@ public class RedisConfiguration extends CachingConfigurerSupport {
 
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        log.info("=============注册Redis服务成功===========");
+    }
 }
