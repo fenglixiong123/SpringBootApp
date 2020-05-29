@@ -1,4 +1,4 @@
-package com.flx.springboot.email.enums;
+package com.flx.springboot.email.common.enums;
 
 /**
  * @Author: Fenglixiong

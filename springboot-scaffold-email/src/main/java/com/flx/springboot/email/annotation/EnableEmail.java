@@ -1,7 +1,7 @@
 package com.flx.springboot.email.annotation;
 
-import com.flx.springboot.email.enums.EmailMode;
-import com.flx.springboot.email.selector.EmailConfigurationSelector;
+import com.flx.springboot.email.common.enums.EmailMode;
+import com.flx.springboot.email.common.selector.EmailConfigurationSelector;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -16,8 +16,6 @@ import java.lang.annotation.*;
 @Import({EmailConfigurationSelector.class})
 @Documented
 public @interface EnableEmail {
-
-    Class<? extends Annotation> annotation() default Annotation.class;
 
     EmailMode emailMode() default EmailMode.SIMPLE;
 

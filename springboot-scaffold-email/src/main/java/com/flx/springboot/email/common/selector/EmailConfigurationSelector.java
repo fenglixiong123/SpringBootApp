@@ -1,9 +1,9 @@
-package com.flx.springboot.email.selector;
+package com.flx.springboot.email.common.selector;
 
 import com.flx.springboot.email.annotation.EnableEmail;
-import com.flx.springboot.email.config.ComplexEmailConfiguration;
-import com.flx.springboot.email.config.SimpleEmailConfiguration;
-import com.flx.springboot.email.enums.EmailMode;
+import com.flx.springboot.email.common.config.ComplexEmailConfiguration;
+import com.flx.springboot.email.common.config.SimpleEmailConfiguration;
+import com.flx.springboot.email.common.enums.EmailMode;
 
 /**
  * @Author: Fenglixiong

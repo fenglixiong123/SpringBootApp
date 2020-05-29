@@ -1,7 +1,7 @@
-package com.flx.springboot.email.selector;
+package com.flx.springboot.email.common.selector;
 
-import com.flx.springboot.email.utils.AttributesUtils;
-import com.flx.springboot.email.enums.EmailMode;
+import com.flx.springboot.email.common.utils.AttributesUtils;
+import com.flx.springboot.email.common.enums.EmailMode;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.core.annotation.AnnotationAttributes;

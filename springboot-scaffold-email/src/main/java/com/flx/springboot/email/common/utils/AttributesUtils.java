@@ -1,4 +1,4 @@
-package com.flx.springboot.email.utils;
+package com.flx.springboot.email.common.utils;
 
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotatedTypeMetadata;

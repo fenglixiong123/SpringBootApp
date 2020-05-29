@@ -2,6 +2,7 @@ package com.flx.springboot.email.controller;
 
 import com.flx.springboot.email.entity.ComplexMail;
 import com.flx.springboot.email.entity.SimpleMail;
+import com.flx.springboot.email.service.ComplexEmailService;
 import com.flx.springboot.email.service.SimpleEmailService;
 import com.flx.springboot.scaffold.common.result.ResultResponse;
 import io.swagger.annotations.Api;
@@ -25,7 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmailController {
 
     @Autowired
-    private SimpleEmailService emailService;
+    private SimpleEmailService simpleEmailService;
+
+    @Autowired
+    private ComplexEmailService complexEmailService;
 
     @ApiOperation("发送简单的邮件")
     @GetMapping("/sendSimpleEmail")
@@ -33,20 +37,20 @@ public class EmailController {
                                 @RequestParam String to,
                                 @RequestParam String subject,
                                 @RequestParam String content){
-        boolean result = emailService.sendSimpleEmail(new SimpleMail(subject,to,content));
+        boolean result = simpleEmailService.sendSimpleEmail(new SimpleMail(subject,to,content));
         log.info("发送结果：{}",result);
         return ResultResponse.success(result);
     }
 
-//    @ApiOperation("发送复杂的邮件")
-//    @GetMapping("/sendComplexEmail")
-//    public ResultResponse sendComplexEmil(
-//            @RequestParam String to,
-//            @RequestParam String subject,
-//            @RequestParam String content){
-//        boolean result = emailService.sendComplexEmail(new ComplexMail(subject,to,content));
-//        log.info("发送结果：{}",result);
-//        return ResultResponse.success(result);
-//    }
+    @ApiOperation("发送复杂的邮件")
+    @GetMapping("/sendComplexEmail")
+    public ResultResponse sendComplexEmil(
+            @RequestParam String to,
+            @RequestParam String subject,
+            @RequestParam String content){
+        boolean result = complexEmailService.sendComplexEmail(new ComplexMail(subject,to,content));
+        log.info("发送结果：{}",result);
+        return ResultResponse.success(result);
+    }
 
 }

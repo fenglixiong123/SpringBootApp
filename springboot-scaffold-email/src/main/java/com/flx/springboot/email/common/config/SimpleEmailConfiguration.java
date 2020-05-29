@@ -1,4 +1,4 @@
-package com.flx.springboot.email.config;
+package com.flx.springboot.email.common.config;
 
 import com.flx.springboot.email.service.SimpleEmailService;
 import com.flx.springboot.email.service.impl.SimpleEmailServiceImpl;
