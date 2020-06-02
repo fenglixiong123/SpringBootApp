@@ -1,12 +1,12 @@
 package com.flx.springboot.scaffold.logger.entity;
 
-import com.flx.springboot.scaffold.logger.base.BaseDomain;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * @Author Fenglixiong
@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity
 @Table(name = "t_student")
-public class Student extends BaseDomain {
+public class Student {
 
     @Id
     @Column(name = "id")
@@ -36,5 +36,11 @@ public class Student extends BaseDomain {
     @NotNull(message = "student.hobby.is.notnull")
     @Column(name = "hobby")
     private String hobby;
+
+    @Column(name = "create_time")
+    private Date createTime;
+
+    @Column(name = "update_time")
+    private Date updateTime;
 
 }

@@ -16,6 +16,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +44,7 @@ public class LogAspect {
     private static final int MAX_SEARCH_LENGTH = 3;
 
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisTemplate redisTemplate;
 
     /**
      * 定义请求日志切入点
@@ -170,8 +171,7 @@ public class LogAspect {
      */
     private void processSaveLog(BizLogger bizLogger) {
         log.info("【Redis】发送日志消息：{}",JsonUtils.toJsonMsg(bizLogger));
-        stringRedisTemplate.convertAndSend("chat",JsonUtils.toJsonMsg(bizLogger));
-
+        redisTemplate.convertAndSend("chat",JsonUtils.toJsonMsg(bizLogger));
     }
 
 }

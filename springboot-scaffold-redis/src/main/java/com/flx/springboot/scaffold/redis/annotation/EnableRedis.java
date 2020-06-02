@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 /**
  * @Author: Fenglixiong
  * @Date: 2019/12/5 19:22
- * @Description: 在项目启动类中使用@EnableExceptionHandle注解，即可启用异常捕获功能
+ * @Description: 提供redis基础功能
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

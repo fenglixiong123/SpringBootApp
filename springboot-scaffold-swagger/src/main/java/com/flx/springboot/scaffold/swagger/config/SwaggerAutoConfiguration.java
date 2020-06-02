@@ -4,7 +4,9 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.system.JavaVersion;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,7 @@ import com.flx.springboot.scaffold.swagger.config.property.SwaggerInfoProperties
 @Configuration
 @EnableSwagger2
 @EnableConfigurationProperties({SwaggerInfoProperties.class})
+@ConditionalOnJava(value = JavaVersion.EIGHT)
 public class SwaggerAutoConfiguration {
 
     @Autowired

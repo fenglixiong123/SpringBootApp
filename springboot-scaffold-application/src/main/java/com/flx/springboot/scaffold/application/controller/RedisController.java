@@ -3,9 +3,12 @@ package com.flx.springboot.scaffold.application.controller;
 import com.flx.springboot.scaffold.application.entity.User;
 import com.flx.springboot.scaffold.common.result.ResultResponse;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
+import com.flx.springboot.scaffold.redis.constant.RedisConstant;
 import com.flx.springboot.scaffold.redis.utils.RedisUtils;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +25,9 @@ import java.util.Date;
 @RestController
 @RequestMapping("/redis")
 public class RedisController {
+
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
 
     @GetMapping("/get")
     public ResultResponse getKey(String key){
@@ -48,5 +54,10 @@ public class RedisController {
         return ResultResponse.success();
     }
 
+    @GetMapping("/push")
+    public ResultResponse push(String message){
+        redisTemplate.convertAndSend(RedisConstant.DEFAULT_CHANNEL,message);
+        return ResultResponse.success("ok");
+    }
 
 }

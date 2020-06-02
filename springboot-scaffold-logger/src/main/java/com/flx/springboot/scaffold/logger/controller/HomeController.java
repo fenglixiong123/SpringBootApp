@@ -3,7 +3,6 @@ package com.flx.springboot.scaffold.logger.controller;
 import com.flx.springboot.scaffold.common.result.ResultResponse;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.flx.springboot.scaffold.logger.common.annotation.BizLog;
-import com.flx.springboot.scaffold.logger.common.redis.RedisQueue;
 import com.flx.springboot.scaffold.logger.dao.BizLogDao;
 import com.flx.springboot.scaffold.logger.entity.BizLogger;
 import com.flx.springboot.scaffold.logger.entity.Student;
