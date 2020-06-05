@@ -2,9 +2,8 @@ package com.flx.springboot.scaffold.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author Fenglixiong
@@ -51,6 +50,36 @@ public class CommonUtils {
 
     public static boolean isNotEmpty(Object[] params){
         return !isEmpty(params);
+    }
+
+    /**
+     * 获取list列表中的重复值
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> getDuplicateElements(List<T> list) {
+        return list.stream()
+                .collect(Collectors.toMap(e -> e, e -> 1, Integer::sum)) // 获得元素出现频率的 Map，键为元素，值为元素出现的次数
+                .entrySet().stream() // Set<Entry>转换为Stream<Entry>
+                .filter(entry -> entry.getValue() > 1) // 过滤出元素出现次数大于 1 的 entry
+                .map(Map.Entry::getKey) // 获得 entry 的键（重复元素）对应的 Stream
+                .collect(Collectors.toList()); // 转化为 List
+    }
+
+    public static void main(String[] args) {
+
+        List<String> a = new ArrayList<>();
+        a.add("2");
+        a.add("2");
+        a.add("2");
+        a.add("3");
+        a.add("3");
+        a.add("4");
+        a.add("4");
+        a.add("5");
+
+        System.out.println(getDuplicateElements(a));
     }
 
 }
