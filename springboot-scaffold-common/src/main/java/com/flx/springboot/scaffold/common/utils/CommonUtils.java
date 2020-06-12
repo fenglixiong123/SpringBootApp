@@ -1,85 +1,12 @@
 package com.flx.springboot.scaffold.common.utils;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.*;
-import java.util.stream.Collectors;
-
 /**
- * @Author Fenglixiong
- * @Create 2018.11.09 23:19
- * @Description
- **/
+ * @Author: Fenglixiong
+ * @Date: 2020/6/10 12:06
+ * @Description:
+ */
 public class CommonUtils {
 
-    public static boolean isBlank(String s){
-        return StringUtils.isBlank(s);
-    }
 
-    public static boolean isNotBlank(String s){
-        return !isBlank(s);
-    }
-
-    public static boolean isEmpty(List list){
-        return (list==null||list.isEmpty());
-    }
-
-    public static boolean isNotEmpty(List list){
-        return !isEmpty(list);
-    }
-
-    public static boolean isEmpty(Set set){
-        return (set==null||set.isEmpty());
-    }
-
-    public static boolean isNotEmpty(Set set){
-        return !isEmpty(set);
-    }
-
-    public static boolean isEmpty(Map map){
-        return (map==null||map.isEmpty());
-    }
-
-    public static boolean isNotEmpty(Map map){
-        return !isEmpty(map);
-    }
-
-    public static boolean isEmpty(Object[] params){
-        return (params==null||params.length==0);
-    }
-
-    public static boolean isNotEmpty(Object[] params){
-        return !isEmpty(params);
-    }
-
-    /**
-     * 获取list列表中的重复值
-     * @param list
-     * @param <T>
-     * @return
-     */
-    public static <T> List<T> getDuplicateElements(List<T> list) {
-        return list.stream()
-                .collect(Collectors.toMap(e -> e, e -> 1, Integer::sum)) // 获得元素出现频率的 Map，键为元素，值为元素出现的次数
-                .entrySet().stream() // Set<Entry>转换为Stream<Entry>
-                .filter(entry -> entry.getValue() > 1) // 过滤出元素出现次数大于 1 的 entry
-                .map(Map.Entry::getKey) // 获得 entry 的键（重复元素）对应的 Stream
-                .collect(Collectors.toList()); // 转化为 List
-    }
-
-    public static void main(String[] args) {
-
-        List<String> a = new ArrayList<>();
-        a.add("2");
-        a.add("2");
-        a.add("2");
-        a.add("3");
-        a.add("3");
-        a.add("4");
-        a.add("4");
-        a.add("5");
-
-        System.out.println(getDuplicateElements(a));
-    }
 
 }

@@ -2,7 +2,7 @@ package com.flx.springboot.scaffold.aop.config;
 
 import com.alibaba.fastjson.JSONObject;
 import com.flx.springboot.scaffold.aop.annotation.BizLog;
-import com.flx.springboot.scaffold.common.utils.CommonUtils;
+import com.flx.springboot.scaffold.common.utils.CollectionUtils;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -62,7 +62,7 @@ public class BizAspect {
      * @return
      */
     private String processParamJson(String[] paramNames, Object[] paramValues) {
-        if(CommonUtils.isEmpty(paramNames)||CommonUtils.isEmpty(paramValues)){
+        if(CollectionUtils.isEmpty(paramNames)|| CollectionUtils.isEmpty(paramValues)){
             return null;
         }
         JSONObject jsonObject = new JSONObject();

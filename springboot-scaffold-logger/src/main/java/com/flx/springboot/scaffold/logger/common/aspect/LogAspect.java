@@ -2,7 +2,7 @@ package com.flx.springboot.scaffold.logger.common.aspect;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.flx.springboot.scaffold.common.utils.CommonUtils;
+import com.flx.springboot.scaffold.common.utils.CollectionUtils;
 import com.flx.springboot.scaffold.common.utils.base.ParamUtils;
 import com.flx.springboot.scaffold.common.utils.json.JsonParser;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
@@ -17,7 +17,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -117,7 +116,7 @@ public class LogAspect {
      * @return
      */
     private String processParamJson(String[] paramNames, Object[] paramValues) {
-        if(CommonUtils.isEmpty(paramNames)||CommonUtils.isEmpty(paramValues)){
+        if(CollectionUtils.isEmpty(paramNames)|| CollectionUtils.isEmpty(paramValues)){
             return null;
         }
         JSONObject jsonObject = new JSONObject();
@@ -149,7 +148,7 @@ public class LogAspect {
         log.info("记录主键字段:{}",id);
         //获取参数中的检索字段
         String[] keys = bizLog.searchKey();
-        if(CommonUtils.isNotEmpty(keys)){
+        if(CollectionUtils.isNotEmpty(keys)){
             int length = keys.length>MAX_SEARCH_LENGTH?MAX_SEARCH_LENGTH:keys.length;
             for (int i = 0; i < length; i++) {
                 searchValues.add(JsonParser.readVal(paramJson,keys[i]));

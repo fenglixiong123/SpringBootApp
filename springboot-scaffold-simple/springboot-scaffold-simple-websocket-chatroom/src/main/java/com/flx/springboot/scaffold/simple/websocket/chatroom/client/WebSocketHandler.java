@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.simple.websocket.chatroom.client;
 
-import com.flx.springboot.scaffold.common.utils.CommonUtils;
+import com.flx.springboot.scaffold.common.utils.CollectionUtils;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.common.enums.MessageEnum;
 import com.flx.springboot.scaffold.simple.websocket.chatroom.entity.ChatUser;
@@ -139,7 +139,7 @@ public class WebSocketHandler {
      * @return
      */
     private boolean isClientExist(Session newSession, CopyOnWriteArraySet<Session> sessions){
-        if(CommonUtils.isEmpty(sessions)){
+        if(CollectionUtils.isEmpty(sessions)){
             return false;
         }
         Iterator<Session> it = sessions.iterator();
@@ -156,12 +156,12 @@ public class WebSocketHandler {
 
     private boolean removeMapHandler(Long id,Session oldSession,Map<Long,CopyOnWriteArraySet<Session>> dataMap,String desc){
         boolean removed = false;
-        if(CommonUtils.isEmpty(dataMap)){
+        if(CollectionUtils.isEmpty(dataMap)){
             log.info("【WebSocketRemove】set is null,no need to remove !");
             return false;
         }
         CopyOnWriteArraySet<Session> sessions = dataMap.get(id);
-        if(CommonUtils.isNotEmpty(sessions)) {
+        if(CollectionUtils.isNotEmpty(sessions)) {
             removed = sessions.removeIf(session -> session.getId().equals(oldSession.getId()));
             log.info("【WebSocketRemove】removed from {} sessionId:{}!",desc,oldSession.getId());
             //如果用户已经没有了就删除UserGroup
@@ -247,7 +247,7 @@ public class WebSocketHandler {
     }
 
     private ResultSend sendMessage(Set<Session> sessions, PayLoad payLoad){
-        if(CommonUtils.isEmpty(sessions)){
+        if(CollectionUtils.isEmpty(sessions)){
             return new ResultSend();
         }
         Iterator<Session> it = sessions.iterator();
