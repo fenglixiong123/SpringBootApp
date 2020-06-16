@@ -11,6 +11,10 @@ import java.nio.charset.Charset;
  * @Author: Fenglixiong
  * @Date: 2020/6/11 20:11
  * @Description:
+ *
+ * 2.Content-Disposition中指定的类型是文件的扩展名，并且弹出的下载对话框中的文件类型图片是按照文件的扩展名显示的，
+ * 点保存后，文件以filename的值命名，保存类型以Content中设置的为准。
+ * 注意：在设置Content-Disposition头字段之前，一定要设置Content-Type头字段。
  */
 @Slf4j
 public class FileDownloadUtils {
@@ -29,21 +33,17 @@ public class FileDownloadUtils {
             if(!file.exists()) {
                 throw new Exception("file not exist !");
             }
-            response.setContentType("application/force-download;charset=UTF-8");
-            response.setCharacterEncoding("utf-8");
-//                response.setContentType("multipart/form-data;charset=UTF-8");
+            String suffix = fileName.substring(fileName.lastIndexOf("."));
+//            response.setContentType("application/force-download;charset=UTF-8");
+            response.setContentType(FileUtils.getContentTypeBySuffix(suffix));
             response.addHeader("Content-Disposition", String.format("attachment;fileName=%s", fileName));
             byte[] buffer = new byte[1024];
             bis = new BufferedInputStream(new FileInputStream(file));
             os = response.getOutputStream();
-            String suffix = fileName.substring(fileName.lastIndexOf("."));
-
             int count;
             while ((count=bis.read(buffer))!=-1){
                 os.write(buffer,0,count);
             }
-            os.flush();
-
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -68,9 +68,7 @@ public class FileDownloadUtils {
      * @return
      */
     public static boolean uploadAndAppend(MultipartFile file,String pathName){
-        InputStreamReader is = null;
         BufferedReader br = null;
-        FileWriter fw = null;
         BufferedWriter bw = null;
         try {
             File writeFile = new File(pathName);
@@ -82,29 +80,20 @@ public class FileDownloadUtils {
             }
             StringBuilder sb = new StringBuilder();
             //read file
-            is = new InputStreamReader(file.getInputStream(), Charset.forName("UTF-8"));
-            br=new BufferedReader(is);
+            br=new BufferedReader(new InputStreamReader(file.getInputStream(), Charset.forName("UTF-8")));
             //write file
-            fw = new FileWriter(writeFile.getAbsoluteFile(),true);
-            bw = new BufferedWriter(fw);
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(writeFile.getAbsoluteFile(),true)));
             String temp;
             while ((temp = br.readLine())!=null){
                 sb.append(temp).append("\n");
             }
             bw.write(sb.toString());
-            bw.flush();
         }catch (Exception e){
             e.printStackTrace();
         }finally {
             try {
-                if(is!=null) {
-                    is.close();
-                }
                 if(br!=null) {
                     br.close();
-                }
-                if(fw!=null) {
-                    fw.close();
                 }
                 if(bw!=null) {
                     bw.close();
