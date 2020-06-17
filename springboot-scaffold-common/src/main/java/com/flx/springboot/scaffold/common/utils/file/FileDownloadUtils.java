@@ -19,6 +19,19 @@ import java.nio.charset.Charset;
 @Slf4j
 public class FileDownloadUtils {
 
+
+    /**
+     * 全路径下载文件
+     * @param response
+     * @param pathName
+     */
+    public static void download(HttpServletResponse response,String pathName){
+        int index = pathName.lastIndexOf("/")+1;
+        String path = pathName.substring(0,index);
+        String fileName = pathName.substring(index);
+        download(response,path,fileName);
+    }
+
     /**
      * 下载文件
      * @param response
@@ -27,33 +40,37 @@ public class FileDownloadUtils {
      */
     public static void download(HttpServletResponse response,String path,String fileName){
         BufferedInputStream bis = null;
-        OutputStream os = null;
+        BufferedOutputStream bos = null;
         try {
-            File file = new File(path+"/"+fileName);
+            String pathName;
+            if(path.endsWith("/")){
+                pathName = path+fileName;
+            }else {
+                pathName = path+"/"+fileName;
+            }
+            File file = new File(pathName);
             if(!file.exists()) {
                 throw new Exception("file not exist !");
             }
-            String suffix = fileName.substring(fileName.lastIndexOf("."));
-//            response.setContentType("application/force-download;charset=UTF-8");
+            String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
             response.setContentType(FileUtils.getContentTypeBySuffix(suffix));
             response.addHeader("Content-Disposition", String.format("attachment;fileName=%s", fileName));
             byte[] buffer = new byte[1024];
             bis = new BufferedInputStream(new FileInputStream(file));
-            os = response.getOutputStream();
+            bos = new BufferedOutputStream(response.getOutputStream());
             int count;
             while ((count=bis.read(buffer))!=-1){
-                os.write(buffer,0,count);
+                bos.write(buffer,0,count);
             }
         }catch (Exception e){
             e.printStackTrace();
         }finally {
             try {
                 if (bis != null) {
-
                     bis.close();
                 }
-                if (os != null) {
-                    os.close();
+                if (bos != null) {
+                    bos.close();
                 }
             }catch (Exception e){
                 e.printStackTrace();

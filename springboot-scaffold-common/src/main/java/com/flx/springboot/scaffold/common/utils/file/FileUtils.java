@@ -128,6 +128,39 @@ public class FileUtils {
     }
 
     /**
+     * 文件是否存在
+     * @param filePath
+     * @return
+     */
+    public static boolean isExist(String filePath){
+        File file = new File(filePath);
+        return file.exists();
+    }
+
+    /**
+     * 删除文件或者目录以及下面所有文件
+     * @param pathName
+     * @return
+     */
+    public static boolean delete(String pathName){
+        try{
+            File sourceFile = new File(pathName);
+            if(sourceFile.isDirectory()){
+                File[] files = sourceFile.listFiles();
+                if(files!=null) {
+                    for (File listFile : files) {
+                        delete(listFile.getAbsolutePath());
+                    }
+                }
+            }
+            return sourceFile.delete();
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * 判断是否是文件夹
      * @param path
      * @return
@@ -141,30 +174,21 @@ public class FileUtils {
     }
 
     /**
-     * 文件是否存在
-     * @param filePath
-     * @return
-     */
-    public static boolean isExist(String filePath){
-        File file = new File(filePath);
-        return file.exists();
-    }
-
-    /**
-     * 删除文件
+     * 创建目录
      * @param path
      * @return
      */
-    public static boolean delete(String path){
-        File file = new File(path);
-        if(file.exists()){
-            if(file.delete()){
-                return true;
-            }else {
-                return false;
+    public static boolean mkdirs(String path){
+        try{
+            File file = new File(path);
+            if(!file.exists()){
+                return file.mkdirs();
             }
+            return true;
+        }catch (Exception e){
+            log.info("mkdirs error : {}",e.getMessage());
+            return false;
         }
-        return true;
     }
 
     /**
