@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.utils.excel;
+package com.flx.springboot.scaffold.common.excel;
 
 
 import jxl.Cell;
@@ -15,7 +15,6 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;

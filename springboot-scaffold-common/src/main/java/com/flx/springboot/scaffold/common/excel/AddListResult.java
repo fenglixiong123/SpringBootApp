@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.utils.excel;
+package com.flx.springboot.scaffold.common.excel;
 
 import lombok.Data;
 
