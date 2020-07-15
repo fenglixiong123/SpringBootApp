@@ -3,6 +3,7 @@ package com.flx.springboot.scaffold.application.controller;
 import com.flx.springboot.scaffold.application.entity.User;
 import com.flx.springboot.scaffold.common.result.ResultResponse;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
+import com.flx.springboot.scaffold.redis.annotation.EnableRedis;
 import com.flx.springboot.scaffold.redis.constant.RedisConstant;
 import com.flx.springboot.scaffold.redis.utils.RedisUtils;
 import io.swagger.annotations.Api;
@@ -21,6 +22,7 @@ import java.util.Date;
  * @Description:
  */
 @Slf4j
+@EnableRedis
 @Api(value = "Redis管理层")
 @RestController
 @RequestMapping("/redis")

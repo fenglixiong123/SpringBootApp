@@ -1,5 +1,7 @@
 package com.flx.springboot.scaffold.application.controller;
 
+import com.flx.springboot.email.annotation.EnableEmail;
+import com.flx.springboot.email.common.enums.EmailMode;
 import com.flx.springboot.email.entity.SimpleMail;
 import com.flx.springboot.email.service.SimpleEmailService;
 import com.flx.springboot.scaffold.common.result.ResultResponse;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api("邮件收发相关接口")
 @RestController
 @RequestMapping("/email")
+@EnableEmail(emailMode = EmailMode.SIMPLE)
 public class EmailController {
 
     @Autowired
