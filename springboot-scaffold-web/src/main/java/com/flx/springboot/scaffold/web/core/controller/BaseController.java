@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.web.core.controller;
 
-import com.flx.springboot.scaffold.common.utils.network.ServletUtil;
+import com.flx.springboot.scaffold.common.utils.network.ServletUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +14,9 @@ import javax.servlet.http.HttpSession;
  **/
 public abstract class BaseController {
 
-    protected HttpServletRequest request;
-    protected HttpServletResponse response;
-    protected HttpSession session;
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    private HttpSession session;
 
     @ModelAttribute
     protected void setReqAndRes(HttpServletRequest request,HttpServletResponse response){
@@ -47,7 +47,7 @@ public abstract class BaseController {
      * @return
      */
     public HttpServletRequest getOriginalRequest(){
-        return ServletUtil.getRequest();
+        return ServletUtils.getRequest();
     }
 
     /**
@@ -55,7 +55,7 @@ public abstract class BaseController {
      * @return
      */
     public HttpServletResponse getOriginalResponse(){
-        return ServletUtil.getResponse();
+        return ServletUtils.getResponse();
     }
 
 }

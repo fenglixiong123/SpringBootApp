@@ -12,7 +12,7 @@ import java.util.Date;
  * @Date: 2020/7/8 18:37
  * @Description:
  */
-public class ObjectUtils {
+public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * @param cascadeFieldName 带路径的属性名或简单属性名
