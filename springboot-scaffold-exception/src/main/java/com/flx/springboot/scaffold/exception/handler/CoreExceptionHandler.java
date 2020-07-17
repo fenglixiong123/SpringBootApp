@@ -139,7 +139,7 @@ public class CoreExceptionHandler implements InitializingBean {
             message = "未知异常";
             log.error("【异常类型】未知异常UnknownException：{}",e.getMessage());
         }
-
+        e.printStackTrace();
         return ResultResponse.error(message);
     }
 
