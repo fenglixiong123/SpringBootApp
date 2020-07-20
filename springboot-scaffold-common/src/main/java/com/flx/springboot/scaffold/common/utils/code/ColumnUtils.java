@@ -10,6 +10,11 @@ public class ColumnUtils {
     //转变的依赖字符
     private static final char UNDERLINE = '_';
 
+    /**
+     * userId--->user_id
+     * @param param
+     * @return
+     */
     public static String camelToUnderline(String param) {
         if (param == null || "".equals(param.trim())) {
             return "";
@@ -29,9 +34,6 @@ public class ColumnUtils {
 
     /**
      * 将"_"转成驼峰(user_id:userId)
-     *
-     * @param param
-     * @return
      */
     public static String underlineToCamel(String param) {
         if (param == null || "".equals(param.trim())) {

@@ -31,6 +31,11 @@ public class CodeUtils {
         return sb.toString();
     }
 
+    /**
+     * userId-->USER_ID
+     * @param str
+     * @return
+     */
     public static String toUpperCase(String str) {
         str = toLowerCase(str);
         StringBuilder tableName = new StringBuilder();

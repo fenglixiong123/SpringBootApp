@@ -35,10 +35,15 @@ public class ScanFieldAlias implements ResourceLoaderAware {
     @Value("${spring.flx.table.prefix:basic_}")
     private String tablePrefix;
 
-    public static Map<String, String> fieldAlias = new HashMap<>();
+    public static Map<String, String> fieldAliasMap = new HashMap<>();
     public static List<String> tableName = new ArrayList<>();
 
     private ResourceLoader resourceLoader;
+
+    @Override
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 
     @PostConstruct
     @Transactional(rollbackFor = Exception.class)
@@ -61,7 +66,7 @@ public class ScanFieldAlias implements ResourceLoaderAware {
                     if (field.getAnnotation(TableField.class) != null) {
                         TableField t = field.getAnnotation(TableField.class);
                         if (StringUtils.isNotEmpty(t.value())) {
-                            fieldAlias.put(field.getName(), t.value());
+                            fieldAliasMap.put(field.getName(), t.value());
                         }
                     }
                 }
@@ -71,12 +76,9 @@ public class ScanFieldAlias implements ResourceLoaderAware {
         }
 
         log.info("GetTable:"+(System.currentTimeMillis()-start));
-        log.info("Get table field success,fieldAlias=" + fieldAlias.toString());
+        log.info("Get table field success,fieldAlias=" + fieldAliasMap.toString());
 
     }
 
-    @Override
-    public void setResourceLoader(ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }
+
 }

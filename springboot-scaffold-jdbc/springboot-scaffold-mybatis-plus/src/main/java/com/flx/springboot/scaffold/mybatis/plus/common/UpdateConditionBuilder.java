@@ -1,10 +1,9 @@
 package com.flx.springboot.scaffold.mybatis.plus.common;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.flx.springboot.scaffold.common.utils.CollectionUtils;
-import com.flx.springboot.scaffold.common.utils.code.CodeUtils;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.flx.springboot.scaffold.common.utils.date.DateUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
@@ -12,87 +11,82 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.flx.springboot.scaffold.mybatis.plus.common.ConditionBuilder.getTableFiledName;
+
 /**
  * @author fsanzhen
  * @date 2018-10-17 10:56
  * 条件构造器
  */
-public class ConditionBuilder<T> {
+@Slf4j
+public class UpdateConditionBuilder<T> {
 
     private static int size = 1000;
+
+    private static final List<String> rejectColumn = Arrays.asList("create_user", "update_user", "create_time", "update_time");
+
     private final Map<String, Object> equalConditionMap = new HashMap<>();
     private final Map<String, Object> neConditionMap = new HashMap<>();
     private final Map<String, String> leftLikeConditionMap = new HashMap<>();
     private final Map<String, String> rightLikeConditionMap = new HashMap<>();
     private List<String> nullConditionList = new ArrayList<>();
     private List<String> notNullConditionList = new ArrayList<>();
+    private List<String> setNullList = new ArrayList<>();
 
-    /**
-     * 字段转换为小写
-     * 驼峰转下划线
-     * 获取别名字段
-     * agvPoint--->agv_point
-     */
-    public static String getTableFiledName(String source) {
-        if (ScanFieldAlias.fieldAliasMap.containsKey(source)) {
-            return ScanFieldAlias.fieldAliasMap.get(source);
-        }
-        return CodeUtils.toLowerCase(source);
-    }
-
-    public ConditionBuilder<T> id(Long id) {
+    public UpdateConditionBuilder<T> id(Long id) {
         Assert.notNull(id, "id can not be null");
         equalConditionMap.put("id", id);
         return this;
     }
 
-    public ConditionBuilder<T> neId(Long id) {
+    public UpdateConditionBuilder<T> neId(Long id) {
         Assert.notNull(id, "id can not be null");
         neConditionMap.put("id", id);
         return this;
     }
 
-    public ConditionBuilder<T> neQuery(String property, Object val) {
-        neConditionMap.put(property, val);
-        return this;
-    }
-
-    public ConditionBuilder<T> query(String property, Object val) {
+    public UpdateConditionBuilder<T> query(String property, Object val) {
         equalConditionMap.put(property, val);
         return this;
     }
 
-    public ConditionBuilder<T> leftLike(String property, String val) {
+    public UpdateConditionBuilder<T> neQuery(String property, Object val) {
+        neConditionMap.put(property, val);
+        return this;
+    }
+
+    public UpdateConditionBuilder<T> leftLike(String property, String val) {
         leftLikeConditionMap.put(property, val);
         return this;
     }
 
-    public ConditionBuilder<T> rightLike(String property, String val) {
+    public UpdateConditionBuilder<T> rightLike(String property, String val) {
         rightLikeConditionMap.put(property, val);
         return this;
     }
 
-    public ConditionBuilder<T> isNull(String property) {
+
+    public UpdateConditionBuilder<T> isNull(String property) {
         nullConditionList.add(property);
         return this;
     }
 
-    public ConditionBuilder<T> isNull(List<String> propertyList) {
+    public UpdateConditionBuilder<T> isNull(List<String> propertyList) {
         nullConditionList.addAll(propertyList);
         return this;
     }
 
-    public ConditionBuilder<T> isNotNull(String property) {
+    public UpdateConditionBuilder<T> isNotNull(String property) {
         notNullConditionList.add(property);
         return this;
     }
 
-    public ConditionBuilder<T> isNotNull(List<String> propertyList) {
+    public UpdateConditionBuilder<T> isNotNull(List<String> propertyList) {
         notNullConditionList.addAll(propertyList);
         return this;
     }
 
-    public ConditionBuilder<T> query(Object model) throws Exception {
+    public UpdateConditionBuilder<T> query(Object model) throws Exception {
         if (model == null) {
             return this;
         }
@@ -116,7 +110,8 @@ public class ConditionBuilder<T> {
         return this;
     }
 
-    public ConditionBuilder<T> query(Map<String, Object> query) {
+
+    public UpdateConditionBuilder<T> query(Map<String, Object> query) {
         if (null == query) {
             return this;
         }
@@ -130,30 +125,32 @@ public class ConditionBuilder<T> {
         return this;
     }
 
-    private Boolean conditionIsEmpty() throws Exception {
-        if (CollectionUtils.isNotEmpty(equalConditionMap)) {
-            return false;
+    public UpdateConditionBuilder<T> readObject(Object model) throws Exception {
+        try {
+            Field[] fields = model.getClass().getDeclaredFields();
+            String[] fieldNames = new String[fields.length];
+            for (int i = 0; i < fields.length; i++) {
+                fieldNames[i] = fields[i].getName();
+            }
+            for (String key : fieldNames
+            ) {
+                String firstLetter = key.substring(0, 1).toUpperCase();
+                String getter = "get" + firstLetter + key.substring(1);
+                Object modelValue = model.getClass().getMethod(getter, new Class[]{}).invoke(model);
+                if (modelValue == null) {
+                    this.setNullList.add(key);
+                }
+            }
+        } catch (Exception e) {
+            log.error("Get model name and value fail,message={0}!||" + e.getMessage());
+            throw new Exception("Get model name and value fail,message={0}!||" + e);
         }
-        if (CollectionUtils.isNotEmpty(neConditionMap)) {
-            return false;
-        }
-        if (CollectionUtils.isNotEmpty(leftLikeConditionMap)) {
-            return false;
-        }
-        if (CollectionUtils.isNotEmpty(rightLikeConditionMap)) {
-            return false;
-        }
-        if (CollectionUtils.isNotEmpty(notNullConditionList)) {
-            return false;
-        }
-        if (CollectionUtils.isNotEmpty(nullConditionList)) {
-            return false;
-        }
-        return false;
+        return this;
     }
 
-    public QueryWrapper<T> build(Boolean flag) throws Exception {
-        QueryWrapper<T> condition = new QueryWrapper<>();
+
+    public UpdateWrapper<T> build(Boolean flag) throws Exception {
+        UpdateWrapper<T> condition = new UpdateWrapper<>();
         for (Map.Entry<String, Object> entry : equalConditionMap.entrySet()) {
             if(entry.getValue()==null){
                 continue;
@@ -169,9 +166,9 @@ public class ConditionBuilder<T> {
                     condition.eq(getTableFiledName(entry.getKey()), entry.getValue());
                 }
             } else if (entry.getValue() instanceof Collection) {
-                List select = ((Collection<?>) entry.getValue()).parallelStream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
+                List select = ((Collection<?>) entry.getValue()).parallelStream().distinct().filter(Objects::nonNull).collect(Collectors.toList());
                 if (select.size() == 1) {
-                    condition.eq(getTableFiledName(entry.getKey()), select.get(0));
+                    condition.ne(getTableFiledName(entry.getKey()), select.get(0));
                 } else if (select.size() > size) {
                     condition.and(q -> {
                         int pageNum = select.size() / size;
@@ -233,7 +230,7 @@ public class ConditionBuilder<T> {
                     condition.ne(getTableFiledName(entry.getKey()), entry.getValue());
                 }
             }else if (entry.getValue() instanceof Collection) {
-                List select = ((Collection<?>) entry.getValue()).parallelStream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
+                List select = ((Collection<?>) entry.getValue()).parallelStream().distinct().filter(Objects::nonNull).collect(Collectors.toList());
                 if (select.size() == 1) {
                     condition.ne(getTableFiledName(entry.getKey()), select.get(0));
                 } else if (select.size() > size) {
@@ -300,6 +297,14 @@ public class ConditionBuilder<T> {
             condition.isNotNull(getTableFiledName(key));
         }
 
+        setNullList = setNullList.parallelStream().distinct().filter(Objects::nonNull).collect(Collectors.toList());
+        for (String key : setNullList) {
+            key = getTableFiledName(key);
+            if (rejectColumn.contains(key)) {
+                continue;
+            }
+            condition.set(key, null);
+        }
         return condition;
     }
 }
