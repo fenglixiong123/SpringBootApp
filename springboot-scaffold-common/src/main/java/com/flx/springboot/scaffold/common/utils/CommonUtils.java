@@ -7,6 +7,8 @@ package com.flx.springboot.scaffold.common.utils;
  */
 public class CommonUtils {
 
+    public static void main(String[] args) {
 
+    }
 
 }

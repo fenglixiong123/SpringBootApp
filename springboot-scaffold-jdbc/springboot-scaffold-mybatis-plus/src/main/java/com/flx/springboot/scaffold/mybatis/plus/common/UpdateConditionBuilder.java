@@ -11,7 +11,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.flx.springboot.scaffold.mybatis.plus.common.ConditionBuilder.getTableFiledName;
+import static com.flx.springboot.scaffold.mybatis.plus.common.QueryConditionBuilder.getTableFiledName;
 
 /**
  * @author fsanzhen
@@ -19,11 +19,10 @@ import static com.flx.springboot.scaffold.mybatis.plus.common.ConditionBuilder.g
  * 条件构造器
  */
 @Slf4j
+@SuppressWarnings("Duplicates")
 public class UpdateConditionBuilder<T> {
 
     private static int size = 1000;
-
-    private static final List<String> rejectColumn = Arrays.asList("create_user", "update_user", "create_time", "update_time");
 
     private final Map<String, Object> equalConditionMap = new HashMap<>();
     private final Map<String, Object> neConditionMap = new HashMap<>();
@@ -148,7 +147,6 @@ public class UpdateConditionBuilder<T> {
         return this;
     }
 
-
     public UpdateWrapper<T> build(Boolean flag) throws Exception {
         UpdateWrapper<T> condition = new UpdateWrapper<>();
         for (Map.Entry<String, Object> entry : equalConditionMap.entrySet()) {
@@ -166,9 +164,9 @@ public class UpdateConditionBuilder<T> {
                     condition.eq(getTableFiledName(entry.getKey()), entry.getValue());
                 }
             } else if (entry.getValue() instanceof Collection) {
-                List select = ((Collection<?>) entry.getValue()).parallelStream().distinct().filter(Objects::nonNull).collect(Collectors.toList());
+                List select = ((Collection<?>) entry.getValue()).parallelStream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
                 if (select.size() == 1) {
-                    condition.ne(getTableFiledName(entry.getKey()), select.get(0));
+                    condition.eq(getTableFiledName(entry.getKey()), select.get(0));
                 } else if (select.size() > size) {
                     condition.and(q -> {
                         int pageNum = select.size() / size;
@@ -230,7 +228,7 @@ public class UpdateConditionBuilder<T> {
                     condition.ne(getTableFiledName(entry.getKey()), entry.getValue());
                 }
             }else if (entry.getValue() instanceof Collection) {
-                List select = ((Collection<?>) entry.getValue()).parallelStream().distinct().filter(Objects::nonNull).collect(Collectors.toList());
+                List select = ((Collection<?>) entry.getValue()).parallelStream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
                 if (select.size() == 1) {
                     condition.ne(getTableFiledName(entry.getKey()), select.get(0));
                 } else if (select.size() > size) {
@@ -300,7 +298,7 @@ public class UpdateConditionBuilder<T> {
         setNullList = setNullList.parallelStream().distinct().filter(Objects::nonNull).collect(Collectors.toList());
         for (String key : setNullList) {
             key = getTableFiledName(key);
-            if (rejectColumn.contains(key)) {
+            if (ColumnRejectUtil.rejectColumn.contains(key)) {
                 continue;
             }
             condition.set(key, null);

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  */
 public class ColumnRejectUtil {
 
-    private static final List<String> rejectColumn = Arrays.asList("create_user", "update_user", "create_time", "update_time");
+    public static final List<String> rejectColumn = Arrays.asList("create_user", "update_user", "create_time", "update_time");
 
     /**
      * 获取对象中的字段并转换成数据库字段
@@ -31,8 +31,8 @@ public class ColumnRejectUtil {
         }
         Field[] fields = j.getDeclaredFields();
         List<String> filedName = Arrays.stream(fields).map(Field::getName).collect(Collectors.toList());
-        filedName = filedName.parallelStream().map(ConditionBuilder::getTableFiledName).collect(Collectors.toList());
-        columns = columns.parallelStream().map(ConditionBuilder::getTableFiledName).collect(Collectors.toList());
+        filedName = filedName.parallelStream().map(QueryConditionBuilder::getTableFiledName).collect(Collectors.toList());
+        columns = columns.parallelStream().map(QueryConditionBuilder::getTableFiledName).collect(Collectors.toList());
         List<String> newColumn=new ArrayList<>(columns);
         for (String e : columns) {
             if (!filedName.contains(e)) {
@@ -59,7 +59,7 @@ public class ColumnRejectUtil {
     public static String[] columnReject(Class j, List<String> columns) throws Exception {
         Field[] fields = j.getDeclaredFields();
         List<String> filedName = Arrays.stream(fields).map(Field::getName).collect(Collectors.toList());
-        filedName = filedName.parallelStream().map(ConditionBuilder::getTableFiledName).collect(Collectors.toList());
+        filedName = filedName.parallelStream().map(QueryConditionBuilder::getTableFiledName).collect(Collectors.toList());
         filedName.removeAll(columns);
         if (!filedName.contains("id")) {
             filedName.add("id");

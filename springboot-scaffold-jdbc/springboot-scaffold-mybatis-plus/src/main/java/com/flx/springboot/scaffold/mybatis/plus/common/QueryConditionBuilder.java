@@ -17,7 +17,8 @@ import java.util.stream.Collectors;
  * @date 2018-10-17 10:56
  * 条件构造器
  */
-public class ConditionBuilder<T> {
+@SuppressWarnings("Duplicates")
+public class QueryConditionBuilder<T> {
 
     private static int size = 1000;
     private final Map<String, Object> equalConditionMap = new HashMap<>();
@@ -40,59 +41,59 @@ public class ConditionBuilder<T> {
         return CodeUtils.toLowerCase(source);
     }
 
-    public ConditionBuilder<T> id(Long id) {
+    public QueryConditionBuilder<T> id(Long id) {
         Assert.notNull(id, "id can not be null");
         equalConditionMap.put("id", id);
         return this;
     }
 
-    public ConditionBuilder<T> neId(Long id) {
+    public QueryConditionBuilder<T> neId(Long id) {
         Assert.notNull(id, "id can not be null");
         neConditionMap.put("id", id);
         return this;
     }
 
-    public ConditionBuilder<T> neQuery(String property, Object val) {
+    public QueryConditionBuilder<T> neQuery(String property, Object val) {
         neConditionMap.put(property, val);
         return this;
     }
 
-    public ConditionBuilder<T> query(String property, Object val) {
+    public QueryConditionBuilder<T> query(String property, Object val) {
         equalConditionMap.put(property, val);
         return this;
     }
 
-    public ConditionBuilder<T> leftLike(String property, String val) {
+    public QueryConditionBuilder<T> leftLike(String property, String val) {
         leftLikeConditionMap.put(property, val);
         return this;
     }
 
-    public ConditionBuilder<T> rightLike(String property, String val) {
+    public QueryConditionBuilder<T> rightLike(String property, String val) {
         rightLikeConditionMap.put(property, val);
         return this;
     }
 
-    public ConditionBuilder<T> isNull(String property) {
+    public QueryConditionBuilder<T> isNull(String property) {
         nullConditionList.add(property);
         return this;
     }
 
-    public ConditionBuilder<T> isNull(List<String> propertyList) {
+    public QueryConditionBuilder<T> isNull(List<String> propertyList) {
         nullConditionList.addAll(propertyList);
         return this;
     }
 
-    public ConditionBuilder<T> isNotNull(String property) {
+    public QueryConditionBuilder<T> isNotNull(String property) {
         notNullConditionList.add(property);
         return this;
     }
 
-    public ConditionBuilder<T> isNotNull(List<String> propertyList) {
+    public QueryConditionBuilder<T> isNotNull(List<String> propertyList) {
         notNullConditionList.addAll(propertyList);
         return this;
     }
 
-    public ConditionBuilder<T> query(Object model) throws Exception {
+    public QueryConditionBuilder<T> query(Object model) throws Exception {
         if (model == null) {
             return this;
         }
@@ -116,7 +117,7 @@ public class ConditionBuilder<T> {
         return this;
     }
 
-    public ConditionBuilder<T> query(Map<String, Object> query) {
+    public QueryConditionBuilder<T> query(Map<String, Object> query) {
         if (null == query) {
             return this;
         }
@@ -152,6 +153,7 @@ public class ConditionBuilder<T> {
         return false;
     }
 
+    @SuppressWarnings("all")
     public QueryWrapper<T> build(Boolean flag) throws Exception {
         QueryWrapper<T> condition = new QueryWrapper<>();
         for (Map.Entry<String, Object> entry : equalConditionMap.entrySet()) {
