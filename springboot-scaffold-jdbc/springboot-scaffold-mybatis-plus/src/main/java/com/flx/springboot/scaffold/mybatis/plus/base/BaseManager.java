@@ -46,7 +46,7 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
     }
 
 
-    protected Long add(T model) {
+    protected Long add(T model) throws Exception{
         model.setCreateTime(new Date());
         if (StringUtils.isEmpty(model.getCreateUser())) {
             model.setCreateUser("admin");
@@ -57,6 +57,10 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
         model.setUpdateTime(new Date());
         dao.insert(model);
         return model.getId();
+    }
+
+    protected Integer deleteById(Long id) throws Exception {
+        return dao.deleteById(id);
     }
 
     protected int update(T model, QueryWrapper queryWrapper) throws Exception {
@@ -136,6 +140,10 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
             }
         }
         return result;
+    }
+
+    public Object getById(Long id) throws Exception {
+        return dao.selectById(id);
     }
 
     protected IPage<T> queryPage(Integer pageNum, Integer pageSize, Map<String, Object> query) throws Exception {

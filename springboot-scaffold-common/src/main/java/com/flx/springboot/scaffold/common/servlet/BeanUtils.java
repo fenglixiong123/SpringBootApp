@@ -1,5 +1,8 @@
 package com.flx.springboot.scaffold.common.servlet;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @Author: Fenglixiong
  * @Date: 2020/7/17 17:42
@@ -27,6 +30,10 @@ public class BeanUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static <T,V> List<V> convertList(List<T> entityList , Class<V> classV){
+        return entityList.parallelStream().map(e -> BeanUtils.copyProperties(e, classV)).collect(Collectors.toList());
     }
 
 }
