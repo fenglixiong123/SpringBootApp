@@ -106,15 +106,15 @@ public class HomeController {
     @GetMapping("/inQueue")
     public void testInQueue(@RequestParam String message){
         log.info("inQueue:{}",message);
-        RedisQueue.inQueue("myQueue",message);
+//        RedisQueue.inQueue("myQueue",message);
     }
 
 
     @GetMapping("/outQueue")
     public void testOutQueue(){
         log.info("outQueue");
-        String message = RedisQueue.outQueue("myQueue");
-        log.info("message:{}",message);
+//        String message = RedisQueue.outQueue("myQueue");
+//        log.info("message:{}",message);
     }
 
 
