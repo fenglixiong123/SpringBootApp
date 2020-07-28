@@ -1,5 +1,7 @@
 package com.flx.springboot.scaffold.common.utils.page;
 
+import com.flx.springboot.scaffold.common.utils.CollectionUtils;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,25 +20,14 @@ public class ListPageUtils {
      * @param pageSize 每页多少条数据
      * @return
      */
-    public static List startPage(List list, int curPage, int pageSize) {
-        if (list == null) {
+    public static <T> List<T> startPage(List<T> list, int curPage, int pageSize) {
+        if (CollectionUtils.isEmpty(list)) {
             return null;
         }
-        if (list.size() == 0) {
-            return null;
-        }
-
-        int totalSize = list.size(); // 记录总数
-        int totalPage; // 页数
-        if (totalSize % pageSize == 0) {
-            totalPage = totalSize / pageSize;
-        } else {
-            totalPage = totalSize / pageSize + 1;
-        }
-
         int fromIndex; // 开始索引
         int endIndex; // 结束索引
-
+        int totalSize = list.size(); // 记录总数
+        int totalPage = PageUtils.getTotalPage(totalSize,pageSize); // 页数
         if (curPage != totalPage) {
             fromIndex = (curPage - 1) * pageSize;
             endIndex = fromIndex + pageSize;

@@ -11,11 +11,11 @@ public class PageUtils {
         return (totalRecord+pageSize-1)/pageSize;
     }
 
-    public static int getTotalPage1(int totalRecord,int pageSize){
+    public static int getTotalPageA(int totalRecord,int pageSize){
         return totalRecord % pageSize == 0 ? totalRecord/pageSize : totalRecord/pageSize+1;
     }
 
-    public static int getTotalPage2(int totalRecord,int pageSize){
+    public static int getTotalPageB(int totalRecord,int pageSize){
         return (int)Math.ceil(totalRecord/pageSize);
     }
 
