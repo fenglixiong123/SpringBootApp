@@ -21,8 +21,8 @@ public class MybatisPlusConfiguration {
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer scannerConfigurer = new MapperScannerConfigurer();
-        scannerConfigurer.setBasePackage("com.flx.springboot.scaffold.mybatis.plus.*.dao");
-        scannerConfigurer.setAnnotationClass(DaoMapper.class);
+        scannerConfigurer.setBasePackage("com.flx.springboot.scaffold.mybatis.plus.dao");
+//        scannerConfigurer.setAnnotationClass(DaoMapper.class);
         return scannerConfigurer;
     }
 

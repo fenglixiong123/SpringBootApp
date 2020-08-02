@@ -63,6 +63,10 @@
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-swagger</artifactId>
+        </dependency>
         <!--健康监控-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

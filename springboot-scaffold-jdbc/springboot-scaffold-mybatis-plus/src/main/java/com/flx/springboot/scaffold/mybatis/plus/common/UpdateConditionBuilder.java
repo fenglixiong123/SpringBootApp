@@ -184,7 +184,6 @@ public class UpdateConditionBuilder<T> {
                                 q.in(getTableFiledName(entry.getKey()), select.subList(size * i, select.size()));
                             }
                         }
-                        return q;
                     });
                 } else {
                     condition.in(getTableFiledName(entry.getKey()), select);
@@ -245,7 +244,6 @@ public class UpdateConditionBuilder<T> {
                                 q.notIn(getTableFiledName(entry.getKey()), select.subList(size * i, select.size()));
                             }
                         }
-                        return q;
                     });
                 } else {
                     condition.notIn(getTableFiledName(entry.getKey()), select);

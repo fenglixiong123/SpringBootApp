@@ -10,7 +10,7 @@ import lombok.Data;
  * @author fanzhen
  * @date2018-12-18-16:59
  */
-@TableName(value = "basic_student")
+@TableName(value = "scaffold_student")
 @Data
 public class StudentDO extends BaseDO {
 
