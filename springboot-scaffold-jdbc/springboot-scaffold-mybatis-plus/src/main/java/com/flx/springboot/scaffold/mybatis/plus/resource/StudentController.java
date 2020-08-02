@@ -22,6 +22,12 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @PostMapping("/count")
+    public ResultResponse<Integer> count(){
+
+        return ResultResponse.success(studentService.count());
+    }
+
     @PostMapping("/query")
     public ResultResponse query(@RequestBody HashMap<String,Object> query){
         try {

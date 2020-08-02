@@ -22,6 +22,10 @@ import java.util.stream.Collectors;
 @Service
 public class StudentManager extends BaseManager<StudentDO, StudentDao> {
 
+    public int count(){
+        return dao.countStudent();
+    }
+
     public Long add(StudentDO StudentDO) throws Exception {
         return super.add(StudentDO);
     }

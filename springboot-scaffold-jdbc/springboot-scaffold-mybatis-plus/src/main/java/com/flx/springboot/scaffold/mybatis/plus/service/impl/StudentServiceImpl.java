@@ -35,6 +35,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public int count() {
+        return studentManager.count();
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public Long add(StudentVO studentVO) throws Exception {
         StudentDO studentDO = BeanUtils.copyProperties(studentVO, StudentDO.class);

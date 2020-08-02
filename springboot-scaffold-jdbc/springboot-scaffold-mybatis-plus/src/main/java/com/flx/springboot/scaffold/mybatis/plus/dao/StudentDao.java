@@ -3,6 +3,7 @@ package com.flx.springboot.scaffold.mybatis.plus.dao;
 import com.flx.springboot.scaffold.mybatis.plus.annotation.DaoMapper;
 import com.flx.springboot.scaffold.mybatis.plus.base.BaseDao;
 import com.flx.springboot.scaffold.mybatis.plus.entity.StudentDO;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * @Author: Fenglixiong
@@ -11,5 +12,8 @@ import com.flx.springboot.scaffold.mybatis.plus.entity.StudentDO;
  */
 @DaoMapper
 public interface StudentDao extends BaseDao<StudentDO> {
+
+    @Select("select count(1) from scaffold_student")
+    int countStudent();
 
 }

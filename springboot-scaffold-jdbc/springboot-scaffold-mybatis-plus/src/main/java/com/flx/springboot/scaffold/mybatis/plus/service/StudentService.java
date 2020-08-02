@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public interface StudentService {
 
+    int count();
+
     /**
      * 新增
      *
