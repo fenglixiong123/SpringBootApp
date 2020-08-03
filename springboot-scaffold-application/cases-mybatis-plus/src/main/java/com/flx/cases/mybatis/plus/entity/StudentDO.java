@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.mybatis.plus.entity;
+package com.flx.cases.mybatis.plus.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;

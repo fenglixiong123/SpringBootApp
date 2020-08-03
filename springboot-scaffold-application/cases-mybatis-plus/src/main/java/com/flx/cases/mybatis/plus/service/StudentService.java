@@ -1,9 +1,9 @@
-package com.flx.springboot.scaffold.mybatis.plus.service;
+package com.flx.cases.mybatis.plus.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.flx.springboot.scaffold.mybatis.plus.enums.State;
 import com.flx.springboot.scaffold.mybatis.plus.page.QueryAndPage;
-import com.flx.springboot.scaffold.mybatis.plus.vo.StudentVO;
+import com.flx.cases.mybatis.plus.vo.StudentVO;
 
 import java.util.List;
 import java.util.Map;

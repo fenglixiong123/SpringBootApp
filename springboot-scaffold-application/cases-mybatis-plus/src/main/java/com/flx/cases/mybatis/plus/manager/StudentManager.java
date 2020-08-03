@@ -1,12 +1,12 @@
-package com.flx.springboot.scaffold.mybatis.plus.manager;
+package com.flx.cases.mybatis.plus.manager;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.flx.springboot.scaffold.common.servlet.BeanUtils;
 import com.flx.springboot.scaffold.mybatis.plus.base.BaseManager;
-import com.flx.springboot.scaffold.mybatis.plus.dao.StudentDao;
-import com.flx.springboot.scaffold.mybatis.plus.dto.StudentDTO;
-import com.flx.springboot.scaffold.mybatis.plus.entity.StudentDO;
+import com.flx.cases.mybatis.plus.dao.StudentDao;
+import com.flx.cases.mybatis.plus.dto.StudentDTO;
+import com.flx.cases.mybatis.plus.entity.StudentDO;
 import com.flx.springboot.scaffold.mybatis.plus.page.PageConvert;
 import org.springframework.stereotype.Service;
 

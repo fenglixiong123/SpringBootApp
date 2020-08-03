@@ -55,6 +55,7 @@ public class ScanFieldAlias implements ResourceLoaderAware {
         MetadataReaderFactory metaReader = new CachingMetadataReaderFactory(resourceLoader);
         entityPackage = Objects.requireNonNull(entityPackage).replaceAll("\\.","/");
         String realLocations = "classpath*:"+entityPackage+"/*.class";
+        log.info("Read entity path : "+realLocations);
         Resource[] resources = resolver.getResources(realLocations);
         for (Resource r : resources) {
             MetadataReader reader = metaReader.getMetadataReader(r);
@@ -78,8 +79,9 @@ public class ScanFieldAlias implements ResourceLoaderAware {
 
         }
 
-        log.info("GetTable:"+(System.currentTimeMillis()-start));
-        log.info("Get table field success,fieldAlias=" + fieldAliasMap.toString());
+        log.info("GetTable used time : {}",System.currentTimeMillis()-start);
+        log.info("GetTable params : tablePrefix = {},entityPackage = {}",tablePrefix,entityPackage);
+        log.info("GetTable alis success : fieldAlias = {}",fieldAliasMap.toString());
 
     }
 

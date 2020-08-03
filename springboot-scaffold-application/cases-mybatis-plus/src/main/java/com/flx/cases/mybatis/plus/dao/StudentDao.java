@@ -1,8 +1,8 @@
-package com.flx.springboot.scaffold.mybatis.plus.dao;
+package com.flx.cases.mybatis.plus.dao;
 
 import com.flx.springboot.scaffold.mybatis.plus.annotation.DaoMapper;
 import com.flx.springboot.scaffold.mybatis.plus.base.BaseDao;
-import com.flx.springboot.scaffold.mybatis.plus.entity.StudentDO;
+import com.flx.cases.mybatis.plus.entity.StudentDO;
 import org.apache.ibatis.annotations.Select;
 
 /**

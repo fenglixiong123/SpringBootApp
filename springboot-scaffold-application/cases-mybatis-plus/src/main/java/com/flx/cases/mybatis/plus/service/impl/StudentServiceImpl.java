@@ -1,15 +1,15 @@
-package com.flx.springboot.scaffold.mybatis.plus.service.impl;
+package com.flx.cases.mybatis.plus.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.flx.springboot.scaffold.common.servlet.BeanUtils;
-import com.flx.springboot.scaffold.mybatis.plus.dto.StudentDTO;
-import com.flx.springboot.scaffold.mybatis.plus.entity.StudentDO;
+import com.flx.cases.mybatis.plus.dto.StudentDTO;
+import com.flx.cases.mybatis.plus.entity.StudentDO;
 import com.flx.springboot.scaffold.mybatis.plus.enums.State;
-import com.flx.springboot.scaffold.mybatis.plus.manager.StudentManager;
+import com.flx.cases.mybatis.plus.manager.StudentManager;
 import com.flx.springboot.scaffold.mybatis.plus.page.PageConvert;
 import com.flx.springboot.scaffold.mybatis.plus.page.QueryAndPage;
-import com.flx.springboot.scaffold.mybatis.plus.service.StudentService;
-import com.flx.springboot.scaffold.mybatis.plus.vo.StudentVO;
+import com.flx.cases.mybatis.plus.service.StudentService;
+import com.flx.cases.mybatis.plus.vo.StudentVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

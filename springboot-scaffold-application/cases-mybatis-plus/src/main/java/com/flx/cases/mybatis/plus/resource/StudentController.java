@@ -1,8 +1,7 @@
-package com.flx.springboot.scaffold.mybatis.plus.resource;
+package com.flx.cases.mybatis.plus.resource;
 
 import com.flx.springboot.scaffold.common.result.ResultResponse;
-import com.flx.springboot.scaffold.mybatis.plus.service.StudentService;
-import com.flx.springboot.scaffold.mybatis.plus.vo.StudentVO;
+import com.flx.cases.mybatis.plus.service.StudentService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

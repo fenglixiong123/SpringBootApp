@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.mybatis.plus.dto;
+package com.flx.cases.mybatis.plus.dto;
 
 import com.flx.springboot.scaffold.mybatis.plus.enums.State;
 import lombok.Data;
