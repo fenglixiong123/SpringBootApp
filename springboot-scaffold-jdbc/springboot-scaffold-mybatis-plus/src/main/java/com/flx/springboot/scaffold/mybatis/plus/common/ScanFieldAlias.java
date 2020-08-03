@@ -34,6 +34,8 @@ public class ScanFieldAlias implements ResourceLoaderAware {
      */
     @Value("${spring.flx.table.prefix:basic_}")
     private String tablePrefix;
+    @Value("${spring.flx.entity.package:com/flx/springboot/scaffold/mybatis/plus/entity}")
+    private String entityPackage;
 
     public static Map<String, String> fieldAliasMap = new HashMap<>();
     public static List<String> tableName = new ArrayList<>();
@@ -51,7 +53,8 @@ public class ScanFieldAlias implements ResourceLoaderAware {
         long start=System.currentTimeMillis();
         ResourcePatternResolver resolver = ResourcePatternUtils.getResourcePatternResolver(resourceLoader);
         MetadataReaderFactory metaReader = new CachingMetadataReaderFactory(resourceLoader);
-        Resource[] resources = resolver.getResources("classpath*:com/flx/springboot/scaffold/mybatis/plus/entity/*.class");
+        entityPackage = Objects.requireNonNull(entityPackage).replaceAll("\\.","/");
+        Resource[] resources = resolver.getResources("classpath*:"+entityPackage+"/*.class");
         for (Resource r : resources) {
             MetadataReader reader = metaReader.getMetadataReader(r);
             ClassMetadata entityClass = reader.getClassMetadata();
