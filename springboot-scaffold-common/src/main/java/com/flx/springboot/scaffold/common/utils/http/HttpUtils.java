@@ -48,6 +48,23 @@ import java.util.Map.Entry;
 @NoArgsConstructor
 public class HttpUtils{
 
+    public static void main(String[] args) {
+
+        JSONObject params = new JSONObject();
+        params.put("video_id","60_8be004799c424688949704814ea0d16d");
+        params.put("state",3+"");
+        params.put("attr_tags","");
+        params.put("msg","");
+        HttpUtils httpUtil = HttpUtils.createHttpClient()
+                .setHeader("type","utf-8")
+                .setParam("name","admin")
+                .builder();
+        String URL ="http://127.0.0.1:8023/api/basic/tenant/getCurrentTenantCode";
+        HttpResult post = httpUtil.get(URL);
+        System.out.println(post);
+
+    }
+
     /**
      * Httpclient连接池
      */
@@ -292,21 +309,6 @@ public class HttpUtils{
             request.abort();
         }
         return httpResult;
-    }
-
-    public static void main(String[] args) {
-
-        JSONObject params = new JSONObject();
-        params.put("video_id","60_8be004799c424688949704814ea0d16d");
-        params.put("state",3+"");
-        params.put("attr_tags","");
-        params.put("msg","");
-        HttpUtils httpUtil = HttpUtils.createHttpClient()
-                .builder();
-        String URL ="http://127.0.0.1:8023/api/basic/tenant/getCurrentTenantCode";
-        HttpResult post = httpUtil.get(URL);
-        System.out.println(post);
-
     }
     
     
