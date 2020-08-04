@@ -10,24 +10,25 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>springboot-scaffold-aop</module>
+        <module>springboot-scaffold-annotation</module>
         <module>springboot-scaffold-application</module>
+        <module>springboot-scaffold-common</module>
+        <module>springboot-scaffold-email</module>
+        <module>springboot-scaffold-exception</module>
+        <module>springboot-scaffold-filter</module>
+        <module>springboot-scaffold-flyway</module>
+        <module>springboot-scaffold-jdbc</module>
+        <module>springboot-scaffold-jms</module>
+        <module>springboot-scaffold-logger</module>
         <module>springboot-scaffold-parent</module>
-        <module>springboot-scaffold-web</module>
+        <module>springboot-scaffold-rbac</module>
+        <module>springboot-scaffold-redis</module>
+        <module>springboot-scaffold-schedule</module>
         <module>springboot-scaffold-simple</module>
         <module>springboot-scaffold-swagger</module>
-        <module>springboot-scaffold-common</module>
+        <module>springboot-scaffold-web</module>
         <module>springboot-scaffold-websocket</module>
-        <module>springboot-scaffold-email</module>
-        <module>springboot-scaffold-logger</module>
-        <module>springboot-scaffold-jms</module>
-        <module>springboot-scaffold-jdbc</module>
-        <module>springboot-scaffold-rbac</module>
-        <module>springboot-scaffold-schedule</module>
-        <module>springboot-scaffold-filter</module>
-        <module>springboot-scaffold-aop</module>
-        <module>springboot-scaffold-exception</module>
-        <module>springboot-scaffold-annotation</module>
-        <module>springboot-scaffold-redis</module>
     </modules>
 
 </project>

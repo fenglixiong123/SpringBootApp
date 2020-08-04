@@ -26,6 +26,7 @@
         <http.client.version>4.5.12</http.client.version>
         <alibaba.fastjson.version>1.2.51</alibaba.fastjson.version>
         <alibaba.druid.version>1.1.12</alibaba.druid.version>
+        <flyway.version>5.2.4</flyway.version>
         <jackson.version>2.9.7</jackson.version>
         <json.path.verson>2.4.0</json.path.verson>
         <kafka.version>2.2.0.RELEASE</kafka.version>
@@ -80,6 +81,12 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
+            </dependency>
+            <!--flyway-core-->
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -213,40 +220,149 @@
     </dependencies>
 
     <build>
-        <!--设置子类工程的maven打包插件-->
+        <!--设置子类工程的maven打包插件版本管理-->
         <pluginManagement>
             <plugins>
+                <!--第一种情况，生成单个的jar文件-->
+                <!--看情况使用，小项目可以使用-->
+                <!--常规打包，flat jar，打出来的jar很大，不易于修改部分文件后增量发布 -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <!--打包生成方式 ZIP 、JAR 、WAR、 NONE-->
+                        <!--<layout>JAR</layout>-->
+                        <!--指定主类-->
+                        <!--<mainClass>com.flx.springboot.scaffold.application.MainApplication</mainClass>-->
+                        <!-- 作用:项目打成jar的同时将本地jar包也引入进去,这里的本地jar指的是类路径中添加的jar包-->
+                        <!--<includeSystemScope>true</includeSystemScope>-->
+                    </configuration>
+                    <!--最主要goal就是repackage，其在Maven的package生命周期阶段，能够将mvn package生成的软件包，再次打包为可执行的软件包，并将mvn package生成的软件包重命名为*.original。-->
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!--第二种情况启动项和依赖包分离-->
+                <!--打成jar时，设定manifest的参数，比如指定运行的Main class，还有依赖的jar包，加入classpath中-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>${maven.jar.plugin.version}</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <!-- MANIFEST.MF 中 Class-Path 加入前缀 -->
+                                <classpathPrefix>/lib</classpathPrefix>
+                                <!--指定入口类 -->
+                                <mainClass>com.flx.springboot.scaffold.application.MainApplication</mainClass>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <!--复制依赖的jar包到指定的文件夹里，相当于：mvn dependency:copy-dependencies -DoutputDirectory=lib-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.10</version>
+                    <executions>
+                        <execution>
+                            <id>copy-dependencies</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!--第三种情况，提供给第三方使用，包含所有依赖的普通jar-->
+                <!--用于把多个jar包，打成1个jar包,一般Java项目都会依赖其他第三方jar包，最终打包时，希望把其他jar包包含在一个jar包里-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>2.4.3</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                            <configuration>
+                                <transformers>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                        <manifestEntries>
+                                            <Main-Class>com.flx.springboot.scaffold.application.MainApplication</Main-Class>
+                                            <X-Compile-Source-JDK>1.8</X-Compile-Source-JDK>
+                                            <X-Compile-Target-JDK>1.8</X-Compile-Target-JDK>
+                                        </manifestEntries>
+                                    </transformer>
+                                </transformers>
+                                <createDependencyReducedPom>false</createDependencyReducedPom>
+                                <filters>
+                                    <filter>
+                                        <artifact>*:*</artifact>
+                                        <excludes>
+                                            <exclude>META-INF/*.SF</exclude>
+                                            <exclude>META-INF/*.DSA</exclude>
+                                            <exclude>META-INF/*.RSA</exclude>
+                                        </excludes>
+                                    </filter>
+                                </filters>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!--编译java源码-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.piugin.version}</version>
+                    <configuration>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                    </configuration>
+                </plugin>
+                <!--发布java源码-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
+
+        <!--目前在使用的相关插件,包含打包、编译、源码-->
+
         <plugins>
-            <!--编译java源码-->
+            <!--Springboot的打包插件-->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.piugin.version}</version>
-                <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                </configuration>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!--编译java源码.java到.class文件-->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <!--发布java源码-->
+            <plugin>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

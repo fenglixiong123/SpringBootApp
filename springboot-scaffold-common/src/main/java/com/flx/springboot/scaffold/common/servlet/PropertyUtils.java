@@ -28,6 +28,7 @@ public class PropertyUtils {
      * @return
      */
     public static String getProperty(String key){
+        log.info("Ready to load resource : isClassPath = {} , location = {} , key = {}",true,defaultLocation,key);
         return Objects.requireNonNull(getPropertyEntity(defaultLocation,true)).getProperty(key);
     }
 
@@ -38,6 +39,7 @@ public class PropertyUtils {
      * @return
      */
     public static String getProperty(String location,String key){
+        log.info("Ready to load resource : isClassPath = {} , location = {} , key = {}",true,location,key);
         return Objects.requireNonNull(getPropertyEntity(location,true)).getProperty(key);
     }
 
@@ -48,6 +50,7 @@ public class PropertyUtils {
      * @return
      */
     public static String getFileProperty(String location,String key){
+        log.info("Ready to load resource : isClassPath = {} , location = {} , key = {}",false,location,key);
         return Objects.requireNonNull(getPropertyEntity(location,false)).getProperty(key);
     }
 
@@ -56,7 +59,6 @@ public class PropertyUtils {
             location = "application.properties";
         }
         try{
-            log.info("Ready to load resource : isClassPath = {} , location = {}",isClassPath,location);
             if(isClassPath) {
                 return PropertiesLoaderUtils.loadProperties(new EncodedResource(new ClassPathResource(location), WebConstant.UTF_8));
             }else {

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @ResponseBody
 @ControllerAdvice
-public class CoreExceptionHandler implements InitializingBean {
+public class CoreExceptionHandler {
 
     /**
      * 自定义传参异常类
@@ -143,8 +144,12 @@ public class CoreExceptionHandler implements InitializingBean {
         return ResultResponse.error(message);
     }
 
-    @Override
-    public void afterPropertiesSet() {
-        log.info("=============注册GlobalExceptionHandler成功==========");
+    @PostConstruct
+    public void init() {
+        log.info("*************************************************");
+        log.info("*                                               *");
+        log.info("*                 GlobalException               *");
+        log.info("*                                               *");
+        log.info("*************************************************");
     }
 }
