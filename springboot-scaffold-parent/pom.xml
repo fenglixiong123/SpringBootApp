@@ -27,7 +27,7 @@
         <alibaba.fastjson.version>1.2.51</alibaba.fastjson.version>
         <alibaba.druid.version>1.1.12</alibaba.druid.version>
         <flyway.version>5.2.4</flyway.version>
-        <jackson.version>2.9.7</jackson.version>
+        <jackson.version>2.9.10.5</jackson.version>
         <json.path.verson>2.4.0</json.path.verson>
         <kafka.version>2.2.0.RELEASE</kafka.version>
         <mybatis.version>2.1.2</mybatis.version>
