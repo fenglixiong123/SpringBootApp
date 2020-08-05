@@ -122,16 +122,14 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
     protected Integer addByList(List<T> modelList) throws Exception {
         int result = 1;
         for (T model : modelList) {
-            
             model.setCreateTime(new Date());
+            model.setUpdateTime(new Date());
             if (StringUtils.isEmpty(model.getCreateUser())) {
                 model.setCreateUser("admin");
             }
-            
             if (StringUtils.isEmpty(model.getUpdateUser())) {
                 model.setUpdateUser("admin");
             }
-            model.setUpdateTime(new Date());
             try {
                 dao.insert(model);
             } catch (Exception e) {

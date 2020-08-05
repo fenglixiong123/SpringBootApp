@@ -11,5 +11,19 @@
 
     <artifactId>springboot-scaffold-system-dictionary</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-mybatis-plus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-swagger</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-flyway</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

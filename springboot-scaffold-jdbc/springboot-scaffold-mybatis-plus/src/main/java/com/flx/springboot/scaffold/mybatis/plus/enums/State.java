@@ -6,7 +6,7 @@ package com.flx.springboot.scaffold.mybatis.plus.enums;
  * @date2018-12-03-10:22
  */
 public enum State {
-    effective,
-    invalid,
-    deleted
+    effective,  //有效
+    invalid,    //无效
+    deleted     //删除
 }
