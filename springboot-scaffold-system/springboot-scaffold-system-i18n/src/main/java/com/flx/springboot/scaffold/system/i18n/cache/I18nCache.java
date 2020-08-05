@@ -1,0 +1,100 @@
+package com.flx.springboot.scaffold.system.i18n.cache;
+
+import com.flx.springboot.scaffold.common.constants.WebConstant;
+import com.flx.springboot.scaffold.common.utils.CommonUtils;
+import com.flx.springboot.scaffold.mybatis.plus.constants.PlusConstant;
+import com.flx.springboot.scaffold.mybatis.plus.enums.State;
+import com.flx.springboot.scaffold.system.i18n.entity.I18nDO;
+import com.flx.springboot.scaffold.system.i18n.manager.I18nManager;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.*;
+
+/**
+ * @Author: fenglixiong
+ * @Date: 2019/5/6 16:43
+ * @Version 2.0.0
+ */
+@Slf4j
+@Component
+public class I18nCache {
+
+    private static Map<String, String> i18nBOHashMap = new HashMap<>();
+    @Value("${i18n.refresh.cron:#{\"0 0 0 1/1 * ?\"}}")
+    private String time;
+
+    @Autowired
+    private I18nManager i18nManager;
+
+    public String getMessage(String i18NCode) {
+        String language = LocaleContextHolder.getLocale().getLanguage();
+        return getMessage(i18NCode,language,null);
+    }
+
+    public String getMessage(String i18NCode, String language) {
+        return getMessage(i18NCode,language,null);
+    }
+
+    public String getMessage(String i18NCode, Object[] args) {
+        String language = LocaleContextHolder.getLocale().getLanguage();
+        return getMessage(i18NCode,language,args);
+    }
+
+    private String getMessage(String i18NCode, String language, Object[] args) {
+        language = CommonUtils.defaultIfNull(language,WebConstant.en_us);
+        String i18nMessage = i18nBOHashMap.get(i18NCode + "|" + language);
+        if (StringUtils.isBlank(i18nMessage)) {
+            return i18NCode;
+        }
+        if(args!=null && args.length > 0) {
+            for (int i = 0; i < args.length; i++) {
+                i18nMessage = i18nMessage.replace("{" + i + "}", args[i].toString());
+            }
+        }
+        return i18nMessage;
+    }
+
+    public boolean messageExist(String i18NCode, String language) {
+        return i18nBOHashMap.containsKey(i18NCode + "|" + language);
+    }
+
+    /**
+     * 每隔10分钟更新一次
+     */
+    @Scheduled(cron = "${i18n.refresh.cron:#{\"0 0/10 * * * ? \"}}")
+    private void updateMessage() throws Exception {
+        refresh();
+        log.info("Update i18n and dictionary in " + new Date());
+    }
+
+    @PostConstruct
+    private void init() throws Exception {
+        if (time == null || time.isEmpty()) {
+            throw new Exception("Cron is illegal,your cron is {0}!||" + time);
+        }
+        if (!CronExpression.isValidExpression(time)) {
+            throw new Exception("Cron is illegal,your cron is {0}!||" + time);
+        }
+        refresh();
+    }
+
+    private void refresh() throws Exception {
+        try {
+            i18nBOHashMap.clear();
+            List<I18nDO> i18nBOList = i18nManager.queryByPrefix("Basic-", State.effective,1, PlusConstant.I18N_MAX_PAGE_NUM).getRecords();
+            i18nBOList.forEach(e -> i18nBOHashMap.put(e.getI18nCode() + "|" + e.getLanguage(), e.getValue()));
+        } catch (Exception e) {
+            log.error("I18nClient init fail!");
+            throw new Exception(e.toString());
+        }
+
+    }
+
+}
