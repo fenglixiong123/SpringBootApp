@@ -29,6 +29,7 @@
         <module>springboot-scaffold-swagger</module>
         <module>springboot-scaffold-web</module>
         <module>springboot-scaffold-websocket</module>
+        <module>springboot-scaffold-system</module>
     </modules>
 
 </project>

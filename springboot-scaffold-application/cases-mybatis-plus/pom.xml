@@ -3,10 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>springboot-scaffold-application</artifactId>
+        <artifactId>springboot-scaffold-parent</artifactId>
         <groupId>com.flx.springboot</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cases-mybatis-plus</artifactId>
@@ -15,12 +16,14 @@
         <dependency>
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-mybatis-plus</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-flyway</artifactId>
-            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-swagger</artifactId>
         </dependency>
     </dependencies>
 

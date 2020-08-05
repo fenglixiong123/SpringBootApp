@@ -11,5 +11,34 @@
 
     <artifactId>springboot-scaffold-mybatis</artifactId>
 
+    <dependencies>
+        <!-- 分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.10</version>
+        </dependency>
+        <!--mybatis-->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-swagger</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

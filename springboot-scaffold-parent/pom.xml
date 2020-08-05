@@ -34,15 +34,17 @@
         <mybatis.plus.version>3.3.2</mybatis.plus.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.ui.version>1.8.4</swagger.ui.version>
-        <scaffold.web.version>1.0-SNAPSHOT</scaffold.web.version>
-        <scaffold.swagger.version>1.0-SNAPSHOT</scaffold.swagger.version>
-        <scaffold.common.version>1.0-SNAPSHOT</scaffold.common.version>
-        <scaffold.exception.version>1.0-SNAPSHOT</scaffold.exception.version>
-        <scaffold.redis.version>1.0-SNAPSHOT</scaffold.redis.version>
-        <scaffold.email.version>1.0-SNAPSHOT</scaffold.email.version>
         <quartz.version>2.2.3</quartz.version>
         <jxl.version>2.6.10</jxl.version>
         <cglib.version>3.3.0</cglib.version>
+        <scaffold.common.version>1.0-SNAPSHOT</scaffold.common.version>
+        <scaffold.email.version>1.0-SNAPSHOT</scaffold.email.version>
+        <scaffold.exception.version>1.0-SNAPSHOT</scaffold.exception.version>
+        <scaffold.flyway.version>1.0-SNAPSHOT</scaffold.flyway.version>
+        <scaffold.mybatis.plus.version>1.0-SNAPSHOT</scaffold.mybatis.plus.version>
+        <scaffold.redis.version>1.0-SNAPSHOT</scaffold.redis.version>
+        <scaffold.swagger.version>1.0-SNAPSHOT</scaffold.swagger.version>
+        <scaffold.web.version>1.0-SNAPSHOT</scaffold.web.version>
     </properties>
 
     <dependencyManagement>
@@ -166,6 +168,18 @@
                 <groupId>com.flx.springboot</groupId>
                 <artifactId>springboot-scaffold-redis</artifactId>
                 <version>${scaffold.redis.version}</version>
+            </dependency>
+            <!--scaffold-mybatis-plus-->
+            <dependency>
+                <groupId>com.flx.springboot</groupId>
+                <artifactId>springboot-scaffold-mybatis-plus</artifactId>
+                <version>${scaffold.mybatis.plus.version}</version>
+            </dependency>
+            <!--scaffold-flyway-->
+            <dependency>
+                <groupId>com.flx.springboot</groupId>
+                <artifactId>springboot-scaffold-flyway</artifactId>
+                <version>${scaffold.flyway.version}</version>
             </dependency>
             <!--scaffold-exception-->
             <dependency>

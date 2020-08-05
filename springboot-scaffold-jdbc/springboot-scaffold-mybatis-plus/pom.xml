@@ -11,5 +11,28 @@
 
     <artifactId>springboot-scaffold-mybatis-plus</artifactId>
 
+    <dependencies>
+        <!--mybatis-plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-web</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

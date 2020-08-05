@@ -10,12 +10,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>springboot-scaffold-jdbc</artifactId>
+    <artifactId>springboot-scaffold-system</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>springboot-scaffold-jpa</module>
-        <module>springboot-scaffold-mybatis</module>
-        <module>springboot-scaffold-mybatis-plus</module>
+        <module>springboot-scaffold-system-i18n</module>
+        <module>springboot-scaffold-system-dictionary</module>
     </modules>
+
 
 </project>
