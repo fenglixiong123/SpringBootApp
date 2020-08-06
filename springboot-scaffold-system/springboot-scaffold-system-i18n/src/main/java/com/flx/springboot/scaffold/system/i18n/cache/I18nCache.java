@@ -4,10 +4,13 @@ import com.flx.springboot.scaffold.common.constants.WebConstant;
 import com.flx.springboot.scaffold.common.utils.CommonUtils;
 import com.flx.springboot.scaffold.mybatis.plus.constants.PlusConstant;
 import com.flx.springboot.scaffold.mybatis.plus.enums.State;
+import com.flx.springboot.scaffold.system.i18n.dto.I18nDTO;
 import com.flx.springboot.scaffold.system.i18n.entity.I18nDO;
 import com.flx.springboot.scaffold.system.i18n.manager.I18nManager;
+import com.flx.springboot.scaffold.system.i18n.vo.I18nVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.core.util.CronExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -26,9 +29,12 @@ import java.util.*;
 @Component
 public class I18nCache {
 
-    private static Map<String, String> i18nBOHashMap = new HashMap<>();
+    @Value("${i18n.refresh.prefix:Scaffold-}")
+    private String refreshPrefix;
     @Value("${i18n.refresh.cron:#{\"0 0 0 1/1 * ?\"}}")
-    private String time;
+    private String refreshTime;
+
+    private static Map<String, String> i18nBOHashMap = new HashMap<>();
 
     @Autowired
     private I18nManager i18nManager;
@@ -69,29 +75,33 @@ public class I18nCache {
      * 每隔10分钟更新一次
      */
     @Scheduled(cron = "${i18n.refresh.cron:#{\"0 0/10 * * * ? \"}}")
-    private void updateMessage() throws Exception {
+    private void refreshI18n() throws Exception {
         refresh();
         log.info("Update i18n and dictionary in " + new Date());
     }
 
     @PostConstruct
     private void init() throws Exception {
-        if (time == null || time.isEmpty()) {
-            throw new Exception("Cron is illegal,your cron is {0}!||" + time);
+        if (StringUtils.isBlank(refreshTime)) {
+            throw new Exception("Cron is blank,your cron is " + refreshTime);
         }
-        if (!CronExpression.isValidExpression(time)) {
-            throw new Exception("Cron is illegal,your cron is {0}!||" + time);
+        if (!CronExpression.isValidExpression(refreshTime)) {
+            throw new Exception("Cron is illegal,your cron is " + refreshTime);
         }
         refresh();
     }
 
+    /**
+     * 刷新i18n文件
+     * @throws Exception
+     */
     private void refresh() throws Exception {
         try {
             i18nBOHashMap.clear();
-            List<I18nDO> i18nBOList = i18nManager.queryByPrefix("Basic-", State.effective,1, PlusConstant.I18N_MAX_PAGE_NUM).getRecords();
+            List<I18nDTO> i18nBOList = i18nManager.queryByPrefix(refreshPrefix, State.effective,1, PlusConstant.I18N_MAX_PAGE_NUM).getRecords();
             i18nBOList.forEach(e -> i18nBOHashMap.put(e.getI18nCode() + "|" + e.getLanguage(), e.getValue()));
         } catch (Exception e) {
-            log.error("I18nClient init fail!");
+            log.error("I18nCache refresh fail!");
             throw new Exception(e.toString());
         }
 

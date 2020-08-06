@@ -27,10 +27,6 @@
         </dependency>
         <dependency>
             <groupId>com.flx.springboot</groupId>
-            <artifactId>springboot-scaffold-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-web</artifactId>
         </dependency>
     </dependencies>

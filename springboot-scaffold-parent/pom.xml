@@ -16,6 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
         <maven.compiler.piugin.version>3.7.0</maven.compiler.piugin.version>
+        <spring.log4j2.version>2.3.2.RELEASE</spring.log4j2.version>
         <spring.boot.version>2.1.0.RELEASE</spring.boot.version>
         <spring.cloud.version>Finchley.RELEASE</spring.cloud.version>
         <apache.lang3.version>3.3.2</apache.lang3.version>
@@ -204,6 +205,12 @@
                 <groupId>com.flx.springboot</groupId>
                 <artifactId>springboot-scaffold-common</artifactId>
                 <version>${scaffold.common.version}</version>
+            </dependency>
+            <!--spring-log4j2-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-log4j2</artifactId>
+                <version>${spring.log4j2.version}</version>
             </dependency>
             <!--spring-boot-->
             <dependency>
