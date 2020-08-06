@@ -75,14 +75,6 @@ public class I18nWebConfig extends WebMvcConfigurationSupport {
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
-        stringHttpMessageConverter.setWriteAcceptCharset(false);
-        converters.add(new ByteArrayHttpMessageConverter());
-        converters.add(stringHttpMessageConverter);
-        converters.add(new ResourceHttpMessageConverter());
-        converters.add(new SourceHttpMessageConverter<>());
-        converters.add(new AllEncompassingFormHttpMessageConverter());
-        converters.add(new MappingJackson2HttpMessageConverter(Jackson2ObjectMapperBuilder.json().build()));
         super.configureMessageConverters(converters);
     }
 

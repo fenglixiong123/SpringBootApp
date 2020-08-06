@@ -1,0 +1,1 @@
+select * from `scaffold`.`scaffold_dictionary`;

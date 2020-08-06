@@ -82,7 +82,7 @@ public class I18nCache {
     /**
      * 每隔10分钟更新一次
      */
-    @Scheduled(cron = "${i18n.refresh.cron:#{\"0 0/10 * * * ? \"}}")
+    @Scheduled(initialDelay = 5000,cron = "${i18n.refresh.cron:#{\"0 0/10 * * * ? \"}}")
     private void refreshI18n() throws Exception {
         refresh();
         log.info("Update i18n and dictionary in " + new Date());
@@ -96,7 +96,6 @@ public class I18nCache {
         if (!CronExpression.isValidExpression(refreshTime)) {
             throw new Exception("Cron is illegal,your cron is " + refreshTime);
         }
-        refresh();
     }
 
     /**

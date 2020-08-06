@@ -42,7 +42,7 @@ public class FlywayConfiguration {
     public void initFlyway(){
         log.info("*************************************************");
         log.info("*                                               *");
-        log.info("*                  init flyway                  *");
+        log.info("*                 Flyway Success                *");
         log.info("*                                               *");
         log.info("*************************************************");
         FluentConfiguration fluentConfiguration = Flyway.configure()

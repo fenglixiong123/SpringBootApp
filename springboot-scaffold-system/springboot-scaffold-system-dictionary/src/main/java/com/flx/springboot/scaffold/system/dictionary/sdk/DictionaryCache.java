@@ -62,7 +62,7 @@ public class DictionaryCache {
     /**
      * 每隔10分钟更新一次
      */
-    @Scheduled(cron = "${dictionary.refresh.cron:#{\"0 0/10 * * * ? \"}}")
+    @Scheduled(initialDelay = 5000,cron = "${dictionary.refresh.cron:#{\"0 0/10 * * * ? \"}}")
     private void refreshDictionary() throws Exception {
         refresh();
         log.info("Update dictionary in " + new Date());
@@ -76,7 +76,6 @@ public class DictionaryCache {
         if (!CronExpression.isValidExpression(refreshTime)) {
             throw new Exception("Cron is illegal,your cron is " + refreshTime);
         }
-        refresh();
     }
 
     /**
