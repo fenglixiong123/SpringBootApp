@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.system.i18n.cache;
+package com.flx.springboot.scaffold.system.i18n.sdk;
 
 import com.flx.springboot.scaffold.common.constants.WebConstant;
 import com.flx.springboot.scaffold.common.utils.CommonUtils;
@@ -53,7 +53,7 @@ public class I18nCache {
         return getMessage(i18NCode,language,args);
     }
 
-    private String getMessage(String i18NCode, String language, Object[] args) {
+    public String getMessage(String i18NCode, String language, Object[] args) {
         language = CommonUtils.defaultIfNull(language,WebConstant.en_us);
         String i18nMessage = i18nBOHashMap.get(i18NCode + "|" + language);
         if (StringUtils.isBlank(i18nMessage)) {

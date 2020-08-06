@@ -1,7 +1,7 @@
 package com.flx.springboot.scaffold.system.i18n.resource;
 
 import com.flx.springboot.scaffold.common.result.ResultResponse;
-import com.flx.springboot.scaffold.system.i18n.cache.I18nCache;
+import com.flx.springboot.scaffold.system.i18n.sdk.I18nCache;
 import com.flx.springboot.scaffold.system.i18n.service.I18nService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;

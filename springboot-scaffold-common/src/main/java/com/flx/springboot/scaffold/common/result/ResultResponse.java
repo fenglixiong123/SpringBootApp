@@ -24,12 +24,12 @@ public class ResultResponse<E> {
     /**
      * 返回代码
      */
-    private int code;
+    private String code;
 
     /**
      * 返回错误信息
      */
-    private String msg;
+    private String message;
 
     /**
      * 返回结果
@@ -41,25 +41,25 @@ public class ResultResponse<E> {
         this.success = true;
     }
 
-    private ResultResponse(boolean success, int code, String msg, E data) {
+    private ResultResponse(boolean success, String code, String msg, E data) {
         this.success = success;
         this.code = code;
-        this.msg = msg;
+        this.message = msg;
         this.data = data;
     }
 
-    public ResultResponse<E> success(int code,String message,E data) {
+    public ResultResponse<E> success(String code,String message,E data) {
         this.success = true;
         this.code = code;
-        this.msg = message;
+        this.message = message;
         this.data = data;
         return this;
     }
 
-    public ResultResponse<E> error(int code,String message,E data) {
+    public ResultResponse<E> error(String code,String message,E data) {
         this.success = false;
         this.code = code;
-        this.msg = message;
+        this.message = message;
         this.data = data;
         return this;
     }
@@ -80,9 +80,15 @@ public class ResultResponse<E> {
     public static ResultResponse<String> error() {
         return new ResultResponse<>(false,ErrorMsgEnum.SYS_ERROR.getCode(),ErrorMsgEnum.SYS_ERROR.getMessage(),ErrorMsgEnum.SYS_ERROR.getUserMsg());
     }
+
     public static ResultResponse<String> error(String message) {
         return new ResultResponse<>(false,ErrorMsgEnum.SYS_ERROR.getCode(),message,ErrorMsgEnum.SYS_ERROR.getUserMsg());
     }
+
+    public static ResultResponse<String> error(String code,String message) {
+        return new ResultResponse<>(false,code,message,null);
+    }
+
     public static ResultResponse<String> error(ErrorMsgEnum errorMsgEnum) {
         return new ResultResponse<>(false,errorMsgEnum.getCode(),errorMsgEnum.getMessage(),errorMsgEnum.getUserMsg());
     }
