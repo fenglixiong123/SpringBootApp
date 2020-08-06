@@ -41,23 +41,31 @@ public class I18nCache {
 
     public String getMessage(String i18NCode) {
         String language = LocaleContextHolder.getLocale().getLanguage();
-        return getMessage(i18NCode,language,null);
+        return getMessage(i18NCode,language,null,null);
+    }
+
+    public String getMessageOrDefault(String i18NCode,String language,String defaultValue) {
+        return getMessage(i18NCode,language,null,defaultValue);
     }
 
     public String getMessage(String i18NCode, String language) {
-        return getMessage(i18NCode,language,null);
+        return getMessage(i18NCode,language,null,null);
     }
 
     public String getMessage(String i18NCode, Object[] args) {
         String language = LocaleContextHolder.getLocale().getLanguage();
-        return getMessage(i18NCode,language,args);
+        return getMessage(i18NCode,language,args,null);
     }
 
     public String getMessage(String i18NCode, String language, Object[] args) {
+        return getMessage(i18NCode,language,args,null);
+    }
+
+    private String getMessage(String i18NCode, String language, Object[] args,String defaultValue) {
         language = CommonUtils.defaultIfNull(language,WebConstant.en_us);
         String i18nMessage = i18nBOHashMap.get(i18NCode + "|" + language);
         if (StringUtils.isBlank(i18nMessage)) {
-            return i18NCode;
+            return defaultValue == null ? i18NCode : defaultValue;
         }
         if(args!=null && args.length > 0) {
             for (int i = 0; i < args.length; i++) {

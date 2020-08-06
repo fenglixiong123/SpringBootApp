@@ -89,10 +89,6 @@ public class DictionaryManager extends BaseManager<DictionaryDO, DictionaryDao> 
     }
 
     public Integer addByList(List<DictionaryDO> DictionaryDOList) throws Exception {
-        try {
-            return super.addByList(DictionaryDOList);
-        } catch (Exception e) {
-            return 0;
-        }
+        return super.addByList(DictionaryDOList);
     }
 }

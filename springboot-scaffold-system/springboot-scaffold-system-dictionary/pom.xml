@@ -12,6 +12,13 @@
     <artifactId>springboot-scaffold-system-dictionary</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.flx.springboot</groupId>
+            <artifactId>springboot-scaffold-system-i18n</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-mybatis-plus</artifactId>
@@ -23,6 +30,10 @@
         <dependency>
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-flyway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
     </dependencies>
 
