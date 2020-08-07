@@ -12,11 +12,6 @@
     <artifactId>springboot-scaffold-schedule</artifactId>
 
     <dependencies>
-        <!--quartz-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-quartz</artifactId>
-        </dependency>
         <!--web基础设施-->
         <dependency>
             <groupId>com.flx.springboot</groupId>
@@ -25,10 +20,6 @@
         <dependency>
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.flx.springboot</groupId>
-            <artifactId>springboot-scaffold-common</artifactId>
         </dependency>
     </dependencies>
 

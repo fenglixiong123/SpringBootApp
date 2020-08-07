@@ -5,12 +5,10 @@ import com.flx.springboot.scaffold.common.utils.CommonUtils;
 import com.flx.springboot.scaffold.mybatis.plus.constants.PlusConstant;
 import com.flx.springboot.scaffold.mybatis.plus.enums.State;
 import com.flx.springboot.scaffold.system.i18n.dto.I18nDTO;
-import com.flx.springboot.scaffold.system.i18n.entity.I18nDO;
 import com.flx.springboot.scaffold.system.i18n.manager.I18nManager;
-import com.flx.springboot.scaffold.system.i18n.vo.I18nVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.core.util.CronExpression;
+import org.quartz.CronExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,7 +16,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: fenglixiong
