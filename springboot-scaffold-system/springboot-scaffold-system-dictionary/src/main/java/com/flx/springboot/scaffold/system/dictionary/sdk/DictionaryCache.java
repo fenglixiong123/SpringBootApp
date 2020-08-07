@@ -7,7 +7,7 @@ import com.flx.springboot.scaffold.system.dictionary.manager.DictionaryManager;
 import com.flx.springboot.scaffold.system.i18n.sdk.I18nCache;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.core.util.CronExpression;
+import org.quartz.CronExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -76,6 +76,7 @@ public class DictionaryCache {
         if (!CronExpression.isValidExpression(refreshTime)) {
             throw new Exception("Cron is illegal,your cron is " + refreshTime);
         }
+        refresh();
     }
 
     /**

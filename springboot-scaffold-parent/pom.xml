@@ -250,6 +250,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>2.3.2.RELEASE</version>
                     <configuration>
                         <!--打包生成方式 ZIP 、JAR 、WAR、 NONE-->
                         <!--<layout>JAR</layout>-->

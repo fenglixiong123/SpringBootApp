@@ -97,6 +97,7 @@ public class I18nCache {
         if (!CronExpression.isValidExpression(refreshTime)) {
             throw new Exception("Cron is illegal,your cron is " + refreshTime);
         }
+        refresh();
     }
 
     /**

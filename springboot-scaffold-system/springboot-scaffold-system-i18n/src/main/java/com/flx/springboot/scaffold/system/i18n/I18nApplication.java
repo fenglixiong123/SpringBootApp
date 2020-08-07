@@ -1,6 +1,5 @@
 package com.flx.springboot.scaffold.system.i18n;
 
-import com.flx.springboot.scaffold.flyway.annotation.EnableFlyway;
 import com.flx.springboot.scaffold.mybatis.plus.autoconfig.EnableMyBatisPlus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description:
  */
 @Slf4j
-@EnableFlyway
 @EnableMyBatisPlus
 @SpringBootApplication
 public class I18nApplication {

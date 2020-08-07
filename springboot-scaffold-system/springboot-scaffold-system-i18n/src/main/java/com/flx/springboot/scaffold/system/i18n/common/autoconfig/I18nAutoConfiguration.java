@@ -1,7 +1,6 @@
 package com.flx.springboot.scaffold.system.i18n.common.autoconfig;
 
 import com.flx.springboot.scaffold.system.i18n.common.config.I18nWebConfig;
-import com.flx.springboot.scaffold.system.i18n.dao.I18nDao;
 import com.flx.springboot.scaffold.system.i18n.manager.I18nManager;
 import com.flx.springboot.scaffold.system.i18n.resource.I18nController;
 import com.flx.springboot.scaffold.system.i18n.sdk.I18nCache;

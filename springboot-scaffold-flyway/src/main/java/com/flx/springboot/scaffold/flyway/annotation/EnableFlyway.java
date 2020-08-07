@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.flyway.annotation;
 
-import com.flx.springboot.scaffold.flyway.config.FlywayConfiguration;
+import com.flx.springboot.scaffold.flyway.config.FlywayConfigurationInitializer;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -12,7 +12,7 @@ import java.lang.annotation.*;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({FlywayConfiguration.class})
+@Import({FlywayConfigurationInitializer.class})
 @Documented
 public @interface EnableFlyway {
 

@@ -1,6 +1,5 @@
 package com.flx.springboot.scaffold.system.dictionary;
 
-import com.flx.springboot.scaffold.flyway.annotation.EnableFlyway;
 import com.flx.springboot.scaffold.mybatis.plus.autoconfig.EnableMyBatisPlus;
 import com.flx.springboot.scaffold.system.i18n.common.autoconfig.EnableI18nHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description:
  */
 @Slf4j
-@EnableFlyway
-@EnableMyBatisPlus
 @EnableI18nHandler
+@EnableMyBatisPlus
 @SpringBootApplication
 public class DictionaryApplication {
 
