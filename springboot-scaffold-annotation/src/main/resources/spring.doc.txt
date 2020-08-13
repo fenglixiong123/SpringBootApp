@@ -1,0 +1,32 @@
+
+1.@PostConstr InitialingBean init BeanPostProcessor 执行顺序
+
+构造器>PostConstr>BeanPostProcessor前置>InitialingBean>init()>BeanPostProcessor后置
+
+2.BeanPostProcessor接口
+
+
+SpringIOC容器实例化bean之后在初始化前后做的事情（对所有bean而言的）
+如果设置了自己的BeanPostProcessor，那么所有注册的bean都会被这个处理器处理
+
+注意：可能会报错(is not eligible for getting processed by all BeanPostProcessors)
+这个是因为自己写的bean处理器可能在此bean后面进行初始化的，所以前面的bean不能够被这个processor处理器处理
+可以加上如下注解，将这个处理器级别提高：
+@Order(Ordered.HIGHEST_PRECEDENCE)
+
+案例可以参考：MyBeanPostProcessor，StudentService
+
+3.BeanPostProcessor接口和BeanFactoryPostProcessor接口
+
+一般我们叫这两个接口为Spring的Bean后置处理器接口,作用是为Bean的初始化前后提供可扩展的空间。
+BeanFactoryPostProcessor可以对bean的定义（配置元数据）进行处理。
+也就是说，Spring IoC容器允许BeanFactoryPostProcessor在容器实际实例化任何其它的bean之前读取配置元数据，并有可能修改它。
+如果你愿意，你可以配置多个BeanFactoryPostProcessor。你还能通过设置'order'属性来控制BeanFactoryPostProcessor的执行次序。
+(大概可以这样理解:Spring容器加载了bean的定义文件之后，在bean实例化之前执行的)
+
+实现BeanPostProcessor接口可以在Bean(实例化之后)初始化的前后做一些自定义的操作，
+但是拿到的参数只有BeanDefinition实例和BeanDefinition的名称，也就是无法修改BeanDefinition元数据,这里说的Bean的初始化是：
+1）bean实现了InitializingBean接口，对应的方法为afterPropertiesSet
+2）在bean定义的时候，通过init-method设置的方法
+
+PS:BeanFactoryPostProcessor回调会先于BeanPostProcessor

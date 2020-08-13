@@ -12,6 +12,11 @@
     <artifactId>springboot-scaffold-system-i18n</artifactId>
 
     <dependencies>
+        <!--quartz-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.flx.springboot</groupId>
             <artifactId>springboot-scaffold-mybatis-plus</artifactId>
