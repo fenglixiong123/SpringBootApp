@@ -1,8 +1,10 @@
-package com.flx.springboot.scaffold.redis.utils;
+package com.flx.springboot.scaffold.redis.service;
 
 import com.flx.springboot.scaffold.exception.element.RedisException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -21,7 +23,10 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Component
-public class RedisCommonUtils extends RedisBase {
+public class RedisBaseService {
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 指定缓存失效时间
@@ -29,7 +34,7 @@ public class RedisCommonUtils extends RedisBase {
      * @param expire 时间
      * @return
      */
-    public static boolean expire(String key,long expire){
+    public boolean expire(String key,long expire){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[expire] key is null !");
         }
@@ -49,7 +54,7 @@ public class RedisCommonUtils extends RedisBase {
      * @param key
      * @return 返回0代表永久有效
      */
-    public static long getExpire(String key){
+    public long getExpire(String key){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[getExpire] key is null !");
         }
@@ -66,7 +71,7 @@ public class RedisCommonUtils extends RedisBase {
      * @param key
      * @return
      */
-    public static boolean hasKey(String key){
+    public boolean hasKey(String key){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[hasKey] key is null !");
         }
@@ -81,7 +86,7 @@ public class RedisCommonUtils extends RedisBase {
      * 删除缓存
      * @param key
      */
-    public static boolean delete(String key){
+    public boolean delete(String key){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[delete] key is null !");
         }
@@ -97,7 +102,7 @@ public class RedisCommonUtils extends RedisBase {
      * @param keys
      * @return
      */
-    public static int deleteKeys(List<String> keys){
+    public int deleteKeys(List<String> keys){
         if(CollectionUtils.isEmpty(keys)){
             throw new RedisException("[deleteKeys] list is null !");
         }

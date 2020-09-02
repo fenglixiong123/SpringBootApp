@@ -1,8 +1,10 @@
-package com.flx.springboot.scaffold.redis.utils;
+package com.flx.springboot.scaffold.redis.service;
 
 import com.flx.springboot.scaffold.exception.element.RedisException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -14,7 +16,13 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-public class RedisHashUtils extends RedisBase {
+public class RedisHashService {
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private RedisBaseService redisBaseService;
 
     /**
      * Hash Get
@@ -22,7 +30,7 @@ public class RedisHashUtils extends RedisBase {
      * @param item 项
      * @return
      */
-    public static Object hGet(String key,String item){
+    public Object hGet(String key,String item){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[hGet] key is null !");
         }
@@ -42,7 +50,7 @@ public class RedisHashUtils extends RedisBase {
      * @param item
      * @return
      */
-    public static boolean hSet(String key,String item,Object value){
+    public boolean hSet(String key,String item,Object value){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[hSet] key is null !");
         }
@@ -63,7 +71,7 @@ public class RedisHashUtils extends RedisBase {
      * @param item
      * @return
      */
-    public static boolean hSetWithExpire(String key,String item,Object value,long expire){
+    public boolean hSetWithExpire(String key,String item,Object value,long expire){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[hSetWithExpire] key is null !");
         }
@@ -75,7 +83,7 @@ public class RedisHashUtils extends RedisBase {
         }
         try {
             redisTemplate.opsForHash().put(key,item,value);
-            RedisCommonUtils.expire(key,expire);
+            redisBaseService.expire(key,expire);
             return true;
         }catch (Exception e){
             throw new RedisException("[hSetWithExpire] method occur error : "+e.getMessage()+" !");
@@ -87,7 +95,7 @@ public class RedisHashUtils extends RedisBase {
      * @param key
      * @return
      */
-    public static Map<Object,Object> hmGet(String key){
+    public Map<Object,Object> hmGet(String key){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[hmGet] key is null !");
         }
@@ -104,7 +112,7 @@ public class RedisHashUtils extends RedisBase {
      * @param map
      * @return
      */
-    public static boolean hmSet(String key,Map<String,Object> map){
+    public boolean hmSet(String key,Map<String,Object> map){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[hmSet] key is null !");
         }
@@ -122,7 +130,7 @@ public class RedisHashUtils extends RedisBase {
      * @param map
      * @return
      */
-    public static boolean hmSetWithExpire(String key,Map<String,Object> map,long expire){
+    public boolean hmSetWithExpire(String key,Map<String,Object> map,long expire){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[hmSetWithExpire] key is null !");
         }
@@ -131,7 +139,7 @@ public class RedisHashUtils extends RedisBase {
         }
         try {
             redisTemplate.opsForHash().putAll(key,map);
-            RedisCommonUtils.expire(key,expire);
+            redisBaseService.expire(key,expire);
             return true;
         }catch (Exception e){
             throw new RedisException("[hmSetWithExpire] method occur error : "+e.getMessage()+" !");
@@ -144,7 +152,7 @@ public class RedisHashUtils extends RedisBase {
      * @param item
      * @return
      */
-    public static boolean hDel(String key,Object ... item){
+    public boolean hDel(String key,Object ... item){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[hDel] key is null !");
         }
@@ -162,7 +170,7 @@ public class RedisHashUtils extends RedisBase {
      * @param item
      * @return
      */
-    public static boolean hHasKey(String key,String item){
+    public boolean hHasKey(String key,String item){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[hHasKey] key is null !");
         }
@@ -183,7 +191,7 @@ public class RedisHashUtils extends RedisBase {
      * @param by
      * @return
      */
-    public static double hIncr(String key,String item,double by){
+    public double hIncr(String key,String item,double by){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[hIncr] key is null !");
         }
@@ -207,7 +215,7 @@ public class RedisHashUtils extends RedisBase {
      * @param by
      * @return
      */
-    public static double hDecr(String key,String item,double by){
+    public double hDecr(String key,String item,double by){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[hDecr] key is null !");
         }

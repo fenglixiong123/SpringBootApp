@@ -3,7 +3,8 @@ package com.flx.springboot.scaffold.redis.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flx.springboot.scaffold.redis.utils.RedisCommonUtils;
+import com.flx.springboot.scaffold.redis.service.IRedisService;
+import com.flx.springboot.scaffold.redis.service.IRedisServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cache.CacheManager;
@@ -11,7 +12,6 @@ import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -82,10 +82,9 @@ public class RedisConfiguration extends CachingConfigurerSupport implements Init
      * 注入RedisUtils类
      * @return
      */
-    @Bean(name = "com.flx.springboot.scaffold.redis.utils.RedisUtils")
-    @DependsOn(value = "com.flx.springboot.scaffold.common.context.SpringContextUtil")
-    public RedisCommonUtils redisUtils(){
-        return new RedisCommonUtils();
+    @Bean(name = "com.flx.springboot.scaffold.redis.service.IRedisService")
+    public IRedisService redisService(){
+        return new IRedisServiceImpl();
     }
 
     /**

@@ -1,8 +1,10 @@
-package com.flx.springboot.scaffold.redis.utils;
+package com.flx.springboot.scaffold.redis.service;
 
 import com.flx.springboot.scaffold.exception.element.RedisException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -14,14 +16,17 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Component
-public class RedisStringUtils extends RedisBase {
+public class RedisStringService {
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 获取值
      * @param key
      * @return
      */
-    public static Object get(String key){
+    public Object get(String key){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[get] key is null !");
         }
@@ -38,7 +43,7 @@ public class RedisStringUtils extends RedisBase {
      * @param value
      * @return
      */
-    public static boolean set(String key,Object value){
+    public boolean set(String key,Object value){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[set] key is null !");
         }
@@ -57,7 +62,7 @@ public class RedisStringUtils extends RedisBase {
      * @param expire
      * @return
      */
-    public static boolean setWithExpire(String key,Object value,long expire){
+    public boolean setWithExpire(String key,Object value,long expire){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[setWithExpire] key is null !");
         }
@@ -78,7 +83,7 @@ public class RedisStringUtils extends RedisBase {
      * @param count
      * @return
      */
-    public static long incr(String key,long count){
+    public long incr(String key,long count){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[incr] key is null !");
         }
@@ -99,7 +104,7 @@ public class RedisStringUtils extends RedisBase {
      * @param count
      * @return
      */
-    public static long decr(String key,long count){
+    public long decr(String key,long count){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[decr] key is null !");
         }

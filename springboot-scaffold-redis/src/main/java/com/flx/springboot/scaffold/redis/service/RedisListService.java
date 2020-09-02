@@ -1,8 +1,10 @@
-package com.flx.springboot.scaffold.redis.utils;
+package com.flx.springboot.scaffold.redis.service;
 
 import com.flx.springboot.scaffold.exception.element.RedisException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,8 +16,13 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class RedisListUtils extends RedisBase {
+public class RedisListService {
 
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private RedisBaseService redisBaseService;
 
     /**
      * 通过下标获取list的值
@@ -23,7 +30,7 @@ public class RedisListUtils extends RedisBase {
      * @param index
      * @return
      */
-    public static Object lGetByIndex(String key,long index){
+    public Object lGetByIndex(String key,long index){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[lGetByIndex] key is null !");
         }
@@ -44,7 +51,7 @@ public class RedisListUtils extends RedisBase {
      * @param value
      * @return
      */
-    public static boolean lSetByIndex(String key,long index,Object value){
+    public boolean lSetByIndex(String key,long index,Object value){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[lSetByIndex] key is null !");
         }
@@ -66,7 +73,7 @@ public class RedisListUtils extends RedisBase {
      * @param end
      * @return
      */
-    public static List<Object> lGet(String key, long start, long end){
+    public List<Object> lGet(String key, long start, long end){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[lGet] key is null !");
         }
@@ -83,7 +90,7 @@ public class RedisListUtils extends RedisBase {
      * @param value
      * @return
      */
-    public static boolean lSet(String key,Object value){
+    public boolean lSet(String key,Object value){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[lSet] key is null !");
         }
@@ -102,7 +109,7 @@ public class RedisListUtils extends RedisBase {
      * @param expire
      * @return
      */
-    public static boolean lSetWithExpire(String key,Object value,long expire){
+    public boolean lSetWithExpire(String key,Object value,long expire){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[lSetWithExpire] key is null !");
         }
@@ -111,7 +118,7 @@ public class RedisListUtils extends RedisBase {
         }
         try {
             redisTemplate.opsForList().rightPush(key,value);
-            RedisCommonUtils.expire(key,expire);
+            redisBaseService.expire(key,expire);
             return true;
         }catch (Exception e){
             throw new RedisException("[lSetWithExpire] method occur error : "+e.getMessage()+" !");
@@ -124,7 +131,7 @@ public class RedisListUtils extends RedisBase {
      * @param values
      * @return
      */
-    public static boolean lSetMulti(String key,List<Object> values){
+    public boolean lSetMulti(String key,List<Object> values){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[lSetMulti] key is null !");
         }
@@ -143,7 +150,7 @@ public class RedisListUtils extends RedisBase {
      * @param expire
      * @return
      */
-    public static boolean lSetMultiWithExpire(String key,List<Object> values,long expire){
+    public boolean lSetMultiWithExpire(String key,List<Object> values,long expire){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[lSetMultiWithExpire] key is null !");
         }
@@ -152,7 +159,7 @@ public class RedisListUtils extends RedisBase {
         }
         try {
             redisTemplate.opsForList().rightPushAll(key,values);
-            RedisCommonUtils.expire(key,expire);
+            redisBaseService.expire(key,expire);
             return true;
         }catch (Exception e){
             throw new RedisException("[lSetMultiWithExpire] method occur error : "+e.getMessage()+" !");
@@ -164,7 +171,7 @@ public class RedisListUtils extends RedisBase {
      * @param key
      * @return
      */
-    public static long lSize(String key){
+    public long lSize(String key){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[lSize] key is null !");
         }
@@ -183,7 +190,7 @@ public class RedisListUtils extends RedisBase {
      * @param value
      * @return
      */
-    public static boolean lDel(String key,long count,Object value){
+    public boolean lDel(String key,long count,Object value){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[lDel] key is null !");
         }

@@ -1,8 +1,10 @@
-package com.flx.springboot.scaffold.redis.utils;
+package com.flx.springboot.scaffold.redis.service;
 
 import com.flx.springboot.scaffold.exception.element.RedisException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -14,14 +16,20 @@ import java.util.Set;
  */
 @Slf4j
 @Component
-public class RedisSetUtils extends RedisBase {
+public class RedisSetService {
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private RedisBaseService redisBaseService;
 
     /**
      * 根据key获取set的所有值
      * @param key
      * @return
      */
-    public static Set<Object> sGet(String key){
+    public Set<Object> sGet(String key){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[sGet] key is null !");
         }
@@ -38,7 +46,7 @@ public class RedisSetUtils extends RedisBase {
      * @param values
      * @return
      */
-    public static boolean sSet(String key,Object ... values){
+    public boolean sSet(String key,Object ... values){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[sSet] key is null !");
         }
@@ -57,7 +65,7 @@ public class RedisSetUtils extends RedisBase {
      * @param expire
      * @return
      */
-    public static boolean sSetWithExpire(String key, long expire, Object ... values){
+    public boolean sSetWithExpire(String key, long expire, Object ... values){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[sSetWithExpire] key is null !");
         }
@@ -66,7 +74,7 @@ public class RedisSetUtils extends RedisBase {
         }
         try {
             Long result = redisTemplate.opsForSet().add(key,values);
-            RedisCommonUtils.expire(key,expire);
+            redisBaseService.expire(key,expire);
             return result != null;
         }catch (Exception e){
             throw new RedisException("[sSetWithExpire] method occur error : "+e.getMessage()+" !");
@@ -79,7 +87,7 @@ public class RedisSetUtils extends RedisBase {
      * @param value
      * @return
      */
-    public static boolean sHasKey(String key,Object value){
+    public boolean sHasKey(String key,Object value){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[sHasKey] key is null !");
         }
@@ -96,7 +104,7 @@ public class RedisSetUtils extends RedisBase {
      * @param key
      * @return
      */
-    public static long sSize(String key){
+    public long sSize(String key){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[sSize] key is null !");
         }
@@ -114,7 +122,7 @@ public class RedisSetUtils extends RedisBase {
      * @param values
      * @return
      */
-    public static boolean sDel(String key,Object ... values){
+    public boolean sDel(String key,Object ... values){
         if(StringUtils.isBlank(key)){
             throw new RedisException("[sDel] key is null !");
         }

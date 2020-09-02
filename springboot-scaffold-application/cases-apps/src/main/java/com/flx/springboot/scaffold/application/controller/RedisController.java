@@ -5,7 +5,9 @@ import com.flx.springboot.scaffold.common.result.ResultResponse;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.flx.springboot.scaffold.redis.annotation.EnableRedis;
 import com.flx.springboot.scaffold.redis.constant.RedisConstant;
-import com.flx.springboot.scaffold.redis.utils.RedisCommonUtils;
+import com.flx.springboot.scaffold.redis.service.IRedisService;
+import com.flx.springboot.scaffold.redis.service.RedisBaseService;
+import com.flx.springboot.scaffold.redis.service.RedisStringService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +32,17 @@ public class RedisController {
 
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
+    @Autowired
+    private IRedisService redisService;
 
     @GetMapping("/get")
     public ResultResponse getKey(String key){
-        return ResultResponse.success(RedisCommonUtils.get(key));
+        return ResultResponse.success(redisService.get(key));
     }
 
     @GetMapping("/set")
     public ResultResponse setKey(String key,String value){
-        return ResultResponse.success(RedisCommonUtils.set(key,value));
+        return ResultResponse.success(redisService.set(key,value));
     }
 
     @GetMapping("/setUser")
@@ -48,9 +52,9 @@ public class RedisController {
         user.setId(12);
         user.setName("jack");
         user.setWork("Student");
-        RedisCommonUtils.set("jack",user);
-        RedisCommonUtils.hSet("myUser","user",user);
-        Object o = RedisCommonUtils.get("jack");
+        redisService.set("jack",user);
+        redisService.hSet("myUser","user",user);
+        Object o = redisService.get("jack");
         log.info(JsonUtils.toJsonMsg(o));
         User user1 = (User)o;
         return ResultResponse.success();
