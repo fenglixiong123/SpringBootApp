@@ -1,10 +1,8 @@
 package com.flx.springboot.scaffold.redis.controller;
 
 import com.flx.springboot.scaffold.common.result.ResultResponse;
-import com.flx.springboot.scaffold.exception.element.RedisException;
-import com.flx.springboot.scaffold.redis.utils.RedisUtils;
+import com.flx.springboot.scaffold.redis.utils.RedisCommonUtils;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,12 +19,12 @@ public class RedisController {
 
     @GetMapping("/get")
     public ResultResponse getKey(String key){
-        return ResultResponse.success(RedisUtils.get(key));
+        return ResultResponse.success(RedisCommonUtils.get(key));
     }
 
     @GetMapping("/set")
     public ResultResponse setKey(String key,String value){
-        return ResultResponse.success(RedisUtils.set(key,value));
+        return ResultResponse.success(RedisCommonUtils.set(key,value));
     }
 
 }

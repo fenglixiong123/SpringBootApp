@@ -3,6 +3,7 @@ package com.flx.springboot.scaffold.redis.utils;
 import com.flx.springboot.scaffold.exception.element.RedisException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
@@ -12,10 +13,8 @@ import java.util.Map;
  * @Description:
  */
 @Slf4j
-public class RedisCHashUtils extends RedisBValueUtils {
-
-
-    //==================================hash操作================================================
+@Component
+public class RedisHashUtils extends RedisBase {
 
     /**
      * Hash Get
@@ -76,7 +75,7 @@ public class RedisCHashUtils extends RedisBValueUtils {
         }
         try {
             redisTemplate.opsForHash().put(key,item,value);
-            expire(key,expire);
+            RedisCommonUtils.expire(key,expire);
             return true;
         }catch (Exception e){
             throw new RedisException("[hSetWithExpire] method occur error : "+e.getMessage()+" !");
@@ -132,7 +131,7 @@ public class RedisCHashUtils extends RedisBValueUtils {
         }
         try {
             redisTemplate.opsForHash().putAll(key,map);
-            expire(key,expire);
+            RedisCommonUtils.expire(key,expire);
             return true;
         }catch (Exception e){
             throw new RedisException("[hmSetWithExpire] method occur error : "+e.getMessage()+" !");

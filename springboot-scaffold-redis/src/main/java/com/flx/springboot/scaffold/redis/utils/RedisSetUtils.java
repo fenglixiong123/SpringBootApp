@@ -3,6 +3,7 @@ package com.flx.springboot.scaffold.redis.utils;
 import com.flx.springboot.scaffold.exception.element.RedisException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
@@ -12,9 +13,8 @@ import java.util.Set;
  * @Description:
  */
 @Slf4j
-public class RedisDSetUtils extends RedisCHashUtils {
-
-    //==================================set操作================================================
+@Component
+public class RedisSetUtils extends RedisBase {
 
     /**
      * 根据key获取set的所有值
@@ -66,7 +66,7 @@ public class RedisDSetUtils extends RedisCHashUtils {
         }
         try {
             Long result = redisTemplate.opsForSet().add(key,values);
-            expire(key,expire);
+            RedisCommonUtils.expire(key,expire);
             return result != null;
         }catch (Exception e){
             throw new RedisException("[sSetWithExpire] method occur error : "+e.getMessage()+" !");

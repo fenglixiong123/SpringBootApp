@@ -3,6 +3,7 @@ package com.flx.springboot.scaffold.redis.utils;
 import com.flx.springboot.scaffold.exception.element.RedisException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,9 +13,8 @@ import java.util.concurrent.TimeUnit;
  * @Description:
  */
 @Slf4j
-public class RedisBValueUtils extends RedisABaseUtils {
-
-    //==================================string操作================================================
+@Component
+public class RedisStringUtils extends RedisBase {
 
     /**
      * 获取值

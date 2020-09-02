@@ -3,8 +3,7 @@ package com.flx.springboot.scaffold.redis.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flx.springboot.scaffold.common.context.SpringContextUtil;
-import com.flx.springboot.scaffold.redis.utils.RedisUtils;
+import com.flx.springboot.scaffold.redis.utils.RedisCommonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cache.CacheManager;
@@ -85,8 +84,8 @@ public class RedisConfiguration extends CachingConfigurerSupport implements Init
      */
     @Bean(name = "com.flx.springboot.scaffold.redis.utils.RedisUtils")
     @DependsOn(value = "com.flx.springboot.scaffold.common.context.SpringContextUtil")
-    public RedisUtils redisUtils(){
-        return new RedisUtils();
+    public RedisCommonUtils redisUtils(){
+        return new RedisCommonUtils();
     }
 
     /**

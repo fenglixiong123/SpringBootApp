@@ -1,7 +1,9 @@
 package com.flx.springboot.scaffold.redis.utils;
 
 import com.flx.springboot.scaffold.exception.element.RedisException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -10,9 +12,10 @@ import java.util.List;
  * @Date: 2020/5/27 16:51
  * @Description:
  */
-public class RedisEListUtils extends RedisDSetUtils {
+@Slf4j
+@Component
+public class RedisListUtils extends RedisBase {
 
-    //==================================list操作================================================
 
     /**
      * 通过下标获取list的值
@@ -108,7 +111,7 @@ public class RedisEListUtils extends RedisDSetUtils {
         }
         try {
             redisTemplate.opsForList().rightPush(key,value);
-            expire(key,expire);
+            RedisCommonUtils.expire(key,expire);
             return true;
         }catch (Exception e){
             throw new RedisException("[lSetWithExpire] method occur error : "+e.getMessage()+" !");
@@ -149,7 +152,7 @@ public class RedisEListUtils extends RedisDSetUtils {
         }
         try {
             redisTemplate.opsForList().rightPushAll(key,values);
-            expire(key,expire);
+            RedisCommonUtils.expire(key,expire);
             return true;
         }catch (Exception e){
             throw new RedisException("[lSetMultiWithExpire] method occur error : "+e.getMessage()+" !");
