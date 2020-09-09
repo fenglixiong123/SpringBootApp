@@ -1,6 +1,7 @@
 package com.flx.springboot.scaffold.redis.controller;
 
 import com.flx.springboot.scaffold.common.result.ResultResponse;
+import com.flx.springboot.scaffold.redis.service.IRedisService;
 import com.flx.springboot.scaffold.redis.service.RedisBaseService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/redis")
 public class RedisController {
 
+    private IRedisService redisService;
+
     @GetMapping("/get")
     public ResultResponse getKey(String key){
-        return ResultResponse.success(RedisBaseService.get(key));
+        return ResultResponse.success(redisService.get(key));
     }
 
     @GetMapping("/set")
     public ResultResponse setKey(String key,String value){
-        return ResultResponse.success(RedisBaseService.set(key,value));
+        return ResultResponse.success(redisService.set(key,value));
     }
 
 }
