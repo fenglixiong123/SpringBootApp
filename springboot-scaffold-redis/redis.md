@@ -1,9 +1,20 @@
 
 # Redis知识点精讲
 
+五大数据类型
+
+* [String数据类型](#string数据类型)
+* [Hash数据类型](#hash数据类型)
+* [List数据类型](#list数据类型)
+* [Set数据类型](#set数据类型)
+* [ZSet数据类型](#zset数据类型)
+
+![Redis数据类型](./redis_data_type.png)
+
 ## String数据类型
 
-常用操作：
+### 常用操作
+
 * set key value                 //存入字符串键值对
 * mset key value[key value...]  //批量存入字符串键值对
 * setnx key value               //存入一个不存在的字符串键值对
@@ -17,12 +28,14 @@
 * incrby key increment          //将key所存储的值加上increment
 * decrby key increment          //将key所存储的值减去decrement
 
-### 单值缓存
+### 应用场景
+
+#### 单值缓存
 
 set key value  
 get key  
 
-### 对象缓存
+#### 对象缓存
 
 * 存储对象的json结构  
 set user:1 value(json数据)  
@@ -30,7 +43,7 @@ set user:1 value(json数据)
 mset user:1:name jack user:1:balance 2000  
 mget user:1:name user:1:balance  
 
-### 分布式锁
+#### 分布式锁
 
 setnx product:1001 true //返回1代表获取锁成功
 setnx product:1001 true //返回0代表获取锁失败
@@ -39,21 +52,23 @@ del product:1001    //执行完释放锁
 
 set product:1001 true ex 10 nx  //防止程序意外终止导致死锁
 
-### 计数器
+#### 计数器
 
 incr article:readcount:{文章id}  
 get article:readcount:{文章id}
 
-### 分布式系统全局序列号
+#### 分布式系统全局序列号
 
 incrby orderId 1000    //redis批量生成序列号提升性能
 
-### Web集群session共享
+#### Web集群session共享
+
 spring session + redis实现session共享
 
 ## Hash数据类型
 
-常用操作：
+### 常用操作
+
 * hset key field value                      //存储一个哈希表key的键值
 * hsetnx key field value                    //存储一个不存在的哈希表key的键值
 * hmset key field value[field value...]     //在一个哈希表key中存储多个键值对
@@ -65,7 +80,9 @@ spring session + redis实现session共享
 
 * hincrby key field increment               //为哈希表key中field键的值加上增量increment
 
-### 对象缓存
+### 应用场景
+
+#### 对象缓存
 
 hmset user {userId}:name value {userId}:age value
 
@@ -86,7 +103,7 @@ hmget user 2:name 2:age
 1)过期功能不能用在field上，只能用在key上面  
 2)Redis集群下不适合大规模使用
 
-### 电商购物车
+#### 电商购物车
 
 1)用户id为key      1001  
 2)商品id为field    9999  
@@ -102,7 +119,8 @@ hmget user 2:name 2:age
 
 ## List数据结构
 
-常用操作：  
+### 常用操作
+  
 * lpush key value[value...]         //将一个或者多个值value插入到key列表的表头(最左边)
 * rpush key value[value...]         //将一个或者多个值value插入到key列表的表尾(最右边)
 * lpop key                          //移除并返回key列表的头元素
@@ -112,8 +130,48 @@ hmget user 2:name 2:age
 * blpop key[key...] timeout         //从key列表表头弹出一个元素，若列表中没有元素，阻塞等待timeout秒，如果timeout=0则一直等待
 * brpop key[key...] timeout         //从key列表表尾弹出一个元素，若列表中没有元素，阻塞等待timeout秒，如果timeout=0则一直等待
 
+### 应用场景
+
+#### 常用数据结构
+
+Stack(栈) = lpush + lpop  
+Queue(队列) = lpush + rpop  
+BlockingMQ(阻塞队列) = lpush + brpop
+
+#### 微信微博消息流
+
+1)Jack发微博，消息id为10018
+lpush msg:{userId} 10018
+2)Mary发微博，消息id为10086
+lpush msg:{userId} 10086
+3)查看最新消息
+lrange msg:{userId} 0 5
+
+## Set数据结构
+
+### 常用操作
+
+* sadd key member[member...]                    //往集合key中存入元素，元素存在则忽略，若key不存在则新建
+* srem key member[member...]                    //从集合key中删除元素
+* smembers key                                  //获取集合key中所有元素
+* scard key                                     //获取集合key中元素个数
+* sismember key member                          //判断member元素是否存在于集合key中
+* srandmember key [count]                       //从集合key中选出count个元素，元素不从key中删除
+* spop key [count]                              //从集合key中选出count个元素，元素从key中删除
+
+* sinter key [key]                              //交集运算
+* sinterstore destionation key [key...]         //将交集结果存入新集合destination中
+* sunion key [key...]                           //并集运算
+* sunionstore destionation key [key...]         //将并集结果存入新集合destination中
+* sdiff key [key...]                            //差集运算
+* sdiffstore destionation key [key...]          //将差集结果存入新集合destination中
+
+### 应用场景  
 
 
+## ZSet数据结构
+
+常用操作：  
 
 
 
