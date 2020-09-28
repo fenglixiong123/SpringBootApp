@@ -16,6 +16,7 @@
         <module>springboot-scaffold-jpa</module>
         <module>springboot-scaffold-mybatis</module>
         <module>springboot-scaffold-mybatis-plus</module>
+        <module>springboot-scaffold-multi-datasource</module>
     </modules>
 
 </project>

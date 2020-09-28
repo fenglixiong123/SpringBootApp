@@ -1,0 +1,81 @@
+#spring基础配置
+server:
+  port: 6666
+
+logging:
+  path: ./logs
+
+spring:
+  application:
+    name: springboot-scaffold-mybatis-plus-multi-datasource
+  jackson:
+    defaultPropertyInclusion: NON_NULL
+#dataSource config
+  datasource:
+    druid:
+      type: com.alibaba.druid.pool.DruidDataSource
+      filters: stat,log4j
+      maxActive: ${druid.maxActive:10}
+      initialSize: ${druid.initialSize:2}
+      maxWait: ${druid.maxWait:5000}
+      minIdle: ${druid.minIdle:2}
+      timeBetweenEvictionRunsMillis: 30000
+      minEvictableIdleTimeMillis: 1800000
+      maxEvictableIdleTimeMillis: 900000
+      validationQuery: "select count(*) from basic_tenant"
+      testWhileIdle: ${druid.testWhileIdle:true}
+      testOnBorrow: ${druid.testOnBorrow:true}
+      testOnReturn: ${druid.testOnReturn:false}
+      keepAlive: true
+      phyMaxUseCount: 10000
+      maxOpenPreparedStatements: -1
+      removeAbandoned: ${druid.removeAbandoned:false}
+      removeAbandonedTimeout: ${druid.removeAbandonedTimeout:1800}
+      logAbandoned: true
+      connectionProperties: "druid.stat.mergeSql=true;druid.stat.slowSqlMillis=2000"
+      poolPreparedStatements: false
+      maxPoolPreparedStatementPerConnectionSize: 20
+    #采用多数据源配置
+    db0:
+      url: jdbc:mysql://127.0.0.1:3306/scaffold?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
+      username: ${db.username:root}
+      password: ${db.password:welcome}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      salt-flag: ${salt-flag:false} #是否采用jasy加密
+      salt-password: ${salt-password:fenglixiong}
+    db1:
+      url: jdbc:mysql://127.0.0.1:3306/scaffold?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
+      username: ${db.username:root}
+      password: ${db.password:welcome}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      salt-flag: ${salt-flag:false} #是否采用jasy加密
+      salt-password: ${salt-password:fenglixiong}
+  #自定义配置
+  flx:
+    table:
+      prefix: scaffold_  #表名前缀
+     entity:
+       package: com.flx.springboot.scaffold.mybatis.plus.entity #实体类包路径
+     dao:
+       basePackage: com.flx.springboot.scaffold.mybatis.plus.dao #数据库层dao路径
+
+#mybatis plus config
+mybatis-plus:
+  mapper-locations: classpath:mapper/*:xml
+  type-aliases-package: com.flx.*.entity
+  type-aliases-super-type: java.lang.Object
+  executor-type: simple
+  check-config-location: false
+  configuration:
+    cache-enabled: false
+    auto-mapping-behavior: partial
+    auto-mapping-unknown-column-behavior: WARNING
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: AUTO
+      db-type: MYSQL
+      field-strategy: NOT_NULL
+
+
