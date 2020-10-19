@@ -30,6 +30,7 @@
         <module>springboot-scaffold-web</module>
         <module>springboot-scaffold-websocket</module>
         <module>springboot-scaffold-system</module>
+        <module>springboot-scaffold-mongdb</module>
     </modules>
 
 </project>
