@@ -24,12 +24,12 @@ import java.util.Date;
  * @Description:
  */
 @Slf4j
-@EnableRedis
+//@EnableRedis
 @Api(value = "Redis管理层")
 @RestController
 @RequestMapping("/redis")
 public class RedisController {
-
+/*
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
     @Autowired
@@ -65,5 +65,5 @@ public class RedisController {
         redisTemplate.convertAndSend(RedisConstant.DEFAULT_CHANNEL,message);
         return ResultResponse.success("ok");
     }
-
+*/
 }
