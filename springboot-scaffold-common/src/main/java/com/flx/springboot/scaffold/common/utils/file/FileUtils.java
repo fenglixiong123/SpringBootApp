@@ -1,10 +1,13 @@
 package com.flx.springboot.scaffold.common.utils.file;
 
+import com.flx.springboot.scaffold.common.utils.code.RandomCodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @Author: Fenglixiong
@@ -13,6 +16,42 @@ import java.nio.channels.FileChannel;
  */
 @Slf4j
 public class FileUtils {
+
+    public static void main(String[] args) {
+
+        System.out.println(getRandomName("A",true));
+        System.out.println(getRandomName("A.pdf",true));
+        System.out.println(getRandomName("A",false));
+        System.out.println(getRandomName("A.pdf",false));
+
+    }
+
+    /**
+     * 获得随机的文件名字
+     * @param source
+     * @param date
+     * @return
+     */
+    public static String getRandomName(String source,boolean date){
+        String fileName;
+        String r_code;
+        if(date) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            r_code = sdf.format(new Date());
+        }else {
+            r_code = RandomCodeUtils.getRandomCode(14);
+        }
+        if(StringUtils.isBlank(source)){
+            fileName = r_code;
+        }else {
+            if(source.contains(".")){
+                fileName = source.substring(0,source.lastIndexOf(".")) + r_code + source.substring(source.lastIndexOf("."));
+            }else {
+                fileName = source + r_code;
+            }
+        }
+        return fileName;
+    }
 
     /**
      * 获取文件中的内容

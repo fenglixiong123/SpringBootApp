@@ -1,6 +1,8 @@
 package com.flx.springboot.scaffold.common.pdf;
 
+import com.flx.springboot.scaffold.common.pdf.base.PdfUnit;
 import com.flx.springboot.scaffold.common.utils.CollectionUtils;
+import com.flx.springboot.scaffold.common.utils.file.FileUtils;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import lombok.AllArgsConstructor;
@@ -10,8 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -51,47 +52,58 @@ public class PdfTemplateUtils {
      * 下载pdf文件
      * @param pdfContent
      * @param fileName
-     * @param templatePath
      * @param response
      */
-    public static void downloadPdf(PdfContent pdfContent,String fileName, String templatePath,HttpServletResponse response){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        String timeSuffix = sdf.format(new Date());
-        if(StringUtils.isBlank(fileName)){
-            fileName = timeSuffix;
-        }else {
-            fileName = fileName + timeSuffix;
-        }
+    public static void downloadPdf(PdfContent pdfContent,String fileName,HttpServletResponse response){
+        fileName = FileUtils.getRandomName(fileName,true);
         try {
             response.reset();
             response.setCharacterEncoding("utf-8");
             response.setContentType("application/PDF;charset=utf-8");
             response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8")+".pdf");
-            createPdf(pdfContent,response.getOutputStream(),templatePath);
+            generatePdf(pdfContent,response.getOutputStream());
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
+     * 将生成的PDF保存到磁盘中去
+     * @param pdfContent
+     * @param filePath
+     * @param fileName
+     * @throws IOException
+     * @throws DocumentException
+     */
+    public static void savePdfToDesk(PdfContent pdfContent,String filePath,String fileName) throws IOException, DocumentException {
+        fileName = FileUtils.getRandomName(fileName,true);
+        File file = new File(filePath+fileName);
+        boolean success = file.createNewFile();
+        if(!success) throw new RuntimeException("create file error!");
+        FileOutputStream fos = new FileOutputStream(file);
+        generatePdf(pdfContent,fos);
+    }
+
+    /**
      * 将填充好的pdf生成pdf文件
      * @param out 输出源
-     * @param pdfContent 填充模板的数据
-     * @param templatePath pdf模板路径
+     * @param pdfContent 填充模板信息
      * @throws DocumentException
      * @throws IOException
      */
-    public static void createPdf(PdfContent pdfContent, ServletOutputStream out, String templatePath) throws DocumentException, IOException {
-
-        PdfReader pdfReader = new PdfReader(templatePath);//输入源
+    public static void generatePdf(PdfContent pdfContent, OutputStream out) throws DocumentException, IOException {
+        if(StringUtils.isBlank(pdfContent.getTemplatePath())){
+            throw new RuntimeException("Template path is not exists !");
+        }
+        PdfReader pdfReader = new PdfReader(pdfContent.getTemplatePath());//输入源
         ByteArrayOutputStream bos = new ByteArrayOutputStream();//输出，array
         PdfStamper pdfStamper = new PdfStamper(pdfReader,bos);
 
         Document doc = new Document();
-        PdfCopy pdfCopy = new PdfCopy(doc,out);
         doc.open();
+        PdfCopy pdfCopy = new PdfCopy(doc,out);
         //填充好的pdf字节
-        fillPdf(pdfStamper,pdfContent);
+        fillPdfModule(pdfStamper,pdfContent);
         int pageNo = pdfReader.getNumberOfPages();
         for (int i = 1; i <= pageNo; i++) {
             PdfImportedPage importedPage = pdfCopy.getImportedPage(new PdfReader(bos.toByteArray()),i);
@@ -103,21 +115,20 @@ public class PdfTemplateUtils {
     }
 
     /**
-     * 填充pdf，静态文字，表格图片
+     * 填充pdf模板
+     * 文字
+     * 表格
+     * 图片
      * @param pdfStamper
      * @param pdfContent 各种数据文件
      * @throws DocumentException
      * @throws IOException
      */
-    private static void fillPdf(PdfStamper pdfStamper,PdfContent pdfContent) throws DocumentException, IOException {
-        URL resource = Thread.currentThread().getContextClassLoader().getResource("simsun.ttc");
-        String fontPath = resource==null?null:resource.getPath();
-        System.out.println("fontPath = "+fontPath);
-        BaseFont font = BaseFont.createFont(fontPath+",1",BaseFont.IDENTITY_H,BaseFont.EMBEDDED);
-        pdfStamper.getAcroFields().addSubstitutionFont(font);
-        fillPdfText(pdfStamper,pdfContent.getTextMap());
-        fillPdfImage(pdfStamper,pdfContent.getImageMap());
-        fillPdfTable(pdfStamper,pdfContent.getTableMap(),font);
+    private static void fillPdfModule(PdfStamper pdfStamper,PdfContent pdfContent) throws DocumentException, IOException {
+        pdfStamper.getAcroFields().addSubstitutionFont(PdfUnit.baseFont);
+        dealPdfText(pdfStamper,pdfContent.getTextMap());
+        dealPdfImage(pdfStamper,pdfContent.getImageMap());
+        dealPdfTable(pdfStamper,pdfContent.getTableMap(),PdfUnit.baseFont);
         //设置pdf文件不可编辑
         pdfStamper.setFormFlattening(true);
         pdfStamper.close();
@@ -128,7 +139,7 @@ public class PdfTemplateUtils {
      * @param pdfStamper pdf模板
      * @param textMap 填充模板的文字数据
      */
-    private static void fillPdfText(PdfStamper pdfStamper,Map<String,Object> textMap) throws IOException, DocumentException {
+    private static void dealPdfText(PdfStamper pdfStamper,Map<String,Object> textMap) throws IOException, DocumentException {
         if(CollectionUtils.isEmpty(textMap)){
             return;
         }
@@ -145,7 +156,7 @@ public class PdfTemplateUtils {
      * K>>>>>data
      * userTable>>>List<List<String>>
      */
-    private static void fillPdfTable(PdfStamper pdfStamper,Map<String, List<List<String>>> tableMap,BaseFont font) throws DocumentException {
+    private static void dealPdfTable(PdfStamper pdfStamper,Map<String, List<List<String>>> tableMap,BaseFont font) throws DocumentException {
         if(CollectionUtils.isEmpty(tableMap)){
             return;
         }
@@ -159,34 +170,21 @@ public class PdfTemplateUtils {
 
             int column = tableValue.get(0).size();
             int row = tableValue.size();
-            PdfPTable table = new PdfPTable(column);
             float totalWidth = rectangle.getRight() - rectangle.getLeft() - 1;
-            float[] width = new float[column];
+            float[] widths = new float[column];
             for (int i = 0; i < column; i++) {
                 if(i==0){
-                    width[i] = 60f;
+                    widths[i] = 60f;
                 }else {
-                    width[i] = (totalWidth-60)/(column-1);
+                    widths[i] = (totalWidth-60)/(column-1);
                 }
             }
-            table.setTotalWidth(width);
-            table.setLockedWidth(true);
-            table.setKeepTogether(true);
-            table.setSplitLate(false);
-            table.setSplitRows(true);
-            Font f = new Font(font, 8, 0);
+            PdfPTable table = PdfUnit.createTable(widths);
             //表格数据填写
             for (int i = 0; i < row; i++) {
                 List<String> rowValue = tableValue.get(i);
                 for (int j = 0; j < column; j++) {
-                    Paragraph paragraph = new Paragraph(String.valueOf(rowValue.get(j)),f);
-                    PdfPCell cell = new PdfPCell(paragraph);
-                    cell.setBorderWidth(1);
-                    cell.setPaddingBottom(8f);
-                    cell.setVerticalAlignment(Element.ALIGN_CENTER);
-                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    cell.setLeading(0, (float) 1.4);
-                    table.addCell(cell);
+                    table.addCell(PdfUnit.createCell(String.valueOf(rowValue.get(j)),PdfUnit.textFont));
                 }
             }
             table.writeSelectedRows(0,-1,rectangle.getLeft(),rectangle.getTop(),pcb);
@@ -198,7 +196,7 @@ public class PdfTemplateUtils {
      * @param pdfStamper
      * @param imageMap
      */
-    private static void fillPdfImage(PdfStamper pdfStamper,Map<String,String> imageMap) throws IOException, DocumentException {
+    private static void dealPdfImage(PdfStamper pdfStamper,Map<String,String> imageMap) throws IOException, DocumentException {
         if(CollectionUtils.isEmpty(imageMap)){
             return;
         }
@@ -230,6 +228,11 @@ public class PdfTemplateUtils {
     public static class PdfContent {
 
         /**
+         * 模板路径
+         */
+        private String templatePath;
+
+        /**
          * 文字数据
          */
         private Map<String,Object> textMap;
@@ -244,8 +247,8 @@ public class PdfTemplateUtils {
          */
         private Map<String, List<List<String>>> tableMap;
 
-        public static PdfContent of(Map<String,Object> textMap,Map<String,String> imageMap,Map<String, List<List<String>>> tableMap){
-            return new PdfContent(textMap,imageMap,tableMap);
+        public static PdfContent of(String templatePath,Map<String,Object> textMap,Map<String,String> imageMap,Map<String, List<List<String>>> tableMap){
+            return new PdfContent(templatePath,textMap,imageMap,tableMap);
         }
 
     }
