@@ -1,8 +1,6 @@
 package com.flx.springboot.scaffold.common.utils.http;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.flx.springboot.scaffold.common.result.ResultResponse;
 import com.flx.springboot.scaffold.common.utils.CollectionUtils;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -10,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
