@@ -34,6 +34,10 @@ public class OkUtils {
                 .build();
     }
 
+    public static <T> T get(String url, Class z) throws Exception{
+        return get(url,null,z);
+    }
+
     public static <T> T get(String url, Map<String, String> queries, Class z) throws Exception {
         Request request = new Request.Builder()
                 .url(getPerfectUrl(url,queries)).get().build();
@@ -41,6 +45,10 @@ public class OkUtils {
                 .newCall(request)
                 .execute();
         return parseResult(response,z);
+    }
+
+    public static <T> T post(String url,String jsonData,Class z) throws Exception{
+        return post(url,null,jsonData,z);
     }
 
     public static <T> T post(String url,Map<String, String> queries,String jsonData,Class z) throws Exception {
