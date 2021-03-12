@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,11 +23,11 @@ public class OkUtils {
     /**
      * 获取OKHttpClient
      */
-    public static OkHttpClient getOKHttp(){
-        return getOKHttp(30,30);
+    public static OkHttpClient getOK(){
+        return getOK(30,30);
     }
 
-    public static OkHttpClient getOKHttp(long connectTime,long readTime){
+    public static OkHttpClient getOK(long connectTime,long readTime){
         return new OkHttpClient.Builder()
                 .retryOnConnectionFailure(false)
                 .connectTimeout(connectTime, TimeUnit.SECONDS)
@@ -41,7 +42,7 @@ public class OkUtils {
     public static <T> T get(String url, Map<String, String> queries, Class z) throws Exception {
         Request request = new Request.Builder()
                 .url(getPerfectUrl(url,queries)).get().build();
-        Response response = getOKHttp()
+        Response response = getOK()
                 .newCall(request)
                 .execute();
         return parseResult(response,z);
@@ -55,12 +56,41 @@ public class OkUtils {
         RequestBody requestBody = RequestBody.create(jsonData, MediaType.parse("application/json; charset=utf-8"));
         Request request = new Request.Builder()
                 .url(getPerfectUrl(url,queries)).post(requestBody).build();
-        Response response = getOKHttp()
+        Response response = getOK()
                 .newCall(request)
                 .execute();
         ResponseBody responseBody = response.body();
         String resultString = responseBody==null ? null : responseBody.string();
         return JSON.parseObject(resultString, (Type) z);
+    }
+
+    /**
+     * get返回字符串
+     */
+    public static String getForString(String url, Map<String, String> queries) throws Exception {
+        return Optional.ofNullable(getOK().newCall(new Request.Builder().url(getPerfectUrl(url,queries)).get().build()).execute().body()).map(responseBody -> {
+            try {
+                return responseBody.string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).orElse(null);
+    }
+
+    /**
+     * post返回字符串
+     */
+    public static String postForString(String url,Map<String, String> queries,String jsonData) throws Exception {
+        return Optional.ofNullable(getOK().newCall(new Request.Builder().url(getPerfectUrl(url,queries)).post(RequestBody.create(jsonData,MediaType.parse("application/json; charset=utf-8"))).build()).execute().body()).map(responseBody -> {
+            try {
+                return responseBody.string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).orElse(null);
+
     }
 
     /**
