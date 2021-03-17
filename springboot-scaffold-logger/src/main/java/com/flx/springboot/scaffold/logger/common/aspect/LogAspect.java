@@ -3,6 +3,7 @@ package com.flx.springboot.scaffold.logger.common.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.flx.springboot.scaffold.common.utils.CollectionUtils;
+import com.flx.springboot.scaffold.common.utils.ObjectUtils;
 import com.flx.springboot.scaffold.common.utils.base.ParamUtils;
 import com.flx.springboot.scaffold.common.utils.json.JsonParser;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
@@ -137,7 +138,7 @@ public class LogAspect {
         List<String> searchValues = new ArrayList<>(MAX_SEARCH_LENGTH);
         if(bizLog.idFromResp()){
             //如果是基础类型的直接存储主键
-            if(ParamUtils.isBaseType(result)){
+            if(ObjectUtils.isBaseType(result)){
                 id = result.toString();
             }else {
                 id = JsonParser.readVal(resultJson, bizLog.bizId());

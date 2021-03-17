@@ -1,5 +1,6 @@
 package com.flx.springboot.scaffold.common.utils;
 
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
@@ -11,8 +12,54 @@ import java.util.Date;
  * @Author: Fenglixiong
  * @Date: 2020/7/8 18:37
  * @Description:
+ *
+ * 获取Class的三种方式
+ * Class stuClass = Class.forName("com.flx.Student");
+ * Student.class
+ * student.getClass
+ *
+ * Field是字段，是跟对象无关的，通过Class来获取的
+ * Class操作
+ *      getFields() 获取所有公有字段
+ *      getDeclaredFields() 获取所有包含公有、私有、保护字段
+ *      getField(String fieldName) 获取指定公有字段
+ *      getDeclaredField(String fieldName) 获取指定字段包含公有私有保护
+ * 对象值操作
+ *      get(Object obj) 获取对象obj字段的字段值
+ *      set(Object obj,Object value) 设置对象obj字段的字段值
+ * 成员方法操作：
+ *      getMethods() 获取所有公共方法
+ *      getDeclaredMethods() 获取所有方法包含公共和私有保护
+ *      getMethod(String name,Class<?>... parameterTypes) 获取指定公共方法，跟参数类型
+ *      getDeclaredMethod(String name,Class<?>... parameterTypes) 获取指定任意方法，跟参数类型
+ *      invoke(Object obj,Object... args) 调用obj对象的方法
+ *
+ * getFieldByName 通过字段名获取Field
+ * getFieldValueByName 通过名字获取字段值
+ * getFieldValueByCascadeName 通过字段名获取字段值（可以是级联属性）
+ * setFieldValueByName 通过字段名设置字段值
  */
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
+
+    @Getter
+    private static String[] types = {"java.lang.Integer", "java.lang.Double",
+            "java.lang.Float", "java.lang.Long", "java.lang.Short",
+            "java.lang.Byte", "java.lang.Boolean", "java.lang.Char",
+            "java.lang.String", "int", "double", "long", "short", "byte",
+            "boolean", "char", "float"};
+
+    /**
+     * 判断是否是基本数据类型
+     */
+    public static boolean isBaseType(Object value){
+        String typeName = value.getClass().getName();
+        for (String s:types) {
+            if(s.equals(typeName)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * @param cascadeFieldName 带路径的属性名或简单属性名

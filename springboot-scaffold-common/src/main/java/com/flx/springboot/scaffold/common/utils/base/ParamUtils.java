@@ -1,5 +1,6 @@
 package com.flx.springboot.scaffold.common.utils.base;
 
+import com.flx.springboot.scaffold.common.utils.ObjectUtils;
 import org.aspectj.lang.JoinPoint;
 
 import java.lang.reflect.Field;
@@ -11,21 +12,16 @@ import java.lang.reflect.Field;
  **/
 public class ParamUtils {
 
-    private static String[] types = {"java.lang.Integer", "java.lang.Double",
-            "java.lang.Float", "java.lang.Long", "java.lang.Short",
-            "java.lang.Byte", "java.lang.Boolean", "java.lang.Char",
-            "java.lang.String", "int", "double", "long", "short", "byte",
-            "boolean", "char", "float"};
 
-    public static String getParamValue(JoinPoint joinPoint) {
+
+    public static String getParamValue(Object ...args) {
         StringBuilder sb = new StringBuilder();
         //获取所有的参数
-        Object[] args = joinPoint.getArgs();
         for (int k = 0; k < args.length; k++) {
             Object arg = args[k];
             // 获取对象类型
             String typeName = arg.getClass().getTypeName();
-            for (String t : types) {
+            for (String t : ObjectUtils.getTypes()) {
                 //1 判断是否是基础类型
                 if (t.equals(typeName)) {
                     sb.append(arg).append(";");
@@ -49,7 +45,7 @@ public class ParamUtils {
             //在反射时能访问私有变量
             f.setAccessible(true);
             try {
-                for (String str : types) {
+                for (String str : ObjectUtils.getTypes()) {
                     //这边会有问题，如果实体类里面继续包含实体类，这边就没法获取。
                     //其实，我们可以通递归的方式去处理实体类包含实体类的问题。
                     if (f.getType().getName().equals(str)) {
@@ -67,21 +63,5 @@ public class ParamUtils {
         return sb.toString();
     }
 
-    public static boolean isBaseType(Object value){
-        String typeName = value.getClass().getName();
-        System.out.println(typeName);
-        for (String s:types) {
-            if(s.equals(typeName)){
-                return true;
-            }
-        }
-        return false;
-    }
 
-    public static void main(String[] args) {
-        boolean s = false;
-        Object result = s;
-        System.out.println(isBaseType(result));
-
-    }
 }

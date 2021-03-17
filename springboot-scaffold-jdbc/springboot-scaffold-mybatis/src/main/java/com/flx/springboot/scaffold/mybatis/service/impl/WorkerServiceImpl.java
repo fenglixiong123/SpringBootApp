@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.mybatis.service.impl;
 
-import com.flx.springboot.scaffold.common.utils.code.ColumnUtils;
+import com.flx.springboot.scaffold.common.utils.code.CodeUtils;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.flx.springboot.scaffold.mybatis.common.PageQuery;
 import com.flx.springboot.scaffold.mybatis.common.PageResult;
@@ -47,7 +47,7 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public PageResult<Worker> list2(PageQuery<Worker> pageQuery) {
-        String orderBy = ColumnUtils.camelToUnderline(pageQuery.getOrder())+" "+pageQuery.getOrderDesc();
+        String orderBy = CodeUtils.camelToUnder(pageQuery.getOrder())+" "+pageQuery.getOrderDesc();
         log.info("orderBy:{}",orderBy);
         PageHelper.startPage(pageQuery.getPage(),pageQuery.getPageSize());
         WorkerExample example = new WorkerExample();

@@ -1,7 +1,5 @@
 package com.flx.springboot.scaffold.common.utils.code;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * @Author: Fenglixiong
  * @Date: 2020/5/25 16:32
@@ -9,44 +7,58 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class CodeUtils {
 
+    public static void main(String[] args) {
+        
+    }
+
+    //转变的依赖字符
+    private static final char UNDERLINE = '_';
+
     /**
-     * userId-->user_id
-     * @param source
+     * userId--->user_id
+     * @param source 驼峰转换成小写下划线
      * @return
      */
-    public static String toLowerCase(String source) {
-        StringBuilder sb = new StringBuilder();
-        if (StringUtils.isBlank(source)) {
+    public static String camelToUnder(String source) {
+        if (source == null || "".equals(source.trim())) {
             return "";
         }
-        char[] charList = source.toCharArray();
-        sb.append(Character.toLowerCase(charList[0]));
-        for (int i = 1; i < charList.length; i++) {
-            if (Character.isUpperCase(charList[i])) {
-                sb.append("_").append(Character.toLowerCase(charList[i]));
+        int len = source.length();
+        StringBuilder sb = new StringBuilder(len);
+        sb.append(Character.toLowerCase(source.charAt(0)));
+        for (int i = 1; i < len; i++) {
+            char c = source.charAt(i);
+            if (Character.isUpperCase(c)) {
+                sb.append(UNDERLINE).append(Character.toLowerCase(c));
             } else {
-                sb.append(charList[i]);
+                sb.append(c);
             }
         }
         return sb.toString();
     }
 
     /**
-     * userId-->USER_ID
-     * @param str
+     * user_id--->userId
+     * @param source 下划线转驼峰
      * @return
      */
-    public static String toUpperCase(String str) {
-        str = toLowerCase(str);
-        StringBuilder tableName = new StringBuilder();
-        if (StringUtils.isBlank(str)) {
+    public static String underToCamel(String source) {
+        if (source == null || "".equals(source.trim())) {
             return "";
         }
-        char[] charList = str.toCharArray();
-        for (int i = 0; i < charList.length; i++) {
-            tableName.append(Character.toUpperCase(charList[i]));
+        int len = source.length();
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            char c = source.charAt(i);
+            if (c == UNDERLINE) {
+                if (++i < len) {
+                    sb.append(Character.toUpperCase(source.charAt(i)));
+                }
+            } else {
+                sb.append(c);
+            }
         }
-        return tableName.toString();
+        return sb.toString();
     }
 
 }

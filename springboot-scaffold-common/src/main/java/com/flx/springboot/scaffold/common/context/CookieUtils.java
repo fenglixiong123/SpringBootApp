@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.utils.web;
+package com.flx.springboot.scaffold.common.context;
 
 import com.flx.springboot.scaffold.common.constants.WebConstant;
 import lombok.extern.slf4j.Slf4j;
