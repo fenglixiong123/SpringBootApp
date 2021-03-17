@@ -58,27 +58,27 @@ public class SqlDruidUtils {
     }
 
     public static <T> T queryOne(String sql, List<Object> params, Class<T> c)throws Exception{
-        return SqlBaseUtils.queryOne(sql,params,c);
+        return SqlBaseUtils.queryOne(getConnection(),sql,params,c);
     }
 
     public static <T> List<T> queryList(String sql,List<Object> params,Class<T> c)throws Exception{
-        return SqlBaseUtils.queryList(sql,params,c);
+        return SqlBaseUtils.queryList(getConnection(),sql,params,c);
     }
 
     public static int update(String sql, List<Object> params)throws Exception {
-        return SqlBaseUtils.update(sql,params);
-    }
-
-    public static int[] updateBatch(List<String> sqlList)throws Exception{
-        return SqlBaseUtils.updateBatch(sqlList);
-    }
-
-    public static int[] updateBatch(String sql,List<List<Object>> params)throws Exception{
-        return SqlBaseUtils.updateBatch(sql,params);
+        return SqlBaseUtils.update(getConnection(),sql,params);
     }
 
     public static boolean execute(String sql, List<Object> params)throws Exception {
-        return SqlBaseUtils.execute(sql,params);
+        return SqlBaseUtils.execute(getConnection(),sql,params);
+    }
+
+    public static int[] executeBatch(List<String> sqlList)throws Exception{
+        return SqlBaseUtils.executeBatch(getConnection(),sqlList);
+    }
+
+    public static int[] executeBatch(String sql,List<List<Object>> params)throws Exception{
+        return SqlBaseUtils.executeBatch(getConnection(),sql,params);
     }
 
 }

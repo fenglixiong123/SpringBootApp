@@ -170,7 +170,7 @@ public class SimpleExcelToListUtils {
                 String enNormalName = entry.getKey();
                 int col = colMap.get(cnNormalName);
                 String content = sheet.getCell(col, i).getContents().trim();
-                ObjectUtils.setFieldValueByName(enNormalName, content, entity);
+                ObjectUtils.setFieldValueByName(entity,enNormalName, content);
             }
             resultList.add(entity);
         }

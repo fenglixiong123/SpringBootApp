@@ -62,35 +62,35 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
     }
 
     /**
+     * @param entity 对象
      * @param cascadeFieldName 带路径的属性名或简单属性名
-     * @param entity                对象
      * @return 属性值
      * @MethodName : getFieldValueByCascadeName
      * @Description :
      * 根据带路径或不带路径的属性名获取属性值
      * 即接受简单属性名，如userName等，又接受带路径的属性名，如student.department.name等
      */
-    public static Object getFieldValueByCascadeName(String cascadeFieldName, Object entity) throws Exception {
+    public static Object getFieldValueByCascadeName(Object entity,String cascadeFieldName) throws Exception {
 
         String[] attributes = cascadeFieldName.split("\\.");
         if (attributes.length == 1) {
-            return getFieldValueByName(cascadeFieldName, entity);
+            return getFieldValueByName(entity,cascadeFieldName);
         } else {
-            Object fieldObj = getFieldValueByName(attributes[0], entity);
+            Object fieldObj = getFieldValueByName(entity,attributes[0]);
             String subFieldNameSequence = cascadeFieldName.substring(cascadeFieldName.indexOf(".") + 1);
-            return getFieldValueByCascadeName(subFieldNameSequence, fieldObj);
+            return getFieldValueByCascadeName(fieldObj,subFieldNameSequence);
         }
 
     }
 
     /**
+     * @param o 对象
      * @param fieldName 字段名
-     * @param o         对象
      * @return 字段值
      * @MethodName : getFieldValueByName
      * @Description : 根据字段名获取字段值
      */
-    public static Object getFieldValueByName(String fieldName, Object o) throws Exception {
+    public static Object getFieldValueByName(Object o,String fieldName) throws Exception {
 
         Field field = getFieldByName(fieldName, o.getClass());
 
@@ -104,13 +104,13 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
     }
 
     /**
+     * @param entity  对象
      * @param fieldName  字段名
      * @param fieldValue 字段值
-     * @param entity          对象
      * @MethodName : setFieldValueByName
      * @Description : 根据字段名给对象的字段赋值
      */
-    public static void setFieldValueByName(String fieldName, Object fieldValue, Object entity) throws Exception {
+    public static void setFieldValueByName(Object entity, String fieldName, Object fieldValue) throws Exception {
 
         Field field = getFieldByName(fieldName, entity.getClass());
         if (field != null) {
@@ -175,12 +175,27 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
         }
     }
 
+    public static <T> void setFieldByName(T t, String fieldName, Object fieldValue) throws Exception {
+        Field field = t.getClass().getDeclaredField(fieldName);
+        field.setAccessible(true);
+        field.set(t,fieldValue);
+    }
+
+    public static <T> void setFieldByNameIgnoreException(T t, String fieldName, Object fieldValue){
+        try {
+            Field field = t.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            field.set(t, fieldValue);
+        }catch (Exception e){
+            //todo@ignore
+        }
+    }
+
     /**
      * @param fieldName 字段名
-     * @param clazz     包含该字段的类
+     * @param clazz 包含该字段的类
      * @return 字段
-     * @MethodName : getFieldByName
-     * @Description : 根据字段名获取字段
+     * @Description : 根据字段名获取字段,可以包含继承关系
      */
     private static Field getFieldByName(String fieldName, Class<?> clazz) {
 

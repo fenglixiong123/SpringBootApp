@@ -1,6 +1,8 @@
 package com.flx.springboot.scaffold.common.jdbc.base;
 
+import com.flx.springboot.scaffold.common.utils.ObjectUtils;
 import com.flx.springboot.scaffold.common.utils.code.CodeUtils;
+import org.apache.commons.collections.ListUtils;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -17,14 +19,14 @@ import java.util.Properties;
  */
 public class SqlBaseUtils {
 
-    public static String KEY_URL = "url";//数据库的路径
-    public static String KEY_USERNAME = "username";//数据库的登录名
-    public static String KEY_PASSWORD = "password";//数据据库的登录密码
-    public static String KEY_DRIVER_CLASS = "driverClass";//加载驱动时的路径
+    public static String KEY_URL = "db.url";//数据库的路径
+    public static String KEY_USERNAME = "db.username";//数据库的登录名
+    public static String KEY_PASSWORD = "db.password";//数据据库的登录密码
+    public static String KEY_DRIVER_CLASS = "db.driverClass";//加载驱动时的路径
 
     private static String JDBC_LOCATION = "application.properties";//数据库连接文件地址
 
-    public static String DEFAULT_DRIVER_CLASS = "com.mysql.jdbc.Driver";//默认driverClass
+    public static String DEFAULT_DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";//默认driverClass
 
     public static void setLocation(String location){
         JDBC_LOCATION = location;
@@ -64,12 +66,15 @@ public class SqlBaseUtils {
     /**
      * 通用查询接口
      */
-    public static <T> T queryOne(String sql,List<Object> params,Class<T> c)throws Exception{
-        Connection con = null;
+    public static <T> T queryOne(Connection con,String sql,List<Object> params,Class<T> c)throws Exception{
+        Objects.requireNonNull(con);
+        Objects.requireNonNull(sql);
+        if(params==null){
+            params = new ArrayList<>();
+        }
         PreparedStatement ps = null;
         ResultSet rs = null;
         try{
-            con = getConnection();
             ps = con.prepareStatement(sql);
             for (int i = 0; i < params.size(); i++) {
                 ps.setObject(i+1,params.get(i));
@@ -82,9 +87,7 @@ public class SqlBaseUtils {
                 for (int i=0;i<column;i++){
                     String name = CodeUtils.underToCamel(rsm.getColumnName(i+1));
                     Object value = rs.getObject(i+1);
-                    Field field = c.getDeclaredField(name);
-                    field.setAccessible(true);
-                    field.set(o,value);
+                    ObjectUtils.setFieldByNameIgnoreException(o,name,value);
                 }
                 return o;
             }
@@ -97,13 +100,16 @@ public class SqlBaseUtils {
     /**
      * 通用查询接口
      */
-    public static <T> List<T> queryList(String sql,List<Object> params,Class<T> c)throws Exception{
-        Connection con = null;
+    public static <T> List<T> queryList(Connection con,String sql,List<Object> params,Class<T> c)throws Exception{
+        Objects.requireNonNull(con);
+        Objects.requireNonNull(sql);
+        if(params==null){
+            params = new ArrayList<>();
+        }
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<T> resultList = new ArrayList<>();
         try{
-            con = getConnection();
             ps = con.prepareStatement(sql);
             for (int i = 0; i < params.size(); i++) {
                 ps.setObject(i+1,params.get(i));
@@ -116,11 +122,9 @@ public class SqlBaseUtils {
                 for (int i=0;i<column;i++){
                     String name = CodeUtils.underToCamel(rsm.getColumnName(i+1));
                     Object value = rs.getObject(i+1);
-                    Field field = c.getDeclaredField(name);
-                    field.setAccessible(true);
-                    field.set(o,value);
-                    resultList.add(o);
+                    ObjectUtils.setFieldByNameIgnoreException(o,name,value);
                 }
+                resultList.add(o);
             }
             return resultList;
         }finally {
@@ -131,11 +135,14 @@ public class SqlBaseUtils {
     /**
      * 通用更新操作
      */
-    public static int update(String sql, List<Object> params)throws Exception {
-        Connection con = null;
+    public static int update(Connection con,String sql, List<Object> params)throws Exception {
+        Objects.requireNonNull(con);
+        Objects.requireNonNull(sql);
+        if(params==null){
+            params = new ArrayList<>();
+        }
         PreparedStatement ps = null;
         try {
-            con = getConnection();
             ps = con.prepareStatement(sql);
             for (int i = 0; i < params.size(); i++) {
                 ps.setObject(i + 1, params.get(i));
@@ -147,16 +154,37 @@ public class SqlBaseUtils {
     }
 
     /**
+     * 通用操作
+     */
+    public static boolean execute(Connection con,String sql, List<Object> params)throws Exception {
+        Objects.requireNonNull(con);
+        Objects.requireNonNull(sql);
+        if(params==null){
+            params = new ArrayList<>();
+        }
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+            return ps.execute();
+        }finally {
+            close(con,ps);
+        }
+    }
+
+    /**
      * 1.Statement它更适合执行不同sql的批处理，它没有提供预处理功能，性能比较低。
      * 2.PreparedStatement它适合执行相同的批处理，它提供了预处理功能，属性比较高。
      * @param sqlList insert into user values ();
      * @throws Exception
      */
-    public static int[] updateBatch(List<String> sqlList)throws Exception{
-        Connection con = null;
+    public static int[] executeBatch(Connection con,List<String> sqlList)throws Exception{
+        Objects.requireNonNull(con);
+        Objects.requireNonNull(sqlList);
         Statement st = null;
         try {
-            con = getConnection();
             st = con.createStatement();
             for (String sql : sqlList){
                 st.addBatch(sql);
@@ -176,11 +204,14 @@ public class SqlBaseUtils {
      * @return
      * @throws Exception
      */
-    public static int[] updateBatch(String sql,List<List<Object>> params)throws Exception{
-        Connection con = null;
+    public static int[] executeBatch(Connection con,String sql,List<List<Object>> params)throws Exception{
+        Objects.requireNonNull(con);
+        Objects.requireNonNull(sql);
+        if(params==null){
+            params = new ArrayList<>();
+        }
         PreparedStatement ps = null;
         try {
-            con = getConnection();
             ps = con.prepareStatement(sql);
             for (int i = 0; i < params.size(); i++) {
                 List<Object> rows = params.get(i);
@@ -196,24 +227,6 @@ public class SqlBaseUtils {
             int[] ret = ps.executeBatch();
             ps.clearBatch();
             return ret;
-        }finally {
-            close(con,ps);
-        }
-    }
-
-    /**
-     * 通用操作
-     */
-    public static boolean execute(String sql, List<Object> params)throws Exception {
-        Connection con = null;
-        PreparedStatement ps = null;
-        try {
-            con = getConnection();
-            ps = con.prepareStatement(sql);
-            for (int i = 0; i < params.size(); i++) {
-                ps.setObject(i + 1, params.get(i));
-            }
-            return ps.execute();
         }finally {
             close(con,ps);
         }

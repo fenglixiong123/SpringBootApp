@@ -64,7 +64,7 @@ public class BaseExcel {
         for (int index = firstIndex; index <= lastIndex; index++) {
             T item = dataList.get(index);
             for (int i = 0; i < enFields.length; i++) {
-                Object objValue = ObjectUtils.getFieldValueByCascadeName(enFields[i], item);
+                Object objValue = ObjectUtils.getFieldValueByCascadeName(item,enFields[i]);
                 String fieldValue = objValue == null ? "" : objValue.toString();
                 if (objValue != null) {
                     if (objValue.getClass().isAssignableFrom(Date.class)) {
