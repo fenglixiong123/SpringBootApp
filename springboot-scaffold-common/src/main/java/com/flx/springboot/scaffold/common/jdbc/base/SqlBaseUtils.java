@@ -1,14 +1,13 @@
 package com.flx.springboot.scaffold.common.jdbc.base;
 
 import com.flx.springboot.scaffold.common.utils.code.CodeUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -18,12 +17,14 @@ import java.util.Properties;
  */
 public class SqlBaseUtils {
 
-    private static String KEY_URL = "url";//数据库的路径
-    private static String KEY_USERNAME = "username";//数据库的登录名
-    private static String KEY_PASSWORD = "password";//数据据库的登录密码
-    private static String KEY_DRIVER_CLASS = "driverClass";//加载驱动时的路径
+    public static String KEY_URL = "url";//数据库的路径
+    public static String KEY_USERNAME = "username";//数据库的登录名
+    public static String KEY_PASSWORD = "password";//数据据库的登录密码
+    public static String KEY_DRIVER_CLASS = "driverClass";//加载驱动时的路径
 
     private static String JDBC_LOCATION = "application.properties";//数据库连接文件地址
+
+    public static String DEFAULT_DRIVER_CLASS = "com.mysql.jdbc.Driver";//默认driverClass
 
     public static void setLocation(String location){
         JDBC_LOCATION = location;
@@ -44,10 +45,8 @@ public class SqlBaseUtils {
      * @throws Exception
      */
     public static Connection getConnection(String location) throws Exception {
-        if(StringUtils.isBlank(location)){
-            throw new Exception("Location is blank!");
-        }
         //1.加载配置文件
+        Objects.requireNonNull(location);
         InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(location);
         Properties pr = new Properties();
         pr.load(is);
@@ -148,30 +147,12 @@ public class SqlBaseUtils {
     }
 
     /**
-     * 通用操作
-     */
-    public static boolean execute(String sql, List<Object> params)throws Exception {
-        Connection con = null;
-        PreparedStatement ps = null;
-        try {
-            con = getConnection();
-            ps = con.prepareStatement(sql);
-            for (int i = 0; i < params.size(); i++) {
-                ps.setObject(i + 1, params.get(i));
-            }
-            return ps.execute();
-        }finally {
-            close(con,ps);
-        }
-    }
-
-    /**
      * 1.Statement它更适合执行不同sql的批处理，它没有提供预处理功能，性能比较低。
      * 2.PreparedStatement它适合执行相同的批处理，它提供了预处理功能，属性比较高。
      * @param sqlList insert into user values ();
      * @throws Exception
      */
-    public static int[] undateBatch(List<String> sqlList)throws Exception{
+    public static int[] updateBatch(List<String> sqlList)throws Exception{
         Connection con = null;
         Statement st = null;
         try {
@@ -195,7 +176,7 @@ public class SqlBaseUtils {
      * @return
      * @throws Exception
      */
-    public static int[] undateBatch(String sql,List<List<Object>> params)throws Exception{
+    public static int[] updateBatch(String sql,List<List<Object>> params)throws Exception{
         Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -215,6 +196,24 @@ public class SqlBaseUtils {
             int[] ret = ps.executeBatch();
             ps.clearBatch();
             return ret;
+        }finally {
+            close(con,ps);
+        }
+    }
+
+    /**
+     * 通用操作
+     */
+    public static boolean execute(String sql, List<Object> params)throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = getConnection();
+            ps = con.prepareStatement(sql);
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+            return ps.execute();
         }finally {
             close(con,ps);
         }
