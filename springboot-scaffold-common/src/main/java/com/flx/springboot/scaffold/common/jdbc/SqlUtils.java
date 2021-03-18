@@ -1,19 +1,12 @@
 package com.flx.springboot.scaffold.common.jdbc;
 
 import com.flx.springboot.scaffold.common.jdbc.base.SqlBaseUtils;
-import org.apache.commons.lang3.StringUtils;
 
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
 import static com.flx.springboot.scaffold.common.jdbc.base.SqlBaseUtils.*;
+import static com.flx.springboot.scaffold.common.jdbc.base.SqlBaseUtils.load;
 
 /**
  * @Author: Fenglixiong
@@ -25,28 +18,36 @@ public class SqlUtils {
     private static String url;//数据库的路径
     private static String username;//数据库的登录名
     private static String password;//数据据库的登录密码
-    private static String driverClass;//加载驱动时的路径
 
     static {
-        load();//加载默认配置文件的数据库连接
+        load(getLocation());
     }
 
-    public static void createDataSource(String url,String username,String password) throws SQLException {
-        createDataSource(url,username,password,DEFAULT_DRIVER_CLASS);
-    }
-
-    public static void createDataSource(String url,String username,String password,String driverClass) throws SQLException {
+    public static void createDataSource(String url,String username,String password){
         SqlUtils.url = url;
         SqlUtils.username = username;
         SqlUtils.password = password;
-        SqlUtils.driverClass = driverClass;
     }
 
-    /**
-     * 获取数据库连接
-     */
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url,username,password);
+
+    public static Connection getConnection() throws Exception {
+        return SqlBaseUtils.getConnection(url,username,password);
+    }
+
+    public static Connection getConnection(String location) throws Exception {
+        return SqlBaseUtils.getConnection(location);
+    }
+
+    public static Connection getConnection(String url,String username,String password) throws Exception {
+        return SqlBaseUtils.getConnection(url,username,password);
+    }
+
+    public static Map<String,Object> queryMap(Connection con, String sql, List<Object> params)throws Exception{
+        return SqlBaseUtils.queryMap(getConnection(),sql,params);
+    }
+
+    public static List<Map<String,Object>> queryMaps(Connection con,String sql,List<Object> params)throws Exception{
+        return SqlBaseUtils.queryMaps(con,sql,params);
     }
 
     public static <T> T queryOne(String sql, List<Object> params, Class<T> c)throws Exception{
@@ -73,31 +74,15 @@ public class SqlUtils {
         return SqlBaseUtils.executeBatch(getConnection(),sql,params);
     }
 
-    public static void load(){
-        load(getLocation());
+    public static boolean executeWithTransaction(Connection con,List<Command> commands){
+        return SqlBaseUtils.executeWithTransaction(con,commands);
     }
 
     public static void load(String location){
-        //1.加载配置文件
-        Objects.requireNonNull(location);
-        InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(location);
-        Properties pr = new Properties();
-        try {
-            pr.load(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //2.读取配置信息
-        username = pr.getProperty(KEY_USERNAME);
-        password = pr.getProperty(KEY_PASSWORD);
-        url = pr.getProperty(KEY_URL);
-        driverClass = pr.getProperty(KEY_DRIVER_CLASS);
-        //3.加载驱动
-        try {
-            Class.forName(driverClass);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        SqlBaseUtils.SimpleDataSource dataSource = SqlBaseUtils.load(location);
+        url = dataSource.getUrl();
+        username = dataSource.getUsername();
+        password = dataSource.getPassword();
     }
 
 }

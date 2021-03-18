@@ -2,15 +2,15 @@ package com.flx.springboot.scaffold.common.jdbc.base;
 
 import com.flx.springboot.scaffold.common.utils.ObjectUtils;
 import com.flx.springboot.scaffold.common.utils.code.CodeUtils;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.apache.commons.collections.ListUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * @Author: Fenglixiong
@@ -24,74 +24,85 @@ public class SqlBaseUtils {
     public static String KEY_PASSWORD = "db.password";//数据据库的登录密码
     public static String KEY_DRIVER_CLASS = "db.driverClass";//加载驱动时的路径
 
-    private static String JDBC_LOCATION = "application.properties";//数据库连接文件地址
+    private static String DEFAULT_LOCATION = "application.properties";//数据库连接文件地址
 
     public static String DEFAULT_DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";//默认driverClass
 
     public static void setLocation(String location){
-        JDBC_LOCATION = location;
+        DEFAULT_LOCATION = location;
     }
 
     public static String getLocation(){
-        return JDBC_LOCATION;
-    }
-
-    public static Connection getConnection() throws Exception{
-        return getConnection(JDBC_LOCATION);
+        return DEFAULT_LOCATION;
     }
 
     /**
      * 获取数据库连接
-     * @param location
-     * @return
-     * @throws Exception
+     */
+    public static Connection getConnection() throws Exception{
+        return getConnection(DEFAULT_LOCATION);
+    }
+
+    /**
+     * 获取数据库连接
      */
     public static Connection getConnection(String location) throws Exception {
-        //1.加载配置文件
-        Objects.requireNonNull(location);
-        InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(location);
-        Properties pr = new Properties();
-        pr.load(is);
-        //2.读取配置信息
-        String username = pr.getProperty(KEY_USERNAME);
-        String password = pr.getProperty(KEY_PASSWORD);
-        String url = pr.getProperty(KEY_URL);
-        String driverClass = pr.getProperty(KEY_DRIVER_CLASS);
-        //3.加载驱动
+        SimpleDataSource info = load(location);
+        return DriverManager.getConnection(info.getUrl(),info.getUsername(),info.getPassword());
+    }
+
+    /**
+     * 获取数据库连接
+     */
+    public static Connection getConnection(String url,String username,String password) throws Exception {
+        return getConnection(url,username,password,DEFAULT_DRIVER_CLASS);
+    }
+
+    /**
+     * 获取数据库连接
+     */
+    public static Connection getConnection(String url,String username,String password,String driverClass) throws Exception {
         Class.forName(driverClass);
-        //4.获取连接
         return DriverManager.getConnection(url,username,password);
     }
 
     /**
-     * 通用查询接口
+     * 查询单个map结果
      */
-    public static <T> T queryOne(Connection con,String sql,List<Object> params,Class<T> c)throws Exception{
+    public static Map<String,Object> queryMap(Connection con,String sql,List<Object> params)throws Exception{
+        List<Map<String,Object>> resultMap = queryMaps(con,sql,params);
+        return resultMap==null ? null : resultMap.get(0);
+    }
+
+    /**
+     * 查询map结果
+     */
+    public static List<Map<String,Object>> queryMaps(Connection con,String sql,List<Object> params)throws Exception{
         Objects.requireNonNull(con);
         Objects.requireNonNull(sql);
-        if(params==null){
-            params = new ArrayList<>();
-        }
         PreparedStatement ps = null;
         ResultSet rs = null;
+        List<Map<String,Object>> resultList = new ArrayList<>();
         try{
             ps = con.prepareStatement(sql);
-            for (int i = 0; i < params.size(); i++) {
-                ps.setObject(i+1,params.get(i));
+            if(params!=null) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
             }
             rs = ps.executeQuery();
             ResultSetMetaData rsm = rs.getMetaData();
             int column = rsm.getColumnCount();
-            if (rs.next()){
-                T o = c.newInstance();
-                for (int i=0;i<column;i++){
-                    String name = CodeUtils.underToCamel(rsm.getColumnName(i+1));
-                    Object value = rs.getObject(i+1);
-                    ObjectUtils.setFieldByNameIgnoreException(o,name,value);
+            while (rs.next()){
+                Map<String,Object> row = new HashMap<>();
+                for (int i=1;i<=column;i++){
+                    String name = CodeUtils.underToCamel(rsm.getColumnName(i));
+                    Object value = rs.getObject(i);
+                    row.put(name,value);
                 }
-                return o;
+                resultList.add(row);
             }
-            return null;
+            return resultList;
         }finally {
             close(con,ps,rs);
         }
@@ -100,28 +111,35 @@ public class SqlBaseUtils {
     /**
      * 通用查询接口
      */
+    public static <T> T queryOne(Connection con,String sql,List<Object> params,Class<T> c)throws Exception{
+        List<T> result = queryList(con, sql, params, c);
+        return result==null ? null : result.get(0);
+    }
+
+    /**
+     * 通用查询接口
+     */
     public static <T> List<T> queryList(Connection con,String sql,List<Object> params,Class<T> c)throws Exception{
         Objects.requireNonNull(con);
         Objects.requireNonNull(sql);
-        if(params==null){
-            params = new ArrayList<>();
-        }
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<T> resultList = new ArrayList<>();
         try{
             ps = con.prepareStatement(sql);
-            for (int i = 0; i < params.size(); i++) {
-                ps.setObject(i+1,params.get(i));
+            if(params!=null) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
             }
             rs = ps.executeQuery();
             ResultSetMetaData rsm = rs.getMetaData();
             int column = rsm.getColumnCount();
             while (rs.next()){
                 T o = c.newInstance();
-                for (int i=0;i<column;i++){
-                    String name = CodeUtils.underToCamel(rsm.getColumnName(i+1));
-                    Object value = rs.getObject(i+1);
+                for (int i=1;i<=column;i++){
+                    String name = CodeUtils.underToCamel(rsm.getColumnName(i));
+                    Object value = rs.getObject(i);
                     ObjectUtils.setFieldByNameIgnoreException(o,name,value);
                 }
                 resultList.add(o);
@@ -138,14 +156,13 @@ public class SqlBaseUtils {
     public static int update(Connection con,String sql, List<Object> params)throws Exception {
         Objects.requireNonNull(con);
         Objects.requireNonNull(sql);
-        if(params==null){
-            params = new ArrayList<>();
-        }
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
-            for (int i = 0; i < params.size(); i++) {
-                ps.setObject(i + 1, params.get(i));
+            if(params!=null) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
             }
             return ps.executeUpdate();
         }finally {
@@ -159,14 +176,13 @@ public class SqlBaseUtils {
     public static boolean execute(Connection con,String sql, List<Object> params)throws Exception {
         Objects.requireNonNull(con);
         Objects.requireNonNull(sql);
-        if(params==null){
-            params = new ArrayList<>();
-        }
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
-            for (int i = 0; i < params.size(); i++) {
-                ps.setObject(i + 1, params.get(i));
+            if(params!=null) {
+                for (int i = 0; i < params.size(); i++) {
+                    ps.setObject(i + 1, params.get(i));
+                }
             }
             return ps.execute();
         }finally {
@@ -232,6 +248,48 @@ public class SqlBaseUtils {
         }
     }
 
+    /**
+     * 带事务的批量更新
+     * @param con
+     * @param commands
+     */
+    public static boolean executeWithTransaction(Connection con,List<Command> commands){
+        Objects.requireNonNull(con);
+        Objects.requireNonNull(commands);
+        List<PreparedStatement> pss = new ArrayList<>();
+        try {
+            con.setAutoCommit(false);
+            for (Command command : commands) {
+                PreparedStatement ps = con.prepareStatement(command.getSql());
+                List<Object> params = command.getParams();
+                if(params!=null){
+                    for (int i = 0; i < params.size(); i++) {
+                        ps.setObject(i+1,params.get(i));
+                    }
+                }
+                pss.add(ps);
+                if(ps.executeUpdate()<0){
+                    throw new RuntimeException("Bad execute and will rollback !");
+                }
+            }
+            return true;
+        }catch (Exception e){
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return false;
+        }finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            pss.forEach(SqlBaseUtils::close);
+        }
+    }
+
     public static void close(Connection con){
         close(con,null,null,null);
     }
@@ -291,6 +349,81 @@ public class SqlBaseUtils {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public static SimpleDataSource load(){
+        return load(DEFAULT_LOCATION);
+    }
+
+    public static SimpleDataSource load(String location){
+        //1.加载配置文件
+        Objects.requireNonNull(location);
+        InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(location);
+        Properties pr = new Properties();
+        try {
+            pr.load(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //2.读取配置信息
+        String username = pr.getProperty(KEY_USERNAME);
+        String password = pr.getProperty(KEY_PASSWORD);
+        String url = pr.getProperty(KEY_URL);
+        String driverClass = pr.getProperty(KEY_DRIVER_CLASS);
+        if(driverClass == null){
+            driverClass = DEFAULT_DRIVER_CLASS;
+        }
+        //3.加载驱动
+        try {
+            Class.forName(driverClass);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return SimpleDataSource.of(url,username,password,driverClass);
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class SimpleDataSource{
+
+        private String url;
+        private String username;
+        private String password;
+        private String driverClass;
+
+        public static SimpleDataSource of(String url,String username,String password,String driverClass){
+            return new SimpleDataSource(url,username,password,driverClass);
+        }
+    }
+
+    public static Command builder(){
+        return Command.build();
+    }
+
+    public static Command builder(String sql,List<Object> params){
+        return Command.build().sql(sql).params(params);
+    }
+
+    @Data
+    public static class Command{
+        private String sql;
+        private List<Object> params;
+
+        public static Command build(){
+            return new Command();
+        }
+        public Command sql(String sql){
+            this.sql = sql;
+            return this;
+        }
+        public Command params(List<Object> params){
+            this.params = params;
+            return this;
+        }
+        public Command params(Object ...params){
+            this.params = Arrays.asList(params);
+            return this;
         }
     }
 

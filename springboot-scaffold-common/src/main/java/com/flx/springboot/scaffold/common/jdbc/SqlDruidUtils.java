@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import static com.flx.springboot.scaffold.common.jdbc.base.SqlBaseUtils.*;
@@ -24,21 +25,7 @@ public class SqlDruidUtils {
     private static DruidDataSource dataSource;//数据源
 
     static {
-        //1.加载配置文件
-        String location = getLocation();
-        InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(location);
-        Properties pr = new Properties();
-        try {
-            pr.load(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //2.读取配置信息
-        dataSource = new DruidDataSource();
-        dataSource.setUrl(pr.getProperty(KEY_URL));
-        dataSource.setUsername(pr.getProperty(KEY_USERNAME));
-        dataSource.setPassword(pr.getProperty(KEY_PASSWORD));
-        dataSource.setDriverClassName(pr.getProperty(KEY_DRIVER_CLASS));
+        load(getLocation());
     }
 
     public static void createDataSource(String url,String username,String password) throws SQLException {
@@ -55,6 +42,14 @@ public class SqlDruidUtils {
 
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
+    }
+
+    public static Map<String,Object> queryMap(Connection con, String sql, List<Object> params)throws Exception{
+        return SqlBaseUtils.queryMap(getConnection(),sql,params);
+    }
+
+    public static List<Map<String,Object>> queryMaps(Connection con,String sql,List<Object> params)throws Exception{
+        return SqlBaseUtils.queryMaps(con,sql,params);
     }
 
     public static <T> T queryOne(String sql, List<Object> params, Class<T> c)throws Exception{
@@ -79,6 +74,19 @@ public class SqlDruidUtils {
 
     public static int[] executeBatch(String sql,List<List<Object>> params)throws Exception{
         return SqlBaseUtils.executeBatch(getConnection(),sql,params);
+    }
+
+    public static boolean executeWithTransaction(Connection con,List<Command> commands){
+        return SqlBaseUtils.executeWithTransaction(con,commands);
+    }
+
+    public static void load(String location){
+        SqlBaseUtils.SimpleDataSource info = SqlBaseUtils.load(location);
+        dataSource = new DruidDataSource();
+        dataSource.setUrl(info.getUrl());
+        dataSource.setUsername(info.getUsername());
+        dataSource.setPassword(info.getPassword());
+        dataSource.setDriverClassName(info.getDriverClass());
     }
 
 }
