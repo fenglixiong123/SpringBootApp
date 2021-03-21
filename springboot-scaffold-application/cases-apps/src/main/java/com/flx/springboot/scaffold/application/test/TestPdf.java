@@ -1,7 +1,7 @@
 package com.flx.springboot.scaffold.application.test;
 
-import com.flx.springboot.scaffold.common.pdf.PdfTemplateUtils;
-import com.flx.springboot.scaffold.common.pdf.PdfUtils;
+import com.flx.springboot.scaffold.common.office.pdf.PdfTemplateUtils;
+import com.flx.springboot.scaffold.common.office.pdf.PdfUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

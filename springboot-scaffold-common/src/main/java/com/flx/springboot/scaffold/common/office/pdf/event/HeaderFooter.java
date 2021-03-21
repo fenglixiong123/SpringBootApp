@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.pdf.event;
+package com.flx.springboot.scaffold.common.office.pdf.event;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;

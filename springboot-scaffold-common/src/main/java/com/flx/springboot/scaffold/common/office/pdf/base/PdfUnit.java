@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.pdf.base;
+package com.flx.springboot.scaffold.common.office.pdf.base;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;

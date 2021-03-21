@@ -1,11 +1,11 @@
-package com.flx.springboot.scaffold.common.pdf.test;
+package com.flx.springboot.scaffold.common.office.pdf.test;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
-import static com.flx.springboot.scaffold.common.pdf.base.PdfUnit.*;
+import static com.flx.springboot.scaffold.common.office.pdf.base.PdfUnit.*;
 
 /**
  * 测试Pdf功能

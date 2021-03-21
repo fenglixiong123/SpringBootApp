@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.excel.simple;
+package com.flx.springboot.scaffold.common.office.excel.simple;
 
 import com.flx.springboot.scaffold.common.utils.ObjectUtils;
 import jxl.Cell;

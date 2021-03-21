@@ -1,36 +1,17 @@
-package com.flx.springboot.scaffold.common.excel.simple;
+package com.flx.springboot.scaffold.common.office.excel.simple;
 
 
 import com.flx.springboot.scaffold.common.utils.CollectionUtils;
-import com.flx.springboot.scaffold.common.utils.ObjectUtils;
-import jxl.Cell;
-import jxl.Sheet;
 import jxl.Workbook;
-import jxl.format.Colour;
-import jxl.format.UnderlineStyle;
 import jxl.write.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Map.Entry;
 
 /**
  * @author fenglixiong

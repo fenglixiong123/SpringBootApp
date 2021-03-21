@@ -1,6 +1,6 @@
-package com.flx.springboot.scaffold.common.pdf;
+package com.flx.springboot.scaffold.common.office.pdf;
 
-import com.flx.springboot.scaffold.common.pdf.base.PdfUnit;
+import com.flx.springboot.scaffold.common.office.pdf.base.PdfUnit;
 import com.flx.springboot.scaffold.common.utils.CollectionUtils;
 import com.flx.springboot.scaffold.common.utils.file.FileUtils;
 import com.itextpdf.text.*;
@@ -10,13 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URL;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

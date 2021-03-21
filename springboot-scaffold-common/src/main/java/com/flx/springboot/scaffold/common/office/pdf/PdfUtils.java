@@ -1,8 +1,8 @@
-package com.flx.springboot.scaffold.common.pdf;
+package com.flx.springboot.scaffold.common.office.pdf;
 
-import com.flx.springboot.scaffold.common.pdf.base.PdfUnit;
-import com.flx.springboot.scaffold.common.pdf.event.HeaderFooter;
-import com.flx.springboot.scaffold.common.pdf.event.WaterMark;
+import com.flx.springboot.scaffold.common.office.pdf.base.PdfUnit;
+import com.flx.springboot.scaffold.common.office.pdf.event.HeaderFooter;
+import com.flx.springboot.scaffold.common.office.pdf.event.WaterMark;
 import com.flx.springboot.scaffold.common.utils.file.FileUtils;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -19,11 +19,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-import static com.flx.springboot.scaffold.common.pdf.base.PdfUnit.*;
+import static com.flx.springboot.scaffold.common.office.pdf.base.PdfUnit.*;
 
 /**
  * PDF代码生成
