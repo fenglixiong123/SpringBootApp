@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.application.test;
 
-import com.flx.springboot.scaffold.common.http.SimpleHttpUtils;
+import com.flx.springboot.scaffold.common.http.SimpleUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +20,9 @@ public class TestPost {
         paramMap.put("groupInstanceId","000");
         paramMap.put("key","RCS_MAX_COUNT");
         System.out.println("--------post1");
-        System.out.println(SimpleHttpUtils.doGet(url1,null));
+        System.out.println(SimpleUtils.doGet(url1,null));
         System.out.println("--------post2");
-        System.out.println(SimpleHttpUtils.doGet(url2,paramMap));
+        System.out.println(SimpleUtils.doGet(url2,paramMap));
     }
 
 }

@@ -22,7 +22,7 @@ import java.util.Map;
  * @Description
  **/
 @Slf4j
-public class SimpleHttpUtils {
+public class SimpleUtils {
 
     /**
      * GET请求

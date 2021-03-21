@@ -15,6 +15,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import static com.flx.springboot.scaffold.common.http.BaseUtils.getPerfectUrl;
+
 /**
  * @Author: Fenglixiong
  * @Date: 2021/3/10 16:20
@@ -133,28 +135,6 @@ public class OkUtils {
             }
             return null;
         }).orElse(null);
-    }
-
-    /**
-     * 处理url，将query数据代入
-     */
-    private static String getPerfectUrl(String url, Map<String, String> queries) throws Exception {
-        if(StringUtils.isBlank(url)){
-            throw new Exception("url is empty !");
-        }
-        StringBuilder sb = new StringBuilder(url);
-        if (!CollectionUtils.isEmpty(queries)) {
-            int i = 0;
-            for (Map.Entry<String, String> query : queries.entrySet()){
-                if(i==0){
-                    sb.append("?").append(query.getKey()).append("=").append(query.getValue());
-                }else {
-                    sb.append("&").append(query.getKey()).append("=").append(query.getValue());
-                }
-                i++;
-            }
-        }
-        return sb.toString();
     }
 
 }
