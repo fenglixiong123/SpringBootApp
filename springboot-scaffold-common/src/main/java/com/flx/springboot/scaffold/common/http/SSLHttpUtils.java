@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.utils.http;
+package com.flx.springboot.scaffold.common.http;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;

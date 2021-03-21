@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.utils.http;
+package com.flx.springboot.scaffold.common.http;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.application.test;
 
-import com.flx.springboot.scaffold.common.utils.http.SimpleHttpUtils;
+import com.flx.springboot.scaffold.common.http.SimpleHttpUtils;
 
 import java.util.HashMap;
 import java.util.Map;

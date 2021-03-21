@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.utils.http;
+package com.flx.springboot.scaffold.common.http;
 
 import com.flx.springboot.scaffold.common.constants.WebConstant;
 import com.flx.springboot.scaffold.common.utils.CollectionUtils;
