@@ -15,6 +15,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import static com.flx.springboot.scaffold.common.http.BaseUtils.getDefaultHeaders;
 import static com.flx.springboot.scaffold.common.http.BaseUtils.getPerfectUrl;
 
 /**
@@ -47,12 +48,16 @@ public class OkUtils {
                 .build();
     }
 
+    public static JSONObject getJSON(String url) throws Exception {
+        return getJSON(url,null);
+    }
+
     public static JSONObject getJSON(String url, Map<String, String> queries) throws Exception {
-        return JSONObject.parseObject(get(url,queries));
+        return JSONObject.parseObject(getString(url,queries));
     }
 
     public static JSONObject postJSON(String url, Map<String, String> queries, String jsonData) throws Exception {
-        return JSONObject.parseObject(post(url,queries,jsonData));
+        return JSONObject.parseObject(postString(url,queries,jsonData));
     }
 
     public static <T> T get(String url, Class<T> z) throws Exception{
@@ -60,7 +65,11 @@ public class OkUtils {
     }
 
     public static <T> T get(String url, Map<String, String> queries, Class<T> z) throws Exception {
-        return JSON.parseObject(get(url,queries), z);
+        return JSON.parseObject(getString(url,queries), z);
+    }
+
+    public static <T> T post(String url,Class<T> z) throws Exception{
+        return post(url,null,z);
     }
 
     public static <T> T post(String url,String jsonData,Class<T> z) throws Exception{
@@ -68,23 +77,39 @@ public class OkUtils {
     }
 
     public static <T> T post(String url,Map<String, String> queries,String jsonData,Class<T> z) throws Exception {
-        return JSON.parseObject(post(url,queries,jsonData), z);
+        return JSON.parseObject(postString(url,queries,jsonData), z);
     }
 
-    public static String get(String url, Map<String, String> queries) throws Exception {
-        return get(url,null,queries);
+    public static String getString(String url) throws Exception {
+        return getString(url,null);
     }
 
-    public static String post(String url,Map<String, String> queries,String jsonData) throws Exception {
-        return post(url,null,queries,jsonData);
+    public static String getString(String url, Map<String, String> queries) throws Exception {
+        return getString(url,null,queries);
     }
 
-    public static String get(String url,Map<String,String> headerMap, Map<String, String> queries) throws Exception {
-        return request(url,HttpMethod.GET,headerMap,queries,null);
+    public static String getString(String url,Map<String,String> headerMap, Map<String, String> queries) throws Exception {
+        return request(url,HttpMethod.GET,Optional.ofNullable(headerMap).orElse(getDefaultHeaders()),queries,null);
     }
 
-    public static String post(String url,Map<String,String> headerMap,Map<String, String> queries,String jsonData) throws Exception {
-        return request(url,HttpMethod.POST,Optional.ofNullable(headerMap).orElse(new HashMap<>()),queries,jsonData);
+    public static String postString(String url) throws Exception {
+        return postString(url,null,null,null);
+    }
+
+    public static String postString(String url,String jsonData) throws Exception {
+        return postString(url,null,jsonData);
+    }
+
+    public static String postString(String url,Map<String, String> queries) throws Exception {
+        return postString(url,queries,null);
+    }
+
+    public static String postString(String url,Map<String, String> queries,String jsonData) throws Exception {
+        return postString(url,null,queries,jsonData);
+    }
+
+    public static String postString(String url,Map<String,String> headerMap,Map<String, String> queries,String jsonData) throws Exception {
+        return request(url,HttpMethod.POST,Optional.ofNullable(headerMap).orElse(getDefaultHeaders()),queries,jsonData);
     }
 
     /**
