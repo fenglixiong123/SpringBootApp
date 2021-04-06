@@ -1,20 +1,13 @@
 package com.flx.springboot.scaffold.flyway.config;
 
-import com.flx.springboot.scaffold.common.servlet.PropertyUtils;
+import com.flx.springboot.scaffold.common.system.PropertyUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 
 /**
  * @Author: Fenglixiong

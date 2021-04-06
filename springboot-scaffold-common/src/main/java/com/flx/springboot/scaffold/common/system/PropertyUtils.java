@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.servlet;
+package com.flx.springboot.scaffold.common.system;
 
 import com.flx.springboot.scaffold.common.constants.WebConstant;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import java.util.Properties;
  * @Description
  **/
 @Slf4j
-public class PropertyUtils {
+public class PropertyUtils extends SystemPropertyUtils{
 
     public static final String defaultLocation = "application.properties";
 
@@ -95,6 +95,10 @@ public class PropertyUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private PropertyUtils(){
+        //Unsafe
     }
 
 }
