@@ -16,6 +16,7 @@
         <module>springboot-scaffold-simple-jpa</module>
         <module>springboot-scaffold-simple-websocket</module>
         <module>springboot-scaffold-simple-websocket-chatroom</module>
+        <module>springboot-scaffold-simple-websocket-netty-chatroom</module>
     </modules>
 
     <dependencies>
