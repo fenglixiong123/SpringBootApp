@@ -16,8 +16,8 @@ public class NettyAttrUtil {
      * @param channel
      */
     public static void refreshLastHeartBeatTime(Channel channel) {
-    	Long now = System.currentTimeMillis();
-        channel.attr(ATTR_KEY_LAST_HEARTBEAT_TIME).set(now.toString());
+    	long now = System.currentTimeMillis();
+        channel.attr(ATTR_KEY_LAST_HEARTBEAT_TIME).set(String.valueOf(now));
     }
 
     /**
@@ -33,13 +33,12 @@ public class NettyAttrUtil {
         return null;
     }
     
-    public static void setUserId(Channel channel, String value) {
-        channel.attr(ATTR_KEY_USER_ID).set(value);
+    public static void setUserId(Channel channel, Long value) {
+        channel.attr(ATTR_KEY_USER_ID).set(String.valueOf(value));
     }
 
-    public static String getUserId(Channel channel) {
-        String value = getAttribute(channel, ATTR_KEY_USER_ID);
-        return value;
+    public static Long getUserId(Channel channel) {
+        return Long.parseLong(getAttribute(channel, ATTR_KEY_USER_ID));
     }
 
     private static String getAttribute(Channel channel, AttributeKey<String> key) {

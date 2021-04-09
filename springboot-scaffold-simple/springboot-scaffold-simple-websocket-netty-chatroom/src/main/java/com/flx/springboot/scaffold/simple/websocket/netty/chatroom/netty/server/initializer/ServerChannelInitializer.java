@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.initializer;
 
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.handler.WebChatServerHandler;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.handler.ServerHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -11,9 +11,10 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 /**
  * @Author Fenglixiong
  * @Create 2021/4/9 1:51
- * @Description
+ * @Description 通道初始化类，添加相应的处理器
  **/
-public class WebChatServerChannelInitializer extends ChannelInitializer<SocketChannel> {
+public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
+
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
@@ -24,6 +25,7 @@ public class WebChatServerChannelInitializer extends ChannelInitializer<SocketCh
         //支持异步发送大的码流，一般用于发送文件流
         socketChannel.pipeline().addLast("http-chunked", new ChunkedWriteHandler());
         //加入业务处理
-        pipeline.addLast(new WebChatServerHandler());
+        pipeline.addLast(new ServerHandler());
     }
+
 }

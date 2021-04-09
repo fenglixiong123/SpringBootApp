@@ -1,5 +1,6 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.handler;
 
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.service.ServerHandlerService;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.DateUtils;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,9 +9,7 @@ import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
 
-import static com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.service.WebChatHandlerService.handHttpRequest;
-import static com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.service.WebChatHandlerService.handWebSocketFrame;
-import static com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.SessionHolder.channelGroup;
+import static com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.session.SessionHolder.channelGroup;
 
 
 /**
@@ -19,7 +18,7 @@ import static com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.
  * @Description: 用来处理客户端和服务端的会话生命周期事件（握手、建立连接、断开连接、收消息等）
  */
 @Slf4j
-public class WebChatServerHandler extends SimpleChannelInboundHandler<Object> {
+public class ServerHandler extends SimpleChannelInboundHandler<Object> {
 
     /**
      * 表示连接建立，一旦连接，第一个被执行
@@ -32,7 +31,6 @@ public class WebChatServerHandler extends SimpleChannelInboundHandler<Object> {
         //将该客户加入聊天信息推送给其他在线的客户端
         //该方法会遍历所有的channel，并发送消息
         channelGroup.writeAndFlush(DateUtils.getCurrentTime()+" [用户]"+channel.remoteAddress()+" 加入聊天~\n");
-        channelGroup.add(channel);
     }
 
     /**
@@ -58,15 +56,16 @@ public class WebChatServerHandler extends SimpleChannelInboundHandler<Object> {
     /**
      * 服务器读取客户端发来的消息，并转发到指定客户
      * @param ctx
-     * @param msg
+     * @param msg 客户端发来的消息，WebSocket消息 or Http消息
      * @throws Exception
      */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+        ServerHandlerService service = ServerHandlerService.build();
         if(msg instanceof HttpRequest){
-            handHttpRequest(ctx,(HttpRequest)msg);
+            service.handHttpRequest(ctx,(HttpRequest)msg);
         }else if(msg instanceof WebSocketFrame){
-            handWebSocketFrame(ctx,(WebSocketFrame)msg);
+            service.handWebSocketFrame(ctx,(WebSocketFrame)msg);
         }
     }
 

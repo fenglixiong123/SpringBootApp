@@ -4,20 +4,20 @@ import com.alibaba.fastjson.JSONObject;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity.WsMessage;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.BizTypeEnum;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.NettyAttrUtil;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.SessionHolder;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.session.SessionHolder;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 import java.util.Map;
 
-import static com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.SessionHolder.channelGroup;
+import static com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.session.SessionHolder.channelGroup;
 
 /**
  * @Author Fenglixiong
  * @Create 2021/4/9 4:02
  * @Description
  **/
-public class WebChatServerService {
+public class ServerService {
 
     /**
      * 广播 ping 信息

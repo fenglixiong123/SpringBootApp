@@ -16,32 +16,32 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
         <maven.compiler.piugin.version>3.7.0</maven.compiler.piugin.version>
-        <spring.log4j2.version>2.3.2.RELEASE</spring.log4j2.version>
-        <spring.boot.version>2.1.0.RELEASE</spring.boot.version>
-        <spring.cloud.version>Finchley.RELEASE</spring.cloud.version>
+
         <apache.lang3.version>3.3.2</apache.lang3.version>
         <apache.io.version>2.8.0</apache.io.version>
         <apache.logging.version>1.2</apache.logging.version>
         <apache.beanutils.version>1.9.4</apache.beanutils.version>
         <apache.collections.version>3.2.2</apache.collections.version>
-        <http.core.version>4.4.13</http.core.version>
-        <http.client.version>4.5.12</http.client.version>
-        <ok.http.version>4.2.0</ok.http.version>
         <alibaba.fastjson.version>1.2.51</alibaba.fastjson.version>
         <alibaba.druid.version>1.1.12</alibaba.druid.version>
+        <cglib.version>3.3.0</cglib.version>
         <flyway.version>5.2.4</flyway.version>
+        <http.core.version>4.4.13</http.core.version>
+        <http.client.version>4.5.12</http.client.version>
+        <itextpdf.version>5.5.10</itextpdf.version>
+        <itext.asian.version>5.2.0</itext.asian.version>
+        <jxl.version>2.6.10</jxl.version>
         <jackson.version>2.9.7</jackson.version>
         <json.path.verson>2.4.0</json.path.verson>
         <kafka.version>2.2.0.RELEASE</kafka.version>
         <mybatis.version>2.1.2</mybatis.version>
         <mybatis.plus.version>3.3.2</mybatis.plus.version>
+        <netty.all.version>4.1.20.Final</netty.all.version>
+        <ok.http.version>4.2.0</ok.http.version>
+        <quartz.version>2.2.3</quartz.version>
+        <spring.log4j2.version>2.3.2.RELEASE</spring.log4j2.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.ui.version>1.8.4</swagger.ui.version>
-        <quartz.version>2.2.3</quartz.version>
-        <jxl.version>2.6.10</jxl.version>
-        <itextpdf.version>5.5.10</itextpdf.version>
-        <itext.asian.version>5.2.0</itext.asian.version>
-        <cglib.version>3.3.0</cglib.version>
         <scaffold.common.version>1.0-SNAPSHOT</scaffold.common.version>
         <scaffold.email.version>1.0-SNAPSHOT</scaffold.email.version>
         <scaffold.exception.version>1.0-SNAPSHOT</scaffold.exception.version>
@@ -50,10 +50,18 @@
         <scaffold.redis.version>1.0-SNAPSHOT</scaffold.redis.version>
         <scaffold.swagger.version>1.0-SNAPSHOT</scaffold.swagger.version>
         <scaffold.web.version>1.0-SNAPSHOT</scaffold.web.version>
+        <spring.boot.version>2.1.0.RELEASE</spring.boot.version>
+        <spring.cloud.version>Finchley.RELEASE</spring.cloud.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--netty网络-->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.all.version}</version>
+            </dependency>
             <!--http请求-->
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>

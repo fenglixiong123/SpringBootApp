@@ -1,8 +1,8 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server;
 
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.constant.WebConstant;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.initializer.WebChatServerChannelInitializer;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.service.WebChatServerService;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.initializer.ServerChannelInitializer;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.service.ServerService;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -44,12 +44,12 @@ public class WebChatServer {
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 128)
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
-                    .childHandler(new WebChatServerChannelInitializer())
+                    .childHandler(new ServerChannelInitializer())
                     .bind(port)
                     .sync();
             //创建一个定长线程池，支持定时及周期性任务执行
             ScheduledExecutorService executorService = Executors.newScheduledThreadPool(3);
-            WebChatServerService webChatServerService = new WebChatServerService();
+            ServerService webChatServerService = new ServerService();
             //定时任务:扫描所有的Channel，关闭失效的Channel
             executorService.scheduleAtFixedRate(webChatServerService::scanNotActiveChannel,
                     3, 60, TimeUnit.SECONDS);
