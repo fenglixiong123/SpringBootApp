@@ -36,7 +36,7 @@
         <kafka.version>2.2.0.RELEASE</kafka.version>
         <mybatis.version>2.1.2</mybatis.version>
         <mybatis.plus.version>3.3.2</mybatis.plus.version>
-        <netty.all.version>4.1.20.Final</netty.all.version>
+        <netty.all.version>4.1.42.Final</netty.all.version>
         <ok.http.version>4.2.0</ok.http.version>
         <quartz.version>2.2.3</quartz.version>
         <spring.log4j2.version>2.3.2.RELEASE</spring.log4j2.version>
