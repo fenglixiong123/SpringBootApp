@@ -1,19 +1,17 @@
-package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity;
+package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.flx.springboot.scaffold.mybatis.plus.base.BaseDO;
+import com.flx.springboot.scaffold.mybatis.plus.base.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;
 
 /**
- * @Author Fenglixiong
- * @Create 2021/4/9 2:21
- * @Description
- **/
+ * @Author: Fenglixiong
+ * @Date: 2021/4/11 16:48
+ * @Description:
+ */
 @Data
-@TableName(value = "web_user")
-public class WebUser extends BaseDO {
+public class WebUserVO extends BaseEntity {
 
     /**
      * 昵称
@@ -84,6 +82,5 @@ public class WebUser extends BaseDO {
      * 过期时间
      */
     private Date expireTime;
-
 
 }

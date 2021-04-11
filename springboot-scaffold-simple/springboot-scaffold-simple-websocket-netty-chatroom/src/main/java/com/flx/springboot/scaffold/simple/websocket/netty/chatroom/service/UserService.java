@@ -1,9 +1,9 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.flx.cases.mybatis.plus.vo.StudentVO;
 import com.flx.springboot.scaffold.mybatis.plus.enums.State;
 import com.flx.springboot.scaffold.mybatis.plus.page.QueryAndPage;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.vo.WebUserVO;
 
 import java.util.List;
 import java.util.Map;
@@ -13,18 +13,16 @@ import java.util.Map;
  * @Date: 2020/7/24 16:33
  * @Description:
  */
-public interface StudentService {
-
-    int count();
+public interface UserService {
 
     /**
      * 新增
      *
-     * @param studentVO
+     * @param WebUserVO
      * @return
      * @throws Exception
      */
-    Long add(StudentVO studentVO) throws Exception;
+    Long add(WebUserVO WebUserVO) throws Exception;
 
     /**
      * 删除
@@ -38,21 +36,21 @@ public interface StudentService {
     /**
      * 更新
      *
-     * @param studentVO
+     * @param WebUserVO
      * @return
      * @throws Exception
      */
-    Integer updateById(StudentVO studentVO) throws Exception;
+    Integer updateById(WebUserVO WebUserVO) throws Exception;
 
     /**
      * 状态修改
      *
-     * @param studentVOList
+     * @param WebUserVOList
      * @param state
      * @return
      * @throws Exception
      */
-    void stateChange(List<StudentVO> studentVOList, State state) throws Exception;
+    void stateChange(List<WebUserVO> WebUserVOList, State state) throws Exception;
 
     /**
      * 查询
@@ -60,7 +58,7 @@ public interface StudentService {
      * @return
      * @throws Exception
      */
-    StudentVO getById(Long id) throws Exception;
+    WebUserVO getById(Long id) throws Exception;
 
     /**
      * 模糊分页查询
@@ -69,7 +67,7 @@ public interface StudentService {
      * @return
      * @throws Exception
      */
-    IPage<StudentVO> queryAndPage(QueryAndPage queryAndPage) throws Exception;
+    IPage<WebUserVO> queryAndPage(QueryAndPage queryAndPage) throws Exception;
 
     /**
      * 通过Map模糊查询
@@ -78,7 +76,7 @@ public interface StudentService {
      * @return
      * @throws Exception
      */
-    List<StudentVO> query(Map<String, Object> query) throws Exception;
+    List<WebUserVO> query(Map<String, Object> query) throws Exception;
 
     /**
      * 通过对象模糊查询
@@ -87,24 +85,24 @@ public interface StudentService {
      * @return
      * @throws Exception
      */
-    List<StudentVO> query(Object query) throws Exception;
+    List<WebUserVO> query(Object query) throws Exception;
 
     /**
      * 批量新增，错误回滚
      *
-     * @param studentVOList
+     * @param WebUserVOList
      * @return
      * @throws Exception
      */
-    int addWholeByList(List<StudentVO> studentVOList) throws Exception;
+    int addWholeByList(List<WebUserVO> WebUserVOList) throws Exception;
 
     /**
      * 批量新增，错误回滚
      *
-     * @param studentVOList
+     * @param WebUserVOList
      * @return
      * @throws Exception
      */
-    int addByList(List<StudentVO> studentVOList) throws Exception;
+    int addByList(List<WebUserVO> WebUserVOList) throws Exception;
 
 }

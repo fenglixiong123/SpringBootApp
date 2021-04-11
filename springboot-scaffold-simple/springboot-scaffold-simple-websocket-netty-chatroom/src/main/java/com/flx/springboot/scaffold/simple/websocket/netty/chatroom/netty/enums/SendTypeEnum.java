@@ -3,9 +3,9 @@ package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums;
 /**
  * @Author Fenglixiong
  * @Create 2021/4/9 1:44
- * @Description 消息业务类型
+ * @Description 发送消息类型
  **/
-public enum BizTypeEnum {
+public enum SendTypeEnum {
 
     PRIVATE,//私聊消息
     GROUP,  //群聊消息

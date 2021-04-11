@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * 公共Manager类
  *
- * @author fanzhen
+ * @author fenglixiong
  * @date 2018-08-09 19:59
  */
 @Slf4j
@@ -59,67 +59,7 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
         return model.getId();
     }
 
-    protected Integer deleteById(Long id) throws Exception {
-        return dao.deleteById(id);
-    }
-
-    protected int update(T model, QueryWrapper queryWrapper) throws Exception {
-        model.setUpdateTime(new Date());
-        if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
-        }
-        return dao.update(model, queryWrapper);
-    }
-
-    protected int update(T model, UpdateWrapper updateWrapper) throws Exception {
-        model.setUpdateTime(new Date());
-        if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
-        }
-        return dao.update(model, updateWrapper);
-    }
-
-    protected Integer updateById(T model) throws Exception {
-        model.setUpdateTime(new Date());
-        if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
-        }
-        return dao.updateById(model);
-    }
-
-    protected Integer updateNullById(T model) throws Exception {
-        model.setUpdateTime(new Date());
-        if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
-        }
-        UpdateWrapper<T> updateWrapper = getUpdateConditionBuilder()
-                .query("id", model.getId())
-                .readObject(model).build(true);
-        return dao.update(model, updateWrapper);
-    }
-
-    protected Integer updateByCode(T model, String codeName, String codeValue) throws Exception {
-        model.setUpdateTime(new Date());
-        if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
-        }
-        QueryWrapper queryWrapper = getConditionBuilder().query(codeName, codeValue).build(false);
-        return dao.update(model, queryWrapper);
-    }
-
-    protected Integer updateNullByCode(T model, String codeName, String codeValue) throws Exception {
-        model.setUpdateTime(new Date());
-        if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
-        }
-        UpdateWrapper queryWrapper = getUpdateConditionBuilder()
-                .query(codeName, codeValue)
-                .readObject(model)
-                .build(false);
-        return dao.update(model, queryWrapper);
-    }
-
-    protected Integer addByList(List<T> modelList) throws Exception {
+    protected Integer add(List<T> modelList) throws Exception {
         int result = 1;
         for (T model : modelList) {
             model.setCreateTime(new Date());
@@ -140,7 +80,71 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
         return result;
     }
 
-    public Object getById(Long id) throws Exception {
+    protected Integer delete(Long id) throws Exception {
+        return dao.deleteById(id);
+    }
+
+    protected Integer delete(QueryWrapper queryWrapper) throws Exception {
+        return dao.delete(queryWrapper);
+    }
+
+    protected Integer update(T model) throws Exception {
+        model.setUpdateTime(new Date());
+        if (StringUtils.isEmpty(model.getUpdateUser())) {
+            model.setUpdateUser("admin");
+        }
+        return dao.updateById(model);
+    }
+
+    protected Integer updateNull(T model) throws Exception {
+        model.setUpdateTime(new Date());
+        if (StringUtils.isEmpty(model.getUpdateUser())) {
+            model.setUpdateUser("admin");
+        }
+        UpdateWrapper<T> updateWrapper = getUpdateConditionBuilder()
+                .query("id", model.getId())
+                .readObject(model).build(true);
+        return dao.update(model, updateWrapper);
+    }
+
+    protected Integer update(T model, String codeName, String codeValue) throws Exception {
+        model.setUpdateTime(new Date());
+        if (StringUtils.isEmpty(model.getUpdateUser())) {
+            model.setUpdateUser("admin");
+        }
+        QueryWrapper queryWrapper = getConditionBuilder().query(codeName, codeValue).build(false);
+        return dao.update(model, queryWrapper);
+    }
+
+    protected Integer updateNull(T model, String codeName, String codeValue) throws Exception {
+        model.setUpdateTime(new Date());
+        if (StringUtils.isEmpty(model.getUpdateUser())) {
+            model.setUpdateUser("admin");
+        }
+        UpdateWrapper queryWrapper = getUpdateConditionBuilder()
+                .query(codeName, codeValue)
+                .readObject(model)
+                .build(false);
+        return dao.update(model, queryWrapper);
+    }
+
+    protected int update(T model, QueryWrapper queryWrapper) throws Exception {
+        model.setUpdateTime(new Date());
+        if (StringUtils.isEmpty(model.getUpdateUser())) {
+            model.setUpdateUser("admin");
+        }
+        return dao.update(model, queryWrapper);
+    }
+
+    protected int update(T model, UpdateWrapper updateWrapper) throws Exception {
+        model.setUpdateTime(new Date());
+        if (StringUtils.isEmpty(model.getUpdateUser())) {
+            model.setUpdateUser("admin");
+        }
+        return dao.update(model, updateWrapper);
+    }
+
+    public Object get(Long id) throws Exception {
         return dao.selectById(id);
     }
 

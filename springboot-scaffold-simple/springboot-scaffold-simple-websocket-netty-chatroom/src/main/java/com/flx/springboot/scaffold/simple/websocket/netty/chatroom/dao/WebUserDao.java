@@ -1,8 +1,8 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.dao;
 
-import com.flx.cases.mybatis.plus.entity.StudentDO;
 import com.flx.springboot.scaffold.mybatis.plus.annotation.DaoMapper;
 import com.flx.springboot.scaffold.mybatis.plus.base.BaseDao;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity.WebUser;
 import org.apache.ibatis.annotations.Select;
 
 /**
@@ -11,9 +11,9 @@ import org.apache.ibatis.annotations.Select;
  * @Description:
  */
 @DaoMapper
-public interface StudentDao extends BaseDao<StudentDO> {
+public interface WebUserDao extends BaseDao<WebUser> {
 
-    @Select("select count(1) from scaffold_student")
-    int countStudent();
+    @Select("select count(1) from web_user")
+    int countWebUser();
 
 }

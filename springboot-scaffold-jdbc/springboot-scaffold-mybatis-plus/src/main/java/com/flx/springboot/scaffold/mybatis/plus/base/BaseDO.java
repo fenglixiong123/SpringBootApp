@@ -19,28 +19,33 @@ import java.util.Date;
 @Data
 public class BaseDO extends Model<BaseDO> {
     /**
-     * PK
+     * 主键id
      */
     @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
-     * createdUser
+     * 状态
+     */
+    private String state;
+
+    /**
+     * 创建用户
      */
     private String createUser;
 
     /**
-     * createdTime
+     * 创建时间
      */
     private Date createTime;
 
     /**
-     * lastUpdatedUser
+     * 更新用户
      */
     private String updateUser;
 
     /**
-     * lastUpdatedTime
+     * 更新时间
      */
     private Date updateTime;
 

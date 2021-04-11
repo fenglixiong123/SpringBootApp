@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.constant.WebConstant;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity.WsMessage;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.BizTypeEnum;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.SendTypeEnum;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.MsgTypeEnum;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.message.MessagePush;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.DateUtils;
@@ -89,7 +89,7 @@ public class ServerHandlerService {
             Map<String, Object> ext = new HashMap<>();
             ext.put("userList", userList);
             msg.setExt(ext);
-            msg.setBizType(BizTypeEnum.LIST.name());
+            msg.setBizType(SendTypeEnum.LIST.name());
             msg.setMsgType(MsgTypeEnum.TEXT.name());
             MessagePush.publishMsg(msg);
         }

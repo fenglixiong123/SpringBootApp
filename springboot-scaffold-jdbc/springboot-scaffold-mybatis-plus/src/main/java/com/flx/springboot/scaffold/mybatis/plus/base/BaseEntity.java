@@ -14,32 +14,32 @@ import java.util.Date;
 public class BaseEntity {
 
     /**
-     * id
+     * 主键id
      */
     private Long id;
 
     /**
-     * effective,invalid,delete
+     * 状态
      */
-    private State state;
+    private String state;
 
     /**
-     * createdUser
+     * 创建用户
      */
     private String createUser;
 
     /**
-     * createdTime
+     * 创建时间
      */
     private Date createTime;
 
     /**
-     * lastUpdatedUser
+     * 更新用户
      */
     private String updateUser;
 
     /**
-     * lastUpdatedTime
+     * 更新时间
      */
     private Date updateTime;
 
