@@ -30,7 +30,7 @@ public class WebUserController {
         try {
             return ResultResponse.success(userService.get(id));
         }catch (Exception e){
-            return ResultResponse.error();
+            return ResultResponse.error(e.getMessage());
         }
     }
 
@@ -39,7 +39,7 @@ public class WebUserController {
         try {
             return ResultResponse.success(userService.add(entity));
         }catch (Exception e){
-            return ResultResponse.error();
+            return ResultResponse.error(e.getMessage());
         }
     }
 
@@ -48,7 +48,7 @@ public class WebUserController {
         try {
             return ResultResponse.success(userService.update(entity));
         }catch (Exception e){
-            return ResultResponse.error();
+            return ResultResponse.error(e.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public class WebUserController {
         try {
             return ResultResponse.success(userService.updateState(stateVO));
         }catch (Exception e){
-            return ResultResponse.error();
+            return ResultResponse.error(e.getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ public class WebUserController {
         try {
             return ResultResponse.success(userService.delete(id));
         }catch (Exception e){
-            return ResultResponse.error();
+            return ResultResponse.error(e.getMessage());
         }
     }
 
@@ -75,7 +75,7 @@ public class WebUserController {
         try {
             return ResultResponse.success(userService.query(query));
         }catch (Exception e){
-            return ResultResponse.error();
+            return ResultResponse.error(e.getMessage());
         }
     }
 
@@ -84,7 +84,7 @@ public class WebUserController {
         try {
             return ResultResponse.success(userService.queryAll(query));
         }catch (Exception e){
-            return ResultResponse.error();
+            return ResultResponse.error(e.getMessage());
         }
     }
 
@@ -93,7 +93,7 @@ public class WebUserController {
         try {
             return ResultResponse.success(userService.queryPage(query));
         }catch (Exception e){
-            return ResultResponse.error();
+            return ResultResponse.error(e.getMessage());
         }
     }
 

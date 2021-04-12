@@ -3,7 +3,7 @@ package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server
 import com.alibaba.fastjson.JSONObject;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.constant.WebConstant;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity.WsMessage;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity.WebMessage;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.ChatTypeEnum;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.MsgTypeEnum;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.message.MessagePush;
@@ -84,14 +84,14 @@ public class ServerHandlerService {
             log.info("握手成功，客户端请求uri：{}", request.uri());
             //推送用户上线消息
             // 推送用户上线消息，更新客户端在线用户列表
-            Set<String> userList = channelMap.keySet();
-            WsMessage msg = new WsMessage();
-            Map<String, Object> ext = new HashMap<>();
-            ext.put("userList", userList);
-            msg.setExt(ext);
-            msg.setBizType(ChatTypeEnum.LIST.name());
-            msg.setMsgType(MsgTypeEnum.TEXT.name());
-            MessagePush.publishMsg(msg);
+//            Set<String> userList = channelMap.keySet();
+//            WebMessage msg = new WebMessage();
+//            Map<String, Object> ext = new HashMap<>();
+//            ext.put("userList", userList);
+//            msg.setExt(ext);
+//            msg.setBizType(ChatTypeEnum.LIST.name());
+//            msg.setMsgType(MsgTypeEnum.TEXT.name());
+//            MessagePush.publishMsg(msg);
         }
     }
 
@@ -126,35 +126,23 @@ public class ServerHandlerService {
         // 获取并解析客户端向服务端发送的 json 消息
         String message = ((TextWebSocketFrame) frame).text();
         log.info("消息：{}", message);
-        JSONObject json = JSONObject.parseObject(message);
+        JSONObject jsonMsg = JSONObject.parseObject(message);
         try {
             String uuid = UUID.randomUUID().toString();
             String time = DateUtils.getCurrentTime();
-            json.put("id", uuid);
-            json.put("sendTime", time);
+            jsonMsg.put("id", uuid);
+            jsonMsg.put("sendTime", time);
 
-            String bizType = json.getString("bizType");
-            switch (bizType){
-                case "GROUP"://群聊
-                    channelGroup.writeAndFlush(new TextWebSocketFrame(JsonUtils.toJsonMsg(json)));
+            String chatType = jsonMsg.getString("chatType");
+            switch (chatType){
+                case "GROUP":
+                    Long groupId = jsonMsg.getLong("groupId");
+                    MessagePush.pushGroupMsg(groupId,jsonMsg);
                     break;
-                case "PRIVATE"://私聊
-                    //接收人id
-                    String receiveUserId = json.getString("receiverUserId");
-                    String sendUserId = json.getString("sendUserId");
-                    String msg = JSONObject.toJSONString(json);
-                    // 点对点挨个给接收人发送消息
-                    for (Map.Entry<String, Channel> entry : channelMap.entrySet()) {
-                        String userId = entry.getKey();
-                        Channel ch = entry.getValue();
-                        if (receiveUserId.equals(userId)) {
-                            ch.writeAndFlush(new TextWebSocketFrame(msg));
-                        }
-                    }
-                    // 如果发给别人，给自己也发一条
-                    if (!receiveUserId.equals(sendUserId)) {
-                        channelMap.get(sendUserId).writeAndFlush(new TextWebSocketFrame(msg));
-                    }
+                case "PRIVATE":
+                    Long sendUserId = jsonMsg.getLong("senderUserId");
+                    Long receiveUserId = jsonMsg.getLong("receiverUserId");
+                    MessagePush.pushPersonMsg(receiveUserId,jsonMsg);
                     break;
                 case "PING"://
                     break;
@@ -164,7 +152,7 @@ public class ServerHandlerService {
                     break;
                 case "SYSTEM":
                     //向连接上来的客户端广播消息
-                    MessagePush.publishMsg(json);
+                    MessagePush.pushAllMsg(jsonMsg);
             }
         }catch (Exception e){
             log.error("转发消息失败！");

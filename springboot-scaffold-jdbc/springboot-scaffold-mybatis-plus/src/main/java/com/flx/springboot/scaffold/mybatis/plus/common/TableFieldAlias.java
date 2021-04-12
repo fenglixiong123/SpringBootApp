@@ -5,6 +5,7 @@ import com.flx.springboot.scaffold.mybatis.plus.annotation.ColumnName;
 import com.flx.springboot.scaffold.mybatis.plus.annotation.TableName;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Configuration;
@@ -31,11 +32,9 @@ import java.util.*;
 public class TableFieldAlias implements ResourceLoaderAware {
 
     /**
-     * 表名前缀
+     * 实体类包路径
      */
-    @Value("${spring.flx.table.prefix:basic_}")
-    private String tablePrefix;
-    @Value("${spring.flx.entity.package:com/flx/springboot/scaffold/mybatis/plus/entity}")
+    @Value("${spring.flx.entity.package:com/flx/**/entity}")
     private String entityPackage;
 
     /**
@@ -50,7 +49,7 @@ public class TableFieldAlias implements ResourceLoaderAware {
     private ResourceLoader resourceLoader;
 
     @Override
-    public void setResourceLoader(ResourceLoader resourceLoader) {
+    public void setResourceLoader(@NotNull ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
 
@@ -96,7 +95,7 @@ public class TableFieldAlias implements ResourceLoaderAware {
             Class<?> clazz = Class.forName(entityClass.getClassName());
             if (clazz.getAnnotation(TableName.class) != null) {
                 TableName entity = clazz.getAnnotation(TableName.class);
-                if (StringUtils.isNotEmpty(entity.value()) && entity.value().startsWith(tablePrefix)) {
+                if (StringUtils.isNotEmpty(entity.value())) {
                     Field[] fields = clazz.getDeclaredFields();
                     for (Field field : fields) {
                         if (field.getAnnotation(ColumnName.class) != null) {
@@ -113,7 +112,6 @@ public class TableFieldAlias implements ResourceLoaderAware {
         }
 
         log.info("GetTable time : {}",System.currentTimeMillis()-start);
-        log.info("GetTable params : tablePrefix = {},entityPackage = {}",tablePrefix,entityPackage);
         log.info("GetTable alis success : fieldAlias = {}",fieldAliasMap.toString());
 
     }

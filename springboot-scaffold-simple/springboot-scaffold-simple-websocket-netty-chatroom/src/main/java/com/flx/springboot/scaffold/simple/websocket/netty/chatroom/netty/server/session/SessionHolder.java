@@ -34,10 +34,10 @@ public class SessionHolder {
 
     /**
      * 群聊实现
-     * 房间id--->群聊人员通道
+     * 群id--->群聊人员通道
      */
     @Getter
-    public static Map<Long, Map<Long,Channel>> roomMap = new ConcurrentHashMap<>();
+    public static Map<Long, Map<Long,Channel>> groupMap = new ConcurrentHashMap<>();
 
     /**
      * 添加会话

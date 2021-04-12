@@ -31,9 +31,14 @@ public class WebUser extends BaseDO {
     private String password;
 
     /**
-     * 找回密码
+     * 密码问题
      */
-    private String passwordReminder;
+    private String passwordQuestion;
+
+    /**
+     * 密码答案
+     */
+    private String passwordAnswer;
 
     /**
      * 头像

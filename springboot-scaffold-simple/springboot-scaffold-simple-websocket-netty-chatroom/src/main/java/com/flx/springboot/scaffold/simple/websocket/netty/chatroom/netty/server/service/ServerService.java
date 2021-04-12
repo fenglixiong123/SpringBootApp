@@ -1,16 +1,14 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity.WsMessage;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity.WebMessage;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.ChatTypeEnum;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.NettyAttrUtil;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.MsgTypeEnum;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.message.MessagePush;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.session.SessionHolder;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.NettyAttrUtil;
 import io.netty.channel.Channel;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 import java.util.Map;
-
-import static com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.session.SessionHolder.channelGroup;
 
 /**
  * @Author Fenglixiong
@@ -23,18 +21,17 @@ public class ServerService {
      * 广播 ping 信息
      */
     public void sendPing() {
-        WsMessage webSocketMessage = new WsMessage();
-        webSocketMessage.setBizType(ChatTypeEnum.PING.name());
-        String message = JSONObject.toJSONString(webSocketMessage);
-        TextWebSocketFrame tws = new TextWebSocketFrame(message);
-        channelGroup.writeAndFlush(tws);
+        WebMessage webMessage = new WebMessage();
+        webMessage.setChatType(ChatTypeEnum.ping.name());
+        webMessage.setMsgType(MsgTypeEnum.text.name());
+        MessagePush.pushAllMsg(webMessage);
     }
 
     /**
      * 从缓存中移除Channel，并且关闭Channel
      */
     public void scanNotActiveChannel() {
-        Map<String, Channel> channelMap = SessionHolder.channelMap;
+        Map<Long, Channel> channelMap = SessionHolder.getUserMap();
         // 如果这个直播下已经没有连接中的用户会话了，删除频道
         if (channelMap.size() == 0) {
             return;

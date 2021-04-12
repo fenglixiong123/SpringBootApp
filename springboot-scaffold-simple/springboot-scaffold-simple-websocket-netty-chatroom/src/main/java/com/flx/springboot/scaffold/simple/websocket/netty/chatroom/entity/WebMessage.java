@@ -1,6 +1,7 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.flx.springboot.scaffold.mybatis.plus.annotation.ColumnName;
 import com.flx.springboot.scaffold.mybatis.plus.base.BaseDO;
 import lombok.Data;
 
@@ -36,9 +37,10 @@ public class WebMessage extends BaseDO {
     private String message;
 
     /**
-     * 消息发送类型
+     * 消息业务类型
      */
-    private String sendType;
+    @ColumnName("zzzz")
+    private String chatType;
 
     /**
      * 发送时间
