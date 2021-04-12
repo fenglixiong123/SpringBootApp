@@ -1,6 +1,5 @@
 package com.flx.springboot.scaffold.mybatis.plus.base;
 
-import com.flx.springboot.scaffold.mybatis.plus.enums.State;
 import lombok.Data;
 
 import java.util.Date;

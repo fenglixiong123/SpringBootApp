@@ -1,7 +1,7 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.flx.springboot.scaffold.mybatis.plus.base.BaseEntity;
+import com.flx.springboot.scaffold.mybatis.plus.base.BaseDO;
 import lombok.Data;
 
 /**
@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 @TableName(value = "web_friend")
-public class WebFriend extends BaseEntity {
+public class WebFriend extends BaseDO {
 
     /**
      * 用户Id

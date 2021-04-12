@@ -7,12 +7,12 @@ package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.enums;
  */
 public enum EduEnum {
 
-    DOCTOR("博士"),//博士
-    MASTER("硕士"),//硕士
-    COLLEGE("本科"),//本科
-    SENIOR("高中"),//高中
-    JUNIOR("初中"),//初中
-    PRIMARY("小学");//小学
+    doctor("博士"),//博士
+    master("硕士"),//硕士
+    college("本科"),//本科
+    senior("高中"),//高中
+    junior("初中"),//初中
+    primary("小学");//小学
 
     EduEnum(String desc) {
         this.desc = desc;

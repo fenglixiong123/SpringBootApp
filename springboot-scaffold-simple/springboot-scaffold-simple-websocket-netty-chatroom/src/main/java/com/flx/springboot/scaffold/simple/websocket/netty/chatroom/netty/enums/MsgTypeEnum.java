@@ -5,12 +5,25 @@ package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums;
  */
 public enum MsgTypeEnum {
 
-    TEXT,   //文本消息
-    IMAGE,  //图片消息
-    FILE,   //文件消息
-    VOICE,  //语音消息
-    VIDEO,  //视频消息
+    text("文本"),   //文本消息
+    image("图片"),  //图片消息
+    voice("语音"),  //语音消息
+    video("视频"),  //视频消息
+    file("文件"),   //文件消息
+    goods("商品");  //商品消息
 
-    GOOD    //商品消息
+    MsgTypeEnum(String desc) {
+        this.desc = desc;
+    }
+
+    private String desc;
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
 }

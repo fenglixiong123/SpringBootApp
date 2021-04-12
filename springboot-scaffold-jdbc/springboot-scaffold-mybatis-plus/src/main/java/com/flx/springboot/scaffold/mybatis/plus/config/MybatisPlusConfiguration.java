@@ -5,7 +5,6 @@ import com.flx.springboot.scaffold.common.system.PropertyUtils;
 import com.flx.springboot.scaffold.mybatis.plus.annotation.DaoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,7 +12,7 @@ import java.util.Objects;
 
 @Slf4j
 @Configuration
-public class MybatisPlusConfiguration implements InitializingBean{
+public class MybatisPlusConfiguration{
 
     @Bean
     public PaginationInterceptor paginationInterceptor() {
@@ -34,9 +33,4 @@ public class MybatisPlusConfiguration implements InitializingBean{
         return scannerConfigurer;
     }
 
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-
-    }
 }

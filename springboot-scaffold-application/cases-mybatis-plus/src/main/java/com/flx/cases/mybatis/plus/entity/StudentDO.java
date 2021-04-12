@@ -1,7 +1,7 @@
 package com.flx.cases.mybatis.plus.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.flx.springboot.scaffold.mybatis.plus.annotation.ColumnName;
+import com.flx.springboot.scaffold.mybatis.plus.annotation.TableName;
 import com.flx.springboot.scaffold.mybatis.plus.base.BaseDO;
 import com.flx.springboot.scaffold.mybatis.plus.enums.State;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class StudentDO extends BaseDO {
     /**
      * 特殊字段
      */
-    @TableField(value = "student_vvv")
+    @ColumnName(value = "student_vvv")
     private String studentVVV;
 
     /**

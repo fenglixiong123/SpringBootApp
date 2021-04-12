@@ -1,7 +1,6 @@
-package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity;
+package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.flx.springboot.scaffold.mybatis.plus.base.BaseDO;
+import com.flx.springboot.scaffold.mybatis.plus.base.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,8 +11,7 @@ import java.util.Date;
  * @Description 消息实体
  **/
 @Data
-@TableName(value = "web_message")
-public class WebMessage extends BaseDO {
+public class WebMessageVO extends BaseEntity {
 
     /**
      * 发送者id

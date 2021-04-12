@@ -1,7 +1,5 @@
-package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity;
+package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.flx.springboot.scaffold.mybatis.plus.base.BaseDO;
 import com.flx.springboot.scaffold.mybatis.plus.base.BaseEntity;
 import lombok.Data;
 
@@ -11,8 +9,7 @@ import lombok.Data;
  * @Description: 好友分组,好友标签
  */
 @Data
-@TableName(value = "web_label")
-public class WebLabel extends BaseDO {
+public class WebLabelVO extends BaseEntity {
 
     /**
      * 用户id

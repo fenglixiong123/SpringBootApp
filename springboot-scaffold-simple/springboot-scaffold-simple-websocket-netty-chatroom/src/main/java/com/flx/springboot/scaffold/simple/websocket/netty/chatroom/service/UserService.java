@@ -1,6 +1,7 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.flx.springboot.scaffold.mybatis.plus.entity.StateVO;
 import com.flx.springboot.scaffold.mybatis.plus.enums.State;
 import com.flx.springboot.scaffold.mybatis.plus.page.QueryAndPage;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.vo.WebUserVO;
@@ -17,92 +18,47 @@ public interface UserService {
 
     /**
      * 新增
-     *
-     * @param WebUserVO
-     * @return
-     * @throws Exception
      */
     Long add(WebUserVO WebUserVO) throws Exception;
 
     /**
      * 删除
-     *
-     * @param id
-     * @return
-     * @throws Exception
      */
-    Integer deleteById(Long id) throws Exception;
+    Integer delete(Long id) throws Exception;
 
     /**
      * 更新
-     *
-     * @param WebUserVO
-     * @return
-     * @throws Exception
      */
-    Integer updateById(WebUserVO WebUserVO) throws Exception;
+    Integer update(WebUserVO WebUserVO) throws Exception;
 
     /**
      * 状态修改
-     *
-     * @param WebUserVOList
-     * @param state
-     * @return
-     * @throws Exception
      */
-    void stateChange(List<WebUserVO> WebUserVOList, State state) throws Exception;
+    boolean updateState(StateVO stateVO) throws Exception;
 
     /**
      * 查询
-     * @param id
-     * @return
-     * @throws Exception
      */
-    WebUserVO getById(Long id) throws Exception;
+    WebUserVO get(Long id) throws Exception;
 
     /**
      * 模糊分页查询
-     *
-     * @param queryAndPage
-     * @return
-     * @throws Exception
      */
-    IPage<WebUserVO> queryAndPage(QueryAndPage queryAndPage) throws Exception;
+    IPage<WebUserVO> queryPage(QueryAndPage queryAndPage) throws Exception;
 
     /**
      * 通过Map模糊查询
-     *
-     * @param query
-     * @return
-     * @throws Exception
      */
     List<WebUserVO> query(Map<String, Object> query) throws Exception;
 
     /**
-     * 通过对象模糊查询
-     *
-     * @param query
-     * @return
-     * @throws Exception
+     * 查询所有
      */
-    List<WebUserVO> query(Object query) throws Exception;
+    List<WebUserVO> queryAll(Map<String, Object> query) throws Exception;
 
     /**
-     * 批量新增，错误回滚
-     *
-     * @param WebUserVOList
-     * @return
-     * @throws Exception
+     * 查询指定字段
      */
-    int addWholeByList(List<WebUserVO> WebUserVOList) throws Exception;
-
-    /**
-     * 批量新增，错误回滚
-     *
-     * @param WebUserVOList
-     * @return
-     * @throws Exception
-     */
-    int addByList(List<WebUserVO> WebUserVOList) throws Exception;
+    List<WebUserVO> querySome(Map<String, Object> query,String[] columns) throws Exception;
 
 }

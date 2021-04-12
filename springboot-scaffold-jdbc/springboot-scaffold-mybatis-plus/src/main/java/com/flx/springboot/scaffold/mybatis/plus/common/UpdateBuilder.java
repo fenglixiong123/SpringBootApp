@@ -11,7 +11,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.flx.springboot.scaffold.mybatis.plus.common.QueryConditionBuilder.getTableFiledName;
+import static com.flx.springboot.scaffold.mybatis.plus.common.TableFieldAlias.getTableFiledName;
 
 /**
  * @author fsanzhen
@@ -20,7 +20,7 @@ import static com.flx.springboot.scaffold.mybatis.plus.common.QueryConditionBuil
  */
 @Slf4j
 @SuppressWarnings("Duplicates")
-public class UpdateConditionBuilder<T> {
+public class UpdateBuilder<T> {
 
     private static int size = 1000;
 
@@ -32,60 +32,60 @@ public class UpdateConditionBuilder<T> {
     private List<String> notNullConditionList = new ArrayList<>();
     private List<String> setNullList = new ArrayList<>();
 
-    public UpdateConditionBuilder<T> id(Long id) {
+    public UpdateBuilder<T> id(Long id) {
         Assert.notNull(id, "id can not be null");
         equalConditionMap.put("id", id);
         return this;
     }
 
-    public UpdateConditionBuilder<T> neId(Long id) {
+    public UpdateBuilder<T> neId(Long id) {
         Assert.notNull(id, "id can not be null");
         neConditionMap.put("id", id);
         return this;
     }
 
-    public UpdateConditionBuilder<T> query(String property, Object val) {
+    public UpdateBuilder<T> query(String property, Object val) {
         equalConditionMap.put(property, val);
         return this;
     }
 
-    public UpdateConditionBuilder<T> neQuery(String property, Object val) {
+    public UpdateBuilder<T> neQuery(String property, Object val) {
         neConditionMap.put(property, val);
         return this;
     }
 
-    public UpdateConditionBuilder<T> leftLike(String property, String val) {
+    public UpdateBuilder<T> leftLike(String property, String val) {
         leftLikeConditionMap.put(property, val);
         return this;
     }
 
-    public UpdateConditionBuilder<T> rightLike(String property, String val) {
+    public UpdateBuilder<T> rightLike(String property, String val) {
         rightLikeConditionMap.put(property, val);
         return this;
     }
 
 
-    public UpdateConditionBuilder<T> isNull(String property) {
+    public UpdateBuilder<T> isNull(String property) {
         nullConditionList.add(property);
         return this;
     }
 
-    public UpdateConditionBuilder<T> isNull(List<String> propertyList) {
+    public UpdateBuilder<T> isNull(List<String> propertyList) {
         nullConditionList.addAll(propertyList);
         return this;
     }
 
-    public UpdateConditionBuilder<T> isNotNull(String property) {
+    public UpdateBuilder<T> isNotNull(String property) {
         notNullConditionList.add(property);
         return this;
     }
 
-    public UpdateConditionBuilder<T> isNotNull(List<String> propertyList) {
+    public UpdateBuilder<T> isNotNull(List<String> propertyList) {
         notNullConditionList.addAll(propertyList);
         return this;
     }
 
-    public UpdateConditionBuilder<T> query(Object model) throws Exception {
+    public UpdateBuilder<T> query(Object model) throws Exception {
         if (model == null) {
             return this;
         }
@@ -110,7 +110,7 @@ public class UpdateConditionBuilder<T> {
     }
 
 
-    public UpdateConditionBuilder<T> query(Map<String, Object> query) {
+    public UpdateBuilder<T> query(Map<String, Object> query) {
         if (null == query) {
             return this;
         }
@@ -124,7 +124,7 @@ public class UpdateConditionBuilder<T> {
         return this;
     }
 
-    public UpdateConditionBuilder<T> readObject(Object model) throws Exception {
+    public UpdateBuilder<T> readObject(Object model) throws Exception {
         try {
             Field[] fields = model.getClass().getDeclaredFields();
             String[] fieldNames = new String[fields.length];
@@ -296,7 +296,7 @@ public class UpdateConditionBuilder<T> {
         setNullList = setNullList.parallelStream().distinct().filter(Objects::nonNull).collect(Collectors.toList());
         for (String key : setNullList) {
             key = getTableFiledName(key);
-            if (ColumnRejectUtil.rejectColumn.contains(key)) {
+            if (ColumnUtils.rejectColumn.contains(key)) {
                 continue;
             }
             condition.set(key, null);

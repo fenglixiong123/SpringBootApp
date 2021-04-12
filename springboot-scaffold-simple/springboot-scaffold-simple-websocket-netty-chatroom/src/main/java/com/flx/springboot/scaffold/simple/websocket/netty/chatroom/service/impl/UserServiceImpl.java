@@ -2,6 +2,7 @@ package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.service.impl
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.flx.springboot.scaffold.common.servlet.BeanUtils;
+import com.flx.springboot.scaffold.mybatis.plus.entity.StateVO;
 import com.flx.springboot.scaffold.mybatis.plus.enums.State;
 import com.flx.springboot.scaffold.mybatis.plus.page.PageConvert;
 import com.flx.springboot.scaffold.mybatis.plus.page.QueryAndPage;
@@ -30,68 +31,65 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserManager userManager;
 
-    private void convertVO(List<WebUserVO> webUserVOList){
+    private void convertVO(List<WebUserVO> entityList){
 
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long add(WebUserVO webUserVO) throws Exception {
-        return userManager.add(BeanUtils.copyProperties(webUserVO, WebUser.class));
+    public Long add(WebUserVO entityVO) throws Exception {
+        return userManager.add(BeanUtils.copyProperties(entityVO, WebUser.class));
     }
 
     @Override
-    public Integer deleteById(Long id) throws Exception {
-        return userManager.deleteById(id);
+    public Integer delete(Long id) throws Exception {
+        return userManager.delete(id);
     }
 
     @Override
-    public Integer updateById(WebUserVO webUserVO) throws Exception {
-        return userManager.updateById(BeanUtils.copyProperties(webUserVO, WebUser.class));
+    public Integer update(WebUserVO entityVO) throws Exception {
+        return userManager.update(BeanUtils.copyProperties(entityVO, WebUser.class));
     }
 
     @Override
-    public void stateChange(List<WebUserVO> webUserVOList, State state) throws Exception {
-
+    public boolean updateState(StateVO stateVO) throws Exception {
+        for (Long id : stateVO.getIds()){
+            WebUser entity = new WebUser();
+            entity.setId(id);
+            entity.setState(stateVO.getState());
+            entity.setUpdateUser(stateVO.getUpdateUser());
+            userManager.updateState(entity);
+        }
+        return true;
     }
 
     @Override
-    public WebUserVO getById(Long id) throws Exception {
-        return BeanUtils.copyProperties(userManager.getById(id), WebUserVO.class);
+    public WebUserVO get(Long id) throws Exception {
+        return BeanUtils.copyProperties(userManager.get(id), WebUserVO.class);
     }
 
     @Override
-    public IPage<WebUserVO> queryAndPage(QueryAndPage queryAndPage) throws Exception {
-        IPage<WebUser> iPage = userManager.queryAndPage(queryAndPage.getPageNum(),queryAndPage.getPageSize(),queryAndPage.getQuery());
-        IPage<WebUserVO> voiPage = PageConvert.pageConvert(iPage, WebUserVO.class);
-        convertVO(voiPage.getRecords());
-        return voiPage;
+    public IPage<WebUserVO> queryPage(QueryAndPage queryAndPage) throws Exception {
+        IPage<WebUser> iPage = userManager.queryPage(queryAndPage.getPageNum(),queryAndPage.getPageSize(),queryAndPage.getQuery());
+        IPage<WebUserVO> voPage = PageConvert.pageConvert(iPage, WebUserVO.class);
+        convertVO(voPage.getRecords());
+        return voPage;
     }
 
     @Override
     public List<WebUserVO> query(Map<String, Object> query) throws Exception {
-        return userManager.queryWebUser(query).parallelStream().map(e -> BeanUtils.copyProperties(e, WebUserVO.class)).collect(Collectors.toList());
+        return userManager.query(query).parallelStream().map(e -> BeanUtils.copyProperties(e, WebUserVO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<WebUserVO> query(Object query) throws Exception {
-        return userManager.queryWebUser(query).parallelStream().map(e -> BeanUtils.copyProperties(e, WebUserVO.class)).collect(Collectors.toList());
+    public List<WebUserVO> queryAll(Map<String, Object> query) throws Exception {
+        return userManager.queryAll(query).parallelStream().map(e -> BeanUtils.copyProperties(e, WebUserVO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public int addWholeByList(List<WebUserVO> webUserVOList) throws Exception {
-        for (WebUserVO webUserVO:webUserVOList){
-            try {
-                add(webUserVO);
-            }catch (Exception e){
-                log.error(e.getMessage());
-            }
-        }
-        return 1;
+    public List<WebUserVO> querySome(Map<String, Object> query,String[] columns) throws Exception {
+        return userManager.querySome(query,columns).parallelStream().map(e -> BeanUtils.copyProperties(e, WebUserVO.class)).collect(Collectors.toList());
     }
 
-    @Override
-    public int addByList(List<WebUserVO> webUserVOList) throws Exception {
-        return userManager.addByList(webUserVOList.parallelStream().map(e -> BeanUtils.copyProperties(e, WebUser.class)).collect(Collectors.toList()));
-    }
+    
 }

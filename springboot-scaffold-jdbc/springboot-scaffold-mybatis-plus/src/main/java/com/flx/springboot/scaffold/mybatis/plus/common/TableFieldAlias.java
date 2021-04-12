@@ -1,7 +1,8 @@
 package com.flx.springboot.scaffold.mybatis.plus.common;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.flx.springboot.scaffold.common.utils.code.CodeUtils;
+import com.flx.springboot.scaffold.mybatis.plus.annotation.ColumnName;
+import com.flx.springboot.scaffold.mybatis.plus.annotation.TableName;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +28,7 @@ import java.util.*;
  */
 @Slf4j
 @Configuration
-public class ScanFieldAlias implements ResourceLoaderAware {
+public class TableFieldAlias implements ResourceLoaderAware {
 
     /**
      * 表名前缀
@@ -37,8 +38,14 @@ public class ScanFieldAlias implements ResourceLoaderAware {
     @Value("${spring.flx.entity.package:com/flx/springboot/scaffold/mybatis/plus/entity}")
     private String entityPackage;
 
-    public static Map<String, String> fieldAliasMap = new HashMap<>();
-    public static List<String> tableName = new ArrayList<>();
+    /**
+     * 实体字段数据库名称
+     */
+    private static Map<String, String> fieldAliasMap = new HashMap<>();
+    /**
+     * 所有表的集合
+     */
+    private static Set<String> tableNameSet = new HashSet<>();
 
     private ResourceLoader resourceLoader;
 
@@ -47,6 +54,32 @@ public class ScanFieldAlias implements ResourceLoaderAware {
         this.resourceLoader = resourceLoader;
     }
 
+    /**
+     * 字段转换为小写
+     * 驼峰转下划线
+     * 获取别名字段
+     * agvPoint--->agv_point
+     * @param source 实体中的字段
+     * @return 字段在数据库中的名称
+     */
+    public static String getTableFiledName(String source) {
+        if (fieldAliasMap.containsKey(source)) {
+            return fieldAliasMap.get(source);
+        }
+        return CodeUtils.camelToUnder(source);
+    }
+
+    /**
+     * @return 表的名称集合
+     */
+    public static Set<String> getTableNameSet(){
+        return Collections.unmodifiableSet(tableNameSet);
+    }
+
+    /**
+     * 启动程序会自动扫描系统中实体字段的别名
+     * @throws Exception
+     */
     @PostConstruct
     @Transactional(rollbackFor = Exception.class)
     public void getTableFieldValue() throws Exception {
@@ -66,20 +99,20 @@ public class ScanFieldAlias implements ResourceLoaderAware {
                 if (StringUtils.isNotEmpty(entity.value()) && entity.value().startsWith(tablePrefix)) {
                     Field[] fields = clazz.getDeclaredFields();
                     for (Field field : fields) {
-                        if (field.getAnnotation(TableField.class) != null) {
-                            TableField t = field.getAnnotation(TableField.class);
+                        if (field.getAnnotation(ColumnName.class) != null) {
+                            ColumnName t = field.getAnnotation(ColumnName.class);
                             if (StringUtils.isNotEmpty(t.value())) {
                                 fieldAliasMap.put(field.getName(), t.value());
                             }
                         }
                     }
-                    tableName.add(entity.value());
+                    tableNameSet.add(entity.value());
                 }
             }
 
         }
 
-        log.info("GetTable used time : {}",System.currentTimeMillis()-start);
+        log.info("GetTable time : {}",System.currentTimeMillis()-start);
         log.info("GetTable params : tablePrefix = {},entityPackage = {}",tablePrefix,entityPackage);
         log.info("GetTable alis success : fieldAlias = {}",fieldAliasMap.toString());
 

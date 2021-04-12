@@ -13,4 +13,6 @@ public class WebConstant {
 
     public final static String websocketUrl = "ws://"+hostIp+":"+port+"/websocket";
 
+    public final static String DEFAULT_USER = "system";
+
 }

@@ -1,11 +1,7 @@
-package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity;
+package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.flx.springboot.scaffold.mybatis.plus.base.BaseDO;
 import com.flx.springboot.scaffold.mybatis.plus.base.BaseEntity;
 import lombok.Data;
-
-import java.util.Date;
 
 /**
  * @Author: Fenglixiong
@@ -13,8 +9,7 @@ import java.util.Date;
  * @Description: 用户群
  */
 @Data
-@TableName(value = "web_group")
-public class WebGroup extends BaseDO {
+public class WebGroupVO extends BaseEntity {
 
     /**
      * 群主

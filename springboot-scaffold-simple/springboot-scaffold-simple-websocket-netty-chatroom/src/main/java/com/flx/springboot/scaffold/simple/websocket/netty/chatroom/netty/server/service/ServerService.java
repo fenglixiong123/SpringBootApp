@@ -2,7 +2,7 @@ package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server
 
 import com.alibaba.fastjson.JSONObject;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity.WsMessage;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.SendTypeEnum;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.ChatTypeEnum;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.NettyAttrUtil;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.session.SessionHolder;
 import io.netty.channel.Channel;
@@ -24,7 +24,7 @@ public class ServerService {
      */
     public void sendPing() {
         WsMessage webSocketMessage = new WsMessage();
-        webSocketMessage.setBizType(SendTypeEnum.PING.name());
+        webSocketMessage.setBizType(ChatTypeEnum.PING.name());
         String message = JSONObject.toJSONString(webSocketMessage);
         TextWebSocketFrame tws = new TextWebSocketFrame(message);
         channelGroup.writeAndFlush(tws);

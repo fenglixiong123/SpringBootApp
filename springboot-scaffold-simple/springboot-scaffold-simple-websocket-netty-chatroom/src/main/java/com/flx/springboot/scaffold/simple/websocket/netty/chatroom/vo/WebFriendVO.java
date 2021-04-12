@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.dto;
+package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.vo;
 
 import com.flx.springboot.scaffold.mybatis.plus.base.BaseEntity;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.Data;
  * @Description: 好友
  */
 @Data
-public class WebFriendDTO extends BaseEntity {
+public class WebFriendVO extends BaseEntity {
 
     /**
      * 用户Id

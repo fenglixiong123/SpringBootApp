@@ -4,13 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.flx.springboot.scaffold.mybatis.plus.common.ColumnRejectUtil;
-import com.flx.springboot.scaffold.mybatis.plus.common.QueryConditionBuilder;
-import com.flx.springboot.scaffold.mybatis.plus.common.UpdateConditionBuilder;
+import com.flx.springboot.scaffold.mybatis.plus.common.ColumnUtils;
+import com.flx.springboot.scaffold.mybatis.plus.common.QueryBuilder;
+import com.flx.springboot.scaffold.mybatis.plus.common.UpdateBuilder;
 import com.flx.springboot.scaffold.mybatis.plus.constants.PlusConstant;
+import com.flx.springboot.scaffold.mybatis.plus.utils.ArrayUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,10 +28,16 @@ import java.util.Map;
  */
 @Slf4j
 @SuppressWarnings("all")
-public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
+public abstract class BaseManager<T extends BaseDO, V extends BaseDao> {
+
+    @Value("${com.flx.system.defaultUser:system}")
+    private String defaultUser;
+    
+    @Value("${com.flx.query.maxPageSize:3000}")
+    private int maxPageSize;
 
     @Autowired
-    protected S dao;
+    protected V dao;
 
     private Class<T> modelClass;
 
@@ -37,22 +46,22 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
         modelClass = (Class<T>) pt.getActualTypeArguments()[0];
     }
 
-    protected QueryConditionBuilder<T> getConditionBuilder() {
-        return new QueryConditionBuilder<T>();
+    protected QueryBuilder<T> getQueryBuilder() {
+        return new QueryBuilder<T>();
     }
 
-    protected UpdateConditionBuilder<T> getUpdateConditionBuilder() {
-        return new UpdateConditionBuilder<>();
+    protected UpdateBuilder<T> getUpdateBuilder() {
+        return new UpdateBuilder<>();
     }
 
 
     protected Long add(T model) throws Exception{
         model.setCreateTime(new Date());
         if (StringUtils.isEmpty(model.getCreateUser())) {
-            model.setCreateUser("admin");
+            model.setCreateUser(defaultUser);
         }
         if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
+            model.setUpdateUser(defaultUser);
         }
         model.setUpdateTime(new Date());
         dao.insert(model);
@@ -65,10 +74,10 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
             model.setCreateTime(new Date());
             model.setUpdateTime(new Date());
             if (StringUtils.isEmpty(model.getCreateUser())) {
-                model.setCreateUser("admin");
+                model.setCreateUser(defaultUser);
             }
             if (StringUtils.isEmpty(model.getUpdateUser())) {
-                model.setUpdateUser("admin");
+                model.setUpdateUser(defaultUser);
             }
             try {
                 dao.insert(model);
@@ -91,7 +100,7 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
     protected Integer update(T model) throws Exception {
         model.setUpdateTime(new Date());
         if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
+            model.setUpdateUser(defaultUser);
         }
         return dao.updateById(model);
     }
@@ -99,9 +108,9 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
     protected Integer updateNull(T model) throws Exception {
         model.setUpdateTime(new Date());
         if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
+            model.setUpdateUser(defaultUser);
         }
-        UpdateWrapper<T> updateWrapper = getUpdateConditionBuilder()
+        UpdateWrapper<T> updateWrapper = getUpdateBuilder()
                 .query("id", model.getId())
                 .readObject(model).build(true);
         return dao.update(model, updateWrapper);
@@ -110,18 +119,18 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
     protected Integer update(T model, String codeName, String codeValue) throws Exception {
         model.setUpdateTime(new Date());
         if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
+            model.setUpdateUser(defaultUser);
         }
-        QueryWrapper queryWrapper = getConditionBuilder().query(codeName, codeValue).build(false);
+        QueryWrapper queryWrapper = getQueryBuilder().query(codeName, codeValue).build(false);
         return dao.update(model, queryWrapper);
     }
 
     protected Integer updateNull(T model, String codeName, String codeValue) throws Exception {
         model.setUpdateTime(new Date());
         if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
+            model.setUpdateUser(defaultUser);
         }
-        UpdateWrapper queryWrapper = getUpdateConditionBuilder()
+        UpdateWrapper queryWrapper = getUpdateBuilder()
                 .query(codeName, codeValue)
                 .readObject(model)
                 .build(false);
@@ -131,7 +140,7 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
     protected int update(T model, QueryWrapper queryWrapper) throws Exception {
         model.setUpdateTime(new Date());
         if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
+            model.setUpdateUser(defaultUser);
         }
         return dao.update(model, queryWrapper);
     }
@@ -139,7 +148,7 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
     protected int update(T model, UpdateWrapper updateWrapper) throws Exception {
         model.setUpdateTime(new Date());
         if (StringUtils.isEmpty(model.getUpdateUser())) {
-            model.setUpdateUser("admin");
+            model.setUpdateUser(defaultUser);
         }
         return dao.update(model, updateWrapper);
     }
@@ -148,39 +157,51 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
         return dao.selectById(id);
     }
 
+    public Object get(String keyCode,String keyValue) throws Exception {
+        QueryWrapper<T> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ge(keyCode,keyValue);
+        return dao.selectOne(queryWrapper);
+    }
+
     protected IPage<T> queryPage(Integer pageNum, Integer pageSize, Map<String, Object> query) throws Exception {
         Page<T> modelPage = new Page<>(pageNum, pageSize);
-        QueryWrapper<T> queryWrapper = getConditionBuilder().query(query).build(true);
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query(query).build(true);
         queryWrapper.orderByAsc("id");
         return dao.selectPage(modelPage, queryWrapper);
     }
 
     protected IPage<T> queryPage(Integer pageNum, Integer pageSize, Object query) throws Exception {
-        Page<T> modelPage = new Page<T>(pageNum, pageSize);
-        QueryWrapper<T> queryWrapper = getConditionBuilder().query(query).build(false);
+        Page<T> modelPage = new Page<>(pageNum, pageSize);
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query(query).build(false);
+        queryWrapper.orderByAsc("id");
+        return dao.selectPage(modelPage, queryWrapper);
+    }
+
+    protected IPage<T> queryPageSome(Integer pageNum, Integer pageSize, Map<String, Object> query,String[] columns) throws Exception {
+        Page<T> modelPage = new Page<>(pageNum, pageSize);
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query(query).build(true);
+        if (ArrayUtils.isNotNull(columns)) {
+            queryWrapper.select(columns);
+        }
+        queryWrapper.orderByAsc("id");
+        return dao.selectPage(modelPage, queryWrapper);
+    }
+
+    protected IPage<T> queryPageSome(Integer pageNum, Integer pageSize, Object query,String[] columns) throws Exception {
+        Page<T> modelPage = new Page<>(pageNum, pageSize);
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query(query).build(false);
+        if (ArrayUtils.isNotNull(columns)) {
+            queryWrapper.select(columns);
+        }
         queryWrapper.orderByAsc("id");
         return dao.selectPage(modelPage, queryWrapper);
     }
 
     protected List<T> query(Object query) throws Exception {
-        Page<T> modelPage = new Page<T>(1, PlusConstant.MAX_PAGE_NUM);
-        QueryWrapper<T> queryWrapper = getConditionBuilder().query(query).build(false);
+        Page<T> modelPage = new Page<>(1, maxPageSize);
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query(query).build(false);
         queryWrapper.orderByAsc("id");
-        queryWrapper.select(ColumnRejectUtil.columnReject(modelClass));
-        IPage<T> modelDOList = dao.selectPage(modelPage, queryWrapper);
-        if (modelDOList == null || modelDOList.getRecords()==null) {
-            return new ArrayList<>();
-        }
-        return modelDOList.getRecords();
-    }
-
-    protected List<T> querySomeColumns(Object query, String[] columns) throws Exception {
-        Page<T> modelPage = new Page<>(1, PlusConstant.MAX_PAGE_NUM);
-        QueryWrapper<T> queryWrapper = getConditionBuilder().query(query).build(false);
-        queryWrapper.orderByAsc("id");
-        if (columns != null && columns.length > 0) {
-            queryWrapper.select(columns);
-        }
+        queryWrapper.select(ColumnUtils.columnReject(modelClass));
         IPage<T> modelDOList = dao.selectPage(modelPage, queryWrapper);
         if (modelDOList == null || modelDOList.getRecords()==null) {
             return new ArrayList<>();
@@ -189,10 +210,10 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
     }
 
     protected List<T> query(Map<String, Object> query) throws Exception {
-        Page<T> modelPage = new Page<>(1, PlusConstant.MAX_PAGE_NUM);
-        QueryWrapper<T> queryWrapper = getConditionBuilder().query(query).build(false);
+        Page<T> modelPage = new Page<>(1, maxPageSize);
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query(query).build(false);
         queryWrapper.orderByAsc("id");
-        queryWrapper.select(ColumnRejectUtil.columnReject(modelClass));
+        queryWrapper.select(ColumnUtils.columnReject(modelClass));
         IPage<T> modelDOList = dao.selectPage(modelPage, queryWrapper);
         if (modelDOList == null || modelDOList.getRecords()==null) {
             return new ArrayList<>();
@@ -200,11 +221,11 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
         return modelDOList.getRecords();
     }
 
-    protected List<T> querySomeColumns(Map<String, Object> query, String[] columns) throws Exception {
-        Page<T> modelPage = new Page<>(1, PlusConstant.MAX_PAGE_NUM);
-        QueryWrapper<T> queryWrapper = getConditionBuilder().query(query).build(false);
+    protected List<T> querySome(Object query, String[] columns) throws Exception {
+        Page<T> modelPage = new Page<>(1, maxPageSize);
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query(query).build(false);
         queryWrapper.orderByAsc("id");
-        if (columns != null && columns.length > 0) {
+        if (ArrayUtils.isNotNull(columns)) {
             queryWrapper.select(columns);
         }
         IPage<T> modelDOList = dao.selectPage(modelPage, queryWrapper);
@@ -214,9 +235,23 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
         return modelDOList.getRecords();
     }
 
-    protected List<T> queryAllColumns(Map<String, Object> query) throws Exception {
-        Page<T> modelPage = new Page<T>(1, PlusConstant.MAX_PAGE_NUM);
-        QueryWrapper<T> queryWrapper = getConditionBuilder().query(query).build(false);
+    protected List<T> querySome(Map<String, Object> query, String[] columns) throws Exception {
+        Page<T> modelPage = new Page<>(1, maxPageSize);
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query(query).build(false);
+        queryWrapper.orderByAsc("id");
+        if (ArrayUtils.isNotNull(columns)) {
+            queryWrapper.select(columns);
+        }
+        IPage<T> modelDOList = dao.selectPage(modelPage, queryWrapper);
+        if (modelDOList == null || modelDOList.getRecords()==null) {
+            return new ArrayList<>();
+        }
+        return modelDOList.getRecords();
+    }
+
+    protected List<T> queryAll(Object query) throws Exception {
+        Page<T> modelPage = new Page<>(1, maxPageSize);
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query(query).build(false);
         queryWrapper.orderByAsc("id");
         IPage<T> modelDOList = dao.selectPage(modelPage, queryWrapper);
         if (modelDOList == null || modelDOList.getRecords()==null) {
@@ -224,4 +259,26 @@ public abstract class BaseManager<T extends BaseDO, S extends BaseDao> {
         }
         return modelDOList.getRecords();
     }
+
+    protected List<T> queryAll(Map<String, Object> query) throws Exception {
+        Page<T> modelPage = new Page<>(1, maxPageSize);
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query(query).build(false);
+        queryWrapper.orderByAsc("id");
+        IPage<T> modelDOList = dao.selectPage(modelPage, queryWrapper);
+        if (modelDOList == null || modelDOList.getRecords()==null) {
+            return new ArrayList<>();
+        }
+        return modelDOList.getRecords();
+    }
+
+    public boolean isExist(Long id) throws Exception {
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query("id", id).build(false);
+        return dao.selectCount(queryWrapper)>0;
+    }
+
+    public boolean isExist(String keyCode,String keyValue) throws Exception {
+        QueryWrapper<T> queryWrapper = getQueryBuilder().query(keyCode, keyValue).build(false);
+        return dao.selectCount(queryWrapper)>0;
+    }
+
 }

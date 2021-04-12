@@ -54,6 +54,11 @@ public class WebUserVO extends BaseEntity {
     private String sex;
 
     /**
+     * 年龄
+     */
+    private int age;
+
+    /**
      * 生日
      */
     private Date birthday;
