@@ -34,7 +34,7 @@ public class TableFieldAlias implements ResourceLoaderAware {
     /**
      * 实体类包路径
      */
-    @Value("${spring.flx.entity.package:com/flx/**/entity}")
+    @Value("${spring.flx.entity.package:com.flx.**.entity}")
     private String entityPackage;
 
     /**
@@ -83,11 +83,11 @@ public class TableFieldAlias implements ResourceLoaderAware {
     @Transactional(rollbackFor = Exception.class)
     public void getTableFieldValue() throws Exception {
         long start=System.currentTimeMillis();
+        log.info("TableFieldAlias entityPackage = "+entityPackage);
         ResourcePatternResolver resolver = ResourcePatternUtils.getResourcePatternResolver(resourceLoader);
         MetadataReaderFactory metaReader = new CachingMetadataReaderFactory(resourceLoader);
         entityPackage = Objects.requireNonNull(entityPackage).replaceAll("\\.","/");
         String realLocations = "classpath*:"+entityPackage+"/*.class";
-        log.info("Read entity path : "+realLocations);
         Resource[] resources = resolver.getResources(realLocations);
         for (Resource r : resources) {
             MetadataReader reader = metaReader.getMetadataReader(r);

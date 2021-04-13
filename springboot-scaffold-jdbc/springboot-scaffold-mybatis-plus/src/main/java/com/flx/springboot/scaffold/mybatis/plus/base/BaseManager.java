@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import static com.flx.springboot.scaffold.mybatis.plus.common.TableFieldAlias.getTableFiledName;
+
 /**
  * 公共Manager类
  *
@@ -159,7 +161,7 @@ public abstract class BaseManager<T extends BaseDO, V extends BaseDao> {
 
     public Object get(String keyCode,String keyValue) throws Exception {
         QueryWrapper<T> queryWrapper = new QueryWrapper<>();
-        queryWrapper.ge(keyCode,keyValue);
+        queryWrapper.ge(getTableFiledName(keyCode),keyValue);
         return dao.selectOne(queryWrapper);
     }
 

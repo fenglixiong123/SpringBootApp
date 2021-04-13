@@ -1,11 +1,7 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.constant.WebConstant;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity.WebMessage;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.ChatTypeEnum;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.MsgTypeEnum;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.message.MessagePush;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.DateUtils;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.utils.NettyAttrUtil;
@@ -17,9 +13,7 @@ import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.websocketx.*;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import static com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.session.SessionHolder.*;

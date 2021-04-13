@@ -1,16 +1,14 @@
 package com.flx.springboot.scaffold.common.system;
 
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -18,6 +16,13 @@ import java.util.jar.JarFile;
  * @Author Fenglixiong
  * @Create 2021/4/12 23:49
  * @Description
+ *
+ * 以下[]为了防止转义，实际需要去掉
+ *
+ * classpath:[**]/*.class 可以获取到当前项目类路径下所有的类
+ * classpath*:[**]/*.class 可以获取到所有classpath下所有的类
+ * classpath*:com/flx/**[/entity/**]/*.class 可以获取指定目录下所有的类
+ *
  **/
 public class ClassUtils {
 

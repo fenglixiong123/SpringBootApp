@@ -2,7 +2,7 @@ package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server
 
 import com.alibaba.fastjson.JSONObject;
 import com.flx.springboot.scaffold.common.utils.json.JsonUtils;
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity.WebMessage;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.biz.entity.WebMessage;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.session.SessionHolder;
 import io.netty.channel.Channel;
 import io.netty.channel.group.ChannelGroup;

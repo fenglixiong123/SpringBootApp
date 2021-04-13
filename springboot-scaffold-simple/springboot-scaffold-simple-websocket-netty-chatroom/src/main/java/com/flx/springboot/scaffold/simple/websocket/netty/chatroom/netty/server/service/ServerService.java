@@ -1,6 +1,6 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.service;
 
-import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.entity.WebMessage;
+import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.biz.entity.WebMessage;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.ChatTypeEnum;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.enums.MsgTypeEnum;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.netty.server.message.MessagePush;

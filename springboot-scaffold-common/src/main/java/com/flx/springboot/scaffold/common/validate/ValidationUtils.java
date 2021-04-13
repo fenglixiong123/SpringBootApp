@@ -1,8 +1,6 @@
 package com.flx.springboot.scaffold.common.validate;
 
-import com.flx.springboot.scaffold.common.result.ResultResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +8,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author fenglixiong
@@ -51,24 +50,6 @@ public class ValidationUtils {
             return ValidationResult.success();
         }
         return failureResult;
-    }
-
-    /**
-     * 用于将ValidationResult转换为ResultResponse
-     * @param validationResult 验证结果
-     * @return 返回对象
-     */
-    public static ResultResponse toResult(ValidationResult validationResult) {
-        if (validationResult.isSuccess()) {
-            return ResultResponse.success();
-        }
-        Map<String, String> messageMap = validationResult.getMessageMap();
-        List<String> errorMessageList = new ArrayList<>();
-        for (Map.Entry<String, String> entry : messageMap.entrySet()) {
-            String message = entry.getKey() + entry.getValue();
-            errorMessageList.add(message);
-        }
-        return ResultResponse.error("Scaffold.Valid.Object.Error", StringUtils.join(errorMessageList, "|"));
     }
 
 }
