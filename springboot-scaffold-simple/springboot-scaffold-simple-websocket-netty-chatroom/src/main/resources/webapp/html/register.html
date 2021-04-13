@@ -68,7 +68,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">确认密码</label>
                             <div class="layui-input-block">
-                                <input type="password" name="password2" lay-verify="required|passValidate" lay-reqtext="确认密码是必填项，岂能为空？" placeholder="请再次输入密码" class="layui-input">
+                                <input type="password" name="password2" lay-verify="required|passValidate|confirmPassValidate" lay-reqtext="确认密码是必填项，岂能为空？" placeholder="请再次输入密码" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -184,6 +184,14 @@
                     alert('长度至少要6个字符');
                     return true;
                 }
+            },
+            confirmPassValidate : function (value) {
+                let password2 = $("form input[password2]").val().trim();
+                console.log(password2);
+                if(password2!==value){
+                    alert("请确认两次密码一致！");
+                }
+                return true;
             },
             sizeValidate : function(value){
                 if(value.length < 3){
