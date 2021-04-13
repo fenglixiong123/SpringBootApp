@@ -34,7 +34,7 @@ clearLogin = ()=>{
 /**
  * 用户注册
  */
-register = ()=>{
+register = (data)=>{
 
 };
 

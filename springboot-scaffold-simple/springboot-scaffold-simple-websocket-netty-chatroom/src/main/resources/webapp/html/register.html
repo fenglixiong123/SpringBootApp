@@ -32,15 +32,15 @@
 
     <div class="layui-row">
 
-        <div class="layui-col-md4">&nbsp;
+        <div class="layui-col-md3">&nbsp;
         </div>
 
-        <div class="layui-col-md4">
+        <div class="layui-col-md6">
             <div class="layui-panel" style="padding: 0 60px;background-color: #F5F5F5">
                 <br/>
                 <br/>
 
-                <div style="width: 80%;align-self: center">
+                <div style="width: 80%;">
 
                     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                         <legend>欢迎注册</legend>
@@ -98,13 +98,13 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">性别</label>
                             <div class="layui-input-block">
-                                <input type="radio" name="sex" value="男" title="男" checked>
-                                <input type="radio" name="sex" value="女" title="女">
+                                <input type="radio" name="sex" value="male" title="男" checked>
+                                <input type="radio" name="sex" value="female" title="女">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">生日</label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="text" name="birthday" id="birthday" lay-verify="date" placeholder="请选择生日" autocomplete="off" class="layui-input">
                             </div>
                         </div>
@@ -130,13 +130,13 @@
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">手机</label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="tel" name="phone" lay-verify="required|phone" placeholder="请输入手机号码" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">邮箱</label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="text" name="email" lay-verify="required|email" placeholder="请输入邮箱" class="layui-input">
                             </div>
                         </div>
@@ -162,7 +162,7 @@
             </div>
         </div>
 
-        <div class="layui-col-md4">&nbsp;
+        <div class="layui-col-md3">&nbsp;
         </div>
 
     </div>
@@ -181,21 +181,19 @@
         form.verify({
             alertValidate : function(value){
                 if(value.length < 6){
-                    alert('长度至少要6个字符');
+                    alert('长度至少要6个字符！');
                     return true;
                 }
-            },
+            },//密码二次确认验证器
             confirmPassValidate : function (value) {
-                let password2 = $("form input[password2]").val().trim();
-                console.log(password2);
+                let password2 = $("form input[name=password]").val().trim();
                 if(password2!==value){
-                    alert("请确认两次密码一致！");
+                    return "请确认两次密码一致！";
                 }
-                return true;
-            },
+            },//长度验证器
             sizeValidate : function(value){
                 if(value.length < 3){
-                    return '长度至少要3个字符';
+                    return '长度至少要3个字符！';
                 }
             }
             ,passValidate: [/^[\S]{6,12}$/,'密码必须6到12位，且不能出现空格']
@@ -205,7 +203,7 @@
         //register为事件<button lay-submit lay-filter="register">提交</button>
         form.on('submit(registerSubmit)', function(data){
             //JSON.stringify(data.field)
-            console.log(data.field); //当前容器的全部表单字段，名值对形式：{name: value}
+            register(data.field); //当前容器的全部表单字段，名值对形式：{name: value}
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
 
