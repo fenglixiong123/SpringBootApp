@@ -3,15 +3,19 @@
  * 用户登录
  */
 login = () => {
-    let message = $("#username").value();
-    if (message === "" || message === null) {
-        alert("昵称不能为空~");
+
+    let username = $("input[name=username]").val().trim();
+    let password = $("input[name=password]").val().trim();
+
+    if(!username){
+        alert("用户名为空请重新填写！");
         return;
     }
-    if (message.length > 15) {
-        alert("昵称字数不能大于15~");
+    if(!password){
+        alert("密码为空请重新填写！");
         return;
     }
+
     //此处进行登录验证，请求后台服务器获取用户信息
 
     //登录成功，跳转聊天页面
@@ -20,8 +24,19 @@ login = () => {
 };
 
 /**
+ * 清除登录框
+ */
+clearLogin = ()=>{
+    $("input[name=username]").val("");
+    $("input[name=password]").val("");
+};
+
+/**
  * 用户注册
  */
 register = ()=>{
 
 };
+
+
+
