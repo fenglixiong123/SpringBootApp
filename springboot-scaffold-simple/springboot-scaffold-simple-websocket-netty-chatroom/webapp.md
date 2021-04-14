@@ -28,20 +28,30 @@ babel就承担了“翻译”的角色，把es6的写法转换成es5的写法。
  
 * 安装cross-env 能跨平台地设置及使用环境变量
 
-        npm cross-env --save-dev 
+        npm install cross-env --save-dev
 
 * 安装webpack 打包工具 
 
-        npm -g install webpack@3 --save-dev //这里指定安装3.0版本，否则会提示版本不匹配
-        npm install webpack-cli --save-dev
+        npm install webpack --save-dev //这里指定安装3.0版本，否则会提示版本不匹配
+        npm install webpack-cli@3 --save-dev
 
 * 安装babel  实现 ES6 到 ES5
 
-        npm install babel-core babel-preset-es2015 --save-dev
+        npm install @babel/preset-env --save-dev //安装转码规则
 
 * 安装babel-loader
 
-        npm install babel-loader --save-dev
+        npm install @babel/core babel-loader --save-dev
+
+注意：
+        
+       如果webpack版本过高，则需要更换为低版本：
+            npm uninstall webpack-cli
+            npm install webpack-cli@3 --save-dev
+            
+       如果安装了babel-preset-es2015需要修改为babel-preset-env
+            npm uninstall --save-dev babel-preset-es2015
+            npm install --save-dev babel-preset-env@next
 
 注释：  
 
@@ -66,9 +76,9 @@ babel就承担了“翻译”的角色，把es6的写法转换成es5的写法。
 设置一个.babelrc的文件放在根目录下  
 内容：
 ~~~  
-{  
-   "presets": ["es2015"]  
-}  
+{
+  "presets": [ "env" ]
+} 
 ~~~
 
 ### 6.配置webpack
@@ -94,19 +104,62 @@ module.exports = {
 
 ### 7.配置package.json
 
-    {
-      "scripts": {
-        "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
-      }
+    "scripts": {
+        "dev": "webpack-dev-server --port 8080 --hot --open --open-page './webapp/html/index.html'",
+        "build": "cross-env NODE_ENV=development webpack --config webpack.config.js",
+        "prod": "cross-env NODE_ENV=production webpack --config webpack.production.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
     }
+    
+    说明：
+    (1)dev采用了devServer热部署的形式，可以运行在node的小型服务器上面
+    (2)build指定了打包环境以及打包采用的配置，可以将js文件从es6转换成es5
 
 ### 8.打包文件
 
     npm run build
 
+### 启用热部署
 
+devServer为你提供了一个简单的 web server，并且具有 live reloading(实时重新加载) 功能。
 
+* 安装插件
 
+        npm install webpack-dev-server --save-dev //热更新服务器
+
+* 修改引用
+
+    我们要注意的是：webpack output is served from /。打包输出的文件在服务器的内存里。文件名：bundle.js  
+    我们要修改index.html的文件引入路径，改为：<script src="/bundle.js" ></script>
+    
+
+* 添加脚本
+        
+        方式一：
+        
+        "scripts": {
+            "dev": "webpack-dev-server --port 8080 --hot --open --open-page "/dist/index.html" "
+        }
+        
+        方式二：
+        
+        "scripts": {
+             "dev": "webpack-dev-server"
+         }
+        
+        webpackage.config.js中配置
+        
+        devServer:{
+            port:8080,//修改端口为8080
+            hot:true,//开启热加载
+            open:true,//执行npm run以后会自动打开浏览器
+            openPage:"/dist/index.html"//指定打开的页面
+            
+        }
+        
+* 运行脚本
+
+        npm run dev
 
 
 
