@@ -268,6 +268,26 @@ devServer为你提供了一个简单的 web server，并且具有 live reloading
     |--->webpack.config.dev.js
     |--->webpack.config.prod.js
     |--->webpack.config.test.js
+
+### .babelrc
+
+    {
+      "presets": [
+        [
+          "@babel/preset-env", {
+          "targets": {
+            "browsers": [
+              "last 2 versions",
+              "not ie <= 9"
+            ]
+          }
+        }
+        ]
+      ],
+      "plugins": [
+        ["@babel/plugin-proposal-class-properties", { "loose": true }]
+      ]
+    }
     
 ### package.json
 
