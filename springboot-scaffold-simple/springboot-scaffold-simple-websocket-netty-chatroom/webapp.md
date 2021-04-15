@@ -6,6 +6,8 @@
 参考文章：    
 
 * https://segmentfault.com/a/1190000022847012
+* https://www.cnblogs.com/makalochen/p/13792400.html
+* https://blog.csdn.net/weixin_33775582/article/details/86008308
 
 ## Windows测试可用
 
@@ -41,18 +43,24 @@ babel就承担了“翻译”的角色，把es6的写法转换成es5的写法。
         
 * 安装dev-server 热部署服务
 
-        npm install -D webpack-dev-server --save-dev
+        npm install webpack-dev-server --save-dev
 
 * 安装babel  实现 ES6 到 ES5
 
+        核心三个：
+        
         npm install babel-loader --save-dev //安装loader
         npm install @babel/core@7.4.5 --save-dev //安装babel核心
         npm install @babel/preset-env@7.4.5 --save-dev //安装转码器
+        
+        按需要添加：
+        
         npm install @babel/plugin-proposal-class-properties --save-dev //如果使用了es6的class需要安装
+        npm install @babel/polyfill --save-dev//解决es6的一些新特征，比如promise
         
 * 安装html 实现html打包
 
-        npm install -D html-webpack-plugin --save-dev
+        npm install html-webpack-plugin --save-dev
 
 一键安装：
 
@@ -119,7 +127,6 @@ module.exports = {
     entry: "./js/main.js",
     output:{
         filename: 'bundle.js'
-
     },
     module: {
         loaders: [{
@@ -144,7 +151,34 @@ module.exports = {
     (1)dev采用了devServer热部署的形式，可以运行在node的小型服务器上面
     (2)build指定了打包环境以及打包采用的配置，可以将js文件从es6转换成es5
 
-### 8.打包文件
+### 8.写入文件内容
+
+此处要注意，默认webpack打包的是局部变量，如果需要在html中之间调用，需要进行变量提升
+
+        function learn(){
+            console.log("...");
+        }
+
+        window.learn = learn;
+        
+        或者：
+        
+        const myFunc = {
+            learn(){
+                console.log("...");
+            },
+            work(){
+                console.log("...");
+            }
+        } 
+        
+        window.myFunc = myFunc;
+        
+        html中使用：
+        
+        <button onclick = "window.myFunc.work();">工作</button>
+
+### 9.打包文件
 
     npm run build
     
@@ -291,6 +325,9 @@ devServer为你提供了一个简单的 web server，并且具有 live reloading
     
 ### package.json
 
+(1) npm init 直接在项目根目录文件夹下面执行这个命令，会自动创建一个package.json文件  
+(2) npm install 直接执行这个命令，会按照当前目录下的package.json的配置去安装各个依赖的包。
+            
     {
       "name": "netty-chat-web",
       "version": "1.0.0",
@@ -384,7 +421,7 @@ devServer为你提供了一个简单的 web server，并且具有 live reloading
             hot:true,//开启热加载
             open:true,//执行npm run以后会自动打开浏览器
             progress: true,//显示启动进度条
-            openPage:"one.html",//指定打开的页面
+            openPage:"web-chat/one.html",//指定打开的页面
             publicPath:'/web-chat/'//对生成目录dist设置的虚拟目录,首先从devServer.publicPath中取值,没有就取output.publicPath的值，否则取默认值"/",也影响利用html-webpack-plugin插件生成的index.html中引用的js、css、img等资源的引用路径。
         },
         resolve: {//解析后缀，可以require的时候不需要添加后缀
