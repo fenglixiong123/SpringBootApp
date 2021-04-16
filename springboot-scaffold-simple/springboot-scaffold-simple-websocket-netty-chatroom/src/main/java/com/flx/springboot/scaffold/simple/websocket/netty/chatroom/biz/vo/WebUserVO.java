@@ -18,28 +18,37 @@ public class WebUserVO extends BaseEntity {
     /**
      * 昵称
      */
-    @Size(max = 64)
     @NotNull
+    @Size(max = 64)
     private String nickName;
 
     /**
      * 用户名
      */
-    @Size(max = 64)
     @NotNull
+    @Size(max = 64)
     private String userName;
 
     /**
      * 密码
      */
-    @Size(max = 64)
     @NotNull
+    @Size(max = 64)
     private String password;
 
     /**
-     * 找回密码
+     * 密码问题
      */
-    private String passwordReminder;
+    @NotNull
+    @Size(max = 128)
+    private String passwordQuestion;
+
+    /**
+     * 密码答案
+     */
+    @NotNull
+    @Size(max = 128)
+    private String passwordAnswer;
 
     /**
      * 头像
@@ -50,7 +59,7 @@ public class WebUserVO extends BaseEntity {
     /**
      * 个性签名
      */
-    @Size(max = 64)
+    @Size(max = 128)
     private String signature;
 
     /**

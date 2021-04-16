@@ -4,6 +4,8 @@ import com.flx.springboot.scaffold.mybatis.plus.annotation.TableName;
 import com.flx.springboot.scaffold.mybatis.plus.base.BaseDO;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @Author: Fenglixiong
  * @Date: 2021/4/12 0:58
@@ -37,5 +39,10 @@ public class WebGroupMessage extends BaseDO {
      * 消息类型
      */
     private String message;
+
+    /**
+     * 发送时间
+     */
+    private Date sendTime;
 
 }

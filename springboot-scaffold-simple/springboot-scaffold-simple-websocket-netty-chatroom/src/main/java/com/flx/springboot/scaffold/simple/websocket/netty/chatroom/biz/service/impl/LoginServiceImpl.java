@@ -53,6 +53,9 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public Long register(WebUserVO webUserVO) throws Exception {
+        if(userManager.isExist("userName",webUserVO.getUserName())){
+            throw new Exception("用户已经存在！");
+        }
         Long id = userManager.add(BeanUtils.copyProperties(webUserVO, WebUser.class));
         sendSuccessEmail(webUserVO);
         return id;
