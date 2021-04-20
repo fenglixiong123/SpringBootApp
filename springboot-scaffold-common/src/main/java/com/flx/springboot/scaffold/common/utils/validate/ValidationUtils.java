@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.validate;
+package com.flx.springboot.scaffold.common.utils.validate;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.HibernateValidator;

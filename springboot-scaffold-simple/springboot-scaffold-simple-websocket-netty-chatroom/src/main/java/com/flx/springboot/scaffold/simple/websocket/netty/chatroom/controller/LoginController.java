@@ -1,8 +1,8 @@
 package com.flx.springboot.scaffold.simple.websocket.netty.chatroom.controller;
 
 import com.flx.springboot.scaffold.common.result.ResultResponse;
-import com.flx.springboot.scaffold.common.validate.ValidationResult;
-import com.flx.springboot.scaffold.common.validate.ValidationUtils;
+import com.flx.springboot.scaffold.common.utils.validate.ValidationResult;
+import com.flx.springboot.scaffold.common.utils.validate.ValidationUtils;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.biz.service.LoginService;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.biz.vo.LoginVO;
 import com.flx.springboot.scaffold.simple.websocket.netty.chatroom.biz.vo.WebUserVO;

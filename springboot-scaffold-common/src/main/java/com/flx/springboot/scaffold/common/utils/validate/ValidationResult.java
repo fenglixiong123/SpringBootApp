@@ -1,4 +1,4 @@
-package com.flx.springboot.scaffold.common.validate;
+package com.flx.springboot.scaffold.common.utils.validate;
 
 import com.flx.springboot.scaffold.common.result.ResultResponse;
 import lombok.Data;
