@@ -161,7 +161,7 @@ public abstract class BaseManager<T extends BaseDO, V extends BaseDao> {
 
     public Object get(String keyCode,String keyValue) throws Exception {
         QueryWrapper<T> queryWrapper = new QueryWrapper<>();
-        queryWrapper.ge(getTableFiledName(keyCode),keyValue);
+        queryWrapper.eq(getTableFiledName(keyCode),keyValue);
         return dao.selectOne(queryWrapper);
     }
 
