@@ -9,13 +9,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 
 import static com.flx.springboot.scaffold.common.http.BaseUtils.getDefaultHeaders;
 import static com.flx.springboot.scaffold.common.http.BaseUtils.getUrlQueries;
+
 
 /**
  * @Author: Fenglixiong
@@ -27,6 +26,17 @@ import static com.flx.springboot.scaffold.common.http.BaseUtils.getUrlQueries;
  */
 @Slf4j
 public class BootUtils {
+
+    public static void main(String[] args) {
+        HttpClient<String> httpClient = BootUtils.createClient();
+        String result = httpClient
+                .setUrl("http//127.0.0.1:8023/api/hello")
+                .setMethod(HttpMethod.POST)
+                .setResponseType(String.class)
+                .build()
+                .execute();
+        System.out.println("result = "+result);
+    }
 
     /**
      * RestAPI 调用器
@@ -129,8 +139,8 @@ public class BootUtils {
      * @return ResponseEntity<responseType>
      */
     public static <T> T request(String url, HttpMethod method,
-                                                Map<String,String> headers, Map<String,Object> queries, String requestBody,
-                                                Class<T> responseType) {
+                                Map<String,String> headers, Map<String,Object> queries, String requestBody,
+                                Class<T> responseType) {
         if (StringUtils.isEmpty(url)) {
             throw new RuntimeException("Request url is blank !");
         }
@@ -149,21 +159,50 @@ public class BootUtils {
         return restTemplate.exchange(url, method, request, responseType).getBody();
     }
 
-    
 
-
-
-    
     @Data
-    private static class HttpClient<T>{
+    public static class HttpClient<T>{
         private String url;
         private HttpMethod method;
         private Map<String,String> headers;
         private Map<String,Object> queries;
         private String requestBody;
         private Class<T> responseType;
-        
-        public HttpClient<T> builder(){
+
+        public HttpClient<T> setUrl(String url){
+            this.url = url;
+            return this;
+        }
+
+        public HttpClient<T> setMethod(HttpMethod method){
+            this.method = method;
+            return this;
+        }
+
+        public HttpClient<T> setHeader(Map<String,String> headers){
+            this.headers = headers;
+            return this;
+        }
+
+        public HttpClient<T> setQuerie(Map<String,Object> queries){
+            this.queries = queries;
+            return this;
+        }
+
+        public HttpClient<T> setRequestBody(String requestBody){
+            this.requestBody = requestBody;
+            return this;
+        }
+
+        public HttpClient<T> setResponseType(Class<T> responseType){
+            this.responseType = responseType;
+            return this;
+        }
+
+        /**
+         * 构建请求对象
+         */
+        public HttpClient<T> build(){
             Objects.requireNonNull(this.url);
             if(method==null){
                 method = HttpMethod.POST;
@@ -176,51 +215,26 @@ public class BootUtils {
             }
             return this;
         }
-        
-        public HttpClient<T> url(String url){
-            this.url = url;
-            return this;
+
+        /**
+         * 执行
+         * @return 返回执行结果
+         */
+        public T execute() {
+            return request(url, method, headers, queries,
+                    requestBody, responseType);
         }
 
-        public HttpClient<T> method(HttpMethod method){
-            this.method = method;
-            return this;
-        }
-
-        public HttpClient<T> headers(Map<String,String> headers){
-            this.headers = headers;
-            return this;
-        }
-
-        public HttpClient<T> queries(Map<String,Object> queries){
-            this.queries = queries;
-            return this;
-        }
-
-        public HttpClient<T> requestBody(String requestBody){
-            this.requestBody = requestBody;
-            return this;
-        }
-
-        public HttpClient<T> responseType(Class<T> responseType){
-            this.responseType = responseType;
-            return this;
-        }
-        
     }
-    
-    public static <T> HttpClient<T> createHttpClient(){
+
+    /**
+     * 创建客户端
+     * @param <T>
+     * @return
+     */
+    public static <T> HttpClient<T> createClient(){
         return new HttpClient<>();
     }
 
-    public static <T> T execute(HttpClient<T> httpClient) {
-        return request(
-                httpClient.getUrl(),
-                httpClient.getMethod(),
-                httpClient.getHeaders(),
-                httpClient.getQueries(),
-                httpClient.getRequestBody(),
-                httpClient.getResponseType());
-    }
-    
+
 }
