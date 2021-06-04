@@ -27,7 +27,7 @@
         <cglib.version>3.3.0</cglib.version>
         <flyway.version>5.2.4</flyway.version>
         <http.core.version>4.4.13</http.core.version>
-        <http.client.version>4.5.12</http.client.version>
+        <http.client.version>4.5.13</http.client.version>
         <itextpdf.version>5.5.10</itextpdf.version>
         <itext.asian.version>5.2.0</itext.asian.version>
         <jxl.version>2.6.10</jxl.version>
