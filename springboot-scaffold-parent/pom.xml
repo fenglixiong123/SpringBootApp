@@ -22,7 +22,7 @@
         <apache.logging.version>1.2</apache.logging.version>
         <apache.beanutils.version>1.9.4</apache.beanutils.version>
         <apache.collections.version>3.2.2</apache.collections.version>
-        <alibaba.fastjson.version>1.2.51</alibaba.fastjson.version>
+        <alibaba.fastjson.version>1.2.83</alibaba.fastjson.version>
         <alibaba.druid.version>1.1.12</alibaba.druid.version>
         <cglib.version>3.3.0</cglib.version>
         <flyway.version>5.2.4</flyway.version>
