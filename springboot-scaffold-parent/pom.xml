@@ -31,7 +31,7 @@
         <itextpdf.version>5.5.10</itextpdf.version>
         <itext.asian.version>5.2.0</itext.asian.version>
         <jxl.version>2.6.10</jxl.version>
-        <jackson.version>2.9.7</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <json.path.verson>2.4.0</json.path.verson>
         <kafka.version>2.2.0.RELEASE</kafka.version>
         <mybatis.version>2.1.2</mybatis.version>
